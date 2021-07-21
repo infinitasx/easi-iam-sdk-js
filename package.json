@@ -1,20 +1,27 @@
 {
   "name": "easi-iam-sdk-js",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
+  "main": "dist/easi-iam-sdk-js.umd.min.js",
+  "module": "dist/easi-iam-sdk-js.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name easi-iam-sdk-js --dest lib packages/index.ts",
+    "build": "vue-cli-service build --target lib --name easi-iam-sdk-js --dest dist packages/index.ts",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "easi-assets-deploy": "easi-assets-deploy",
+    "easi-auto-tag": "easi-auto-tag"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
     "ant-design-vue": "^2.2.2",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "easi-assets-deploy": "https://github.com/infinitasx/easi-assets-deploy.git#main",
+    "easi-auto-tag": "https://github.com/infinitasx/easi-auto-tag.git#main",
     "oidc-client": "^1.11.5",
-    "vue": "^3.1.5"
+    "vue": "^3.1.5",
+    "yarn": "^1.22.10"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
@@ -88,5 +95,15 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "easiAssetsDeployConfig": {
+    "backend": {
+      "projectName": "",
+      "repositoryUrl": "",
+      "templateDir": "",
+      "branchName": ""
+    },
+    "assetsFilePattern": "*.html",
+    "asLibrary": true
   }
 }

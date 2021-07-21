@@ -1,22 +1,26 @@
 /* eslint-disable */
 const path = require('path')
+
+const IS_PRO = process.env.NODE_ENV !== 'development'
+
 module.exports = {
   // 修改 pages 入口
   pages: {
     index: {
-      entry: 'examples/main.js', // 入口
+      entry: 'examples/main.ts', // 入口
       template: 'public/index.html', // 模板
       filename: 'index.html' // 输出文件
     }
   },
+  productionSourceMap: false,
   configureWebpack: {
-    externals: {
+    externals: IS_PRO ? {
       vue: 'vue',
       axios: 'axios',
       'oidc-client': 'oidc-client',
       'ant-design-vue': 'ant-design-vue',
       'ant-design-vue/dist/antd.css': 'ant-design-vue',
-    }
+    }: {}
   },
   // 扩展 webpack 配置
   chainWebpack: config => {
@@ -38,12 +42,12 @@ module.exports = {
       .rule('js')
       .include.add(/packages/)
       .end()
+      .rule('ts')
       .include.add(/examples/)
       .end()
       .use('babel')
       .loader('babel-loader')
       .tap(options => {
-        // 修改它的选项...
         return options
       })
   }

@@ -1,16 +1,21 @@
 <template>
-  <img alt="Vue logo" src="assetsogo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="app">
+    hello world
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
+  setup () {
+    const authInfo = ref()
+    const userInfo = ref('')
+    return {
+      authInfo,
+      userInfo
+    }
   }
 })
 </script>
@@ -20,8 +25,11 @@ export default defineComponent({
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.app{
+  width: 1000px;
+  margin:0 auto;
 }
 </style>
