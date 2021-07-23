@@ -2,8 +2,8 @@
   "name": "easi-iam-sdk-js",
   "version": "0.0.2",
   "private": true,
-  "main": "dist/easiIamSdkJs.umd.min.js",
-  "module": "dist/easiIamSdkJs.umd.min.js",
+  "main": "dist/easiIamSdkJs.umd.js",
+  "module": "dist/easiIamSdkJs.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name easiIamSdkJs --dest dist packages/index.ts",
