@@ -1,6 +1,6 @@
 {
   "name": "easi-iam-sdk-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "main": "dist/easiIamSdkJs.umd.min.js",
   "module": "dist/easiIamSdkJs.umd.min.js",

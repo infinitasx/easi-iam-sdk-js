@@ -20,7 +20,7 @@ module.exports = {
     externals: IS_PRO ? {
       vue: 'Vue',
       axios: 'axios',
-      'oidc-client': 'oidc-client',
+      'oidc-client': 'Oidc',
       'ant-design-vue': 'ant-design-vue',
       'ant-design-vue/dist/antd.css': 'ant-design-vue',
     }: {}

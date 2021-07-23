@@ -2763,7 +2763,7 @@ module.exports = function (input, PREFERRED_STRING) {
 /***/ "c097":
 /***/ (function(module, exports) {
 
-(function() { module.exports = window["oidc-client"]; }());
+(function() { module.exports = window["Oidc"]; }());
 
 /***/ }),
 
@@ -3743,9 +3743,9 @@ var es_promise = __webpack_require__("e6cf");
 // EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
 var runtime = __webpack_require__("96cf");
 
-// EXTERNAL MODULE: external "oidc-client"
-var external_oidc_client_ = __webpack_require__("c097");
-var external_oidc_client_default = /*#__PURE__*/__webpack_require__.n(external_oidc_client_);
+// EXTERNAL MODULE: external "Oidc"
+var external_Oidc_ = __webpack_require__("c097");
+var external_Oidc_default = /*#__PURE__*/__webpack_require__.n(external_Oidc_);
 
 // EXTERNAL MODULE: external "ant-design-vue"
 var external_ant_design_vue_ = __webpack_require__("4e72");
@@ -3943,8 +3943,8 @@ var common_getPermissions = function getPermissions(config) {
 
 
 /* harmony default export */ var easiOidcClient = (function (params) {
-  external_oidc_client_default.a.Log.logger = console;
-  external_oidc_client_default.a.Log.level = params.env === 'production' ? external_oidc_client_default.a.Log.NONE : external_oidc_client_default.a.Log.INFO;
+  external_Oidc_default.a.Log.logger = console;
+  external_Oidc_default.a.Log.level = params.env === 'production' ? external_Oidc_default.a.Log.NONE : external_Oidc_default.a.Log.INFO;
   var client_id = params.client_id[params.env];
   var authority = params.env === 'production' ? PRODUCTION_URL : params.env === 'testing' ? TESTING_URL : DEVELOPMENT_URL; // 是否展示过期提示框
 
@@ -3952,8 +3952,8 @@ var common_getPermissions = function getPermissions(config) {
 
   var auth_info = null; // oidc-client 原本的实例对象
 
-  var _oidcClient = new external_oidc_client_default.a.UserManager({
-    userStore: new external_oidc_client_default.a.WebStorageStateStore({
+  var _oidcClient = new external_Oidc_default.a.UserManager({
+    userStore: new external_Oidc_default.a.WebStorageStateStore({
       store: window.localStorage
     }),
     authority: authority,
@@ -4318,8 +4318,8 @@ callbackLoadingvue_type_script_lang_ts.__scopeId = "data-v-425ef005"
     }
   },
   setup: function setup(props) {
-    var mgr = new external_oidc_client_default.a.UserManager({
-      userStore: new external_oidc_client_default.a.WebStorageStateStore(),
+    var mgr = new external_Oidc_default.a.UserManager({
+      userStore: new external_Oidc_default.a.WebStorageStateStore(),
       loadUserInfo: true,
       filterProtocolClaims: true,
       response_mode: 'query'

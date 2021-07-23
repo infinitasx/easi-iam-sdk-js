@@ -1,5 +1,4 @@
 import { UserManager, User } from 'oidc-client'
-import { AxiosPromise } from 'axios'
 
 export interface Params {
   client_id: {
