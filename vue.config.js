@@ -21,8 +21,8 @@ module.exports = {
       vue: 'Vue',
       axios: 'axios',
       'oidc-client': 'Oidc',
-      'ant-design-vue': 'ant-design-vue',
-      'ant-design-vue/dist/antd.css': 'ant-design-vue',
+      'ant-design-vue': 'antd',
+      'ant-design-vue/dist/antd.css': 'antd',
     }: {}
   },
   // 扩展 webpack 配置

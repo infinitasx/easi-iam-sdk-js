@@ -964,7 +964,7 @@ module.exports = {
 /***/ "4e72":
 /***/ (function(module, exports) {
 
-(function() { module.exports = window["ant-design-vue"]; }());
+(function() { module.exports = window["antd"]; }());
 
 /***/ }),
 
@@ -3747,8 +3747,8 @@ var runtime = __webpack_require__("96cf");
 var external_Oidc_ = __webpack_require__("c097");
 var external_Oidc_default = /*#__PURE__*/__webpack_require__.n(external_Oidc_);
 
-// EXTERNAL MODULE: external "ant-design-vue"
-var external_ant_design_vue_ = __webpack_require__("4e72");
+// EXTERNAL MODULE: external "antd"
+var external_antd_ = __webpack_require__("4e72");
 
 // CONCATENATED MODULE: ./packages/constant/index.ts
 // 地址
@@ -3976,7 +3976,7 @@ var common_getPermissions = function getPermissions(config) {
       auth_info = user;
     }).catch(function () {
       setTimeout(function () {
-        external_ant_design_vue_["message"].error('自动更新token失败');
+        external_antd_["message"].error('自动更新token失败');
       }, 2000);
     });
   }); // 访问令牌过期
@@ -3986,7 +3986,7 @@ var common_getPermissions = function getPermissions(config) {
     if (_show_expired_modal) {
       // 避免多次弹出过期提示框
       _show_expired_modal = false;
-      external_ant_design_vue_["Modal"].error({
+      external_antd_["Modal"].error({
         title: '会话到期',
         content: '会话已到期，请重新登录！',
         onOk: function onOk() {
@@ -4001,7 +4001,7 @@ var common_getPermissions = function getPermissions(config) {
   });
 
   _oidcClient.events.addSilentRenewError(function () {
-    external_ant_design_vue_["message"].error('自动更新token失败');
+    external_antd_["message"].error('自动更新token失败');
   });
 
   _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -4328,7 +4328,7 @@ callbackLoadingvue_type_script_lang_ts.__scopeId = "data-v-425ef005"
     mgr.signinRedirectCallback().then(function () {
       window.location.href = props.homePageUrl || '/';
     }).catch(function () {
-      external_ant_design_vue_["message"].error('获取token失败！');
+      external_antd_["message"].error('获取token失败！');
     });
   }
 }));
