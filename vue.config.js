@@ -14,8 +14,11 @@ module.exports = {
   },
   productionSourceMap: false,
   configureWebpack: {
+    output: {
+      libraryTarget: 'window',
+    },
     externals: IS_PRO ? {
-      vue: 'vue',
+      vue: 'Vue',
       axios: 'axios',
       'oidc-client': 'oidc-client',
       'ant-design-vue': 'ant-design-vue',
