@@ -82,7 +82,7 @@ window["easiIamSdkJs"] =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "fae3");
+/******/ 	return __webpack_require__(__webpack_require__.s = "fb15");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -3525,26 +3525,12 @@ module.exports = function (key) {
 
 /***/ }),
 
-/***/ "fae3":
+/***/ "fb15":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "IamClient", function() { return /* reexport */ easiOidcClient_namespaceObject; });
-__webpack_require__.d(__webpack_exports__, "CallbackPage", function() { return /* reexport */ Callback_namespaceObject; });
-
-// NAMESPACE OBJECT: ./packages/utils/easiOidcClient.ts
-var easiOidcClient_namespaceObject = {};
-__webpack_require__.r(easiOidcClient_namespaceObject);
-__webpack_require__.d(easiOidcClient_namespaceObject, "default", function() { return easiOidcClient; });
-
-// NAMESPACE OBJECT: ./packages/views/Callback.vue
-var Callback_namespaceObject = {};
-__webpack_require__.r(Callback_namespaceObject);
-__webpack_require__.d(Callback_namespaceObject, "default", function() { return Callback; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -4168,10 +4154,14 @@ Callbackvue_type_script_lang_ts.render = render
 // CONCATENATED MODULE: ./packages/index.ts
 
 
+/* harmony default export */ var packages_0 = ({
+  IamClient: easiOidcClient,
+  CallbackPage: Callback
+});
+// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
-// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
-
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (packages_0);
 
 
 
