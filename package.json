@@ -1,6 +1,6 @@
 {
   "name": "easi-iam-sdk-js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "main": "packages/index.ts",
   "module": "packages/index.ts",
