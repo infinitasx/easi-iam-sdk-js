@@ -35,8 +35,6 @@ module.exports = {
     config.plugins.delete('hmr')
     config.entryPoints.delete('app');
 
-    // @ 默认指向 examples 目录，这里要改成 examples
-    // 另外也可以新增一个 ~ 指向 packages
     config.resolve.alias
       .set('@', path.resolve('examples'))
       .set('~', path.resolve('packages'))
