@@ -126,6 +126,10 @@ css.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/${getIamSdkVersion}/eas
   - 获取用户认证信息，返回Promise对象
 - iamSdkUtils.getUserInfo()
   - 获取用户信息，返回Promise对象
+- iamSdkUtils.getPermissionsData({ applicationId: string, scopeId?: string | number | null })
+  - applicationId 系统id
+  - scopeId 城市/范围id  
+  - 获取用户权限点信息，返回Promise对象
 - iamSdkUtils.signIn()
   - 登录
 - iamSdkUtils.signOut()
