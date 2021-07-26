@@ -82,7 +82,7 @@ window["easiIamSdkJs"] =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "fb15");
+/******/ 	return __webpack_require__(__webpack_require__.s = "fae3");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -175,48 +175,6 @@ module.exports = !DESCRIPTORS && !fails(function () {
     get: function () { return 7; }
   }).a != 7;
 });
-
-
-/***/ }),
-
-/***/ "159b":
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__("da84");
-var DOMIterables = __webpack_require__("fdbc");
-var forEach = __webpack_require__("17c2");
-var createNonEnumerableProperty = __webpack_require__("9112");
-
-for (var COLLECTION_NAME in DOMIterables) {
-  var Collection = global[COLLECTION_NAME];
-  var CollectionPrototype = Collection && Collection.prototype;
-  // some Chrome versions have non-configurable methods on DOMTokenList
-  if (CollectionPrototype && CollectionPrototype.forEach !== forEach) try {
-    createNonEnumerableProperty(CollectionPrototype, 'forEach', forEach);
-  } catch (error) {
-    CollectionPrototype.forEach = forEach;
-  }
-}
-
-
-/***/ }),
-
-/***/ "17c2":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $forEach = __webpack_require__("b727").forEach;
-var arrayMethodIsStrict = __webpack_require__("a640");
-
-var STRICT_METHOD = arrayMethodIsStrict('forEach');
-
-// `Array.prototype.forEach` method implementation
-// https://tc39.es/ecma262/#sec-array.prototype.foreach
-module.exports = !STRICT_METHOD ? function forEach(callbackfn /* , thisArg */) {
-  return $forEach(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-// eslint-disable-next-line es/no-array-prototype-foreach -- safe
-} : [].forEach;
 
 
 /***/ }),
@@ -1701,9 +1659,9 @@ var runtime = (function (exports) {
   // This is a polyfill for %IteratorPrototype% for environments that
   // don't natively support it.
   var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
+  define(IteratorPrototype, iteratorSymbol, function () {
     return this;
-  };
+  });
 
   var getProto = Object.getPrototypeOf;
   var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
@@ -1717,8 +1675,9 @@ var runtime = (function (exports) {
 
   var Gp = GeneratorFunctionPrototype.prototype =
     Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunction.prototype = GeneratorFunctionPrototype;
+  define(Gp, "constructor", GeneratorFunctionPrototype);
+  define(GeneratorFunctionPrototype, "constructor", GeneratorFunction);
   GeneratorFunction.displayName = define(
     GeneratorFunctionPrototype,
     toStringTagSymbol,
@@ -1832,9 +1791,9 @@ var runtime = (function (exports) {
   }
 
   defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+  define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
     return this;
-  };
+  });
   exports.AsyncIterator = AsyncIterator;
 
   // Note that simple async functions are implemented on top of
@@ -2027,13 +1986,13 @@ var runtime = (function (exports) {
   // iterator prototype chain incorrectly implement this, causing the Generator
   // object to not be returned from this call. This ensures that doesn't happen.
   // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
+  define(Gp, iteratorSymbol, function() {
     return this;
-  };
+  });
 
-  Gp.toString = function() {
+  define(Gp, "toString", function() {
     return "[object Generator]";
-  };
+  });
 
   function pushTryEntry(locs) {
     var entry = { tryLoc: locs[0] };
@@ -2352,14 +2311,19 @@ try {
 } catch (accidentalStrictMode) {
   // This module should not be running in strict mode, so the above
   // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, we can escape
+  // in case runtime.js accidentally runs in strict mode, in modern engines
+  // we can explicitly access globalThis. In older engines we can escape
   // strict mode using a global Function call. This could conceivably fail
   // if a Content Security Policy forbids using Function, but in that case
   // the proper solution is to fix the accidental strict mode problem. If
   // you've misconfigured your bundler to force strict mode and applied a
   // CSP to forbid Function, and you're not willing to fix either of those
   // problems, please detail your unique predicament in a GitHub issue.
-  Function("r", "regeneratorRuntime = r")(runtime);
+  if (typeof globalThis === "object") {
+    globalThis.regeneratorRuntime = runtime;
+  } else {
+    Function("r", "regeneratorRuntime = r")(runtime);
+  }
 }
 
 
@@ -2468,24 +2432,6 @@ exports.f = DESCRIPTORS ? $defineProperty : function defineProperty(O, P, Attrib
 var userAgent = __webpack_require__("342f");
 
 module.exports = /web0s(?!.*chrome)/i.test(userAgent);
-
-
-/***/ }),
-
-/***/ "a640":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var fails = __webpack_require__("d039");
-
-module.exports = function (METHOD_NAME, argument) {
-  var method = [][METHOD_NAME];
-  return !!method && fails(function () {
-    // eslint-disable-next-line no-useless-call,no-throw-literal -- required for testing
-    method.call(null, argument || function () { throw 1; }, 1);
-  });
-};
 
 
 /***/ }),
@@ -2655,85 +2601,6 @@ module.exports = function (name) {
       WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
     }
   } return WellKnownSymbolsStore[name];
-};
-
-
-/***/ }),
-
-/***/ "b727":
-/***/ (function(module, exports, __webpack_require__) {
-
-var bind = __webpack_require__("0366");
-var IndexedObject = __webpack_require__("44ad");
-var toObject = __webpack_require__("7b0b");
-var toLength = __webpack_require__("50c4");
-var arraySpeciesCreate = __webpack_require__("65f0");
-
-var push = [].push;
-
-// `Array.prototype.{ forEach, map, filter, some, every, find, findIndex, filterOut }` methods implementation
-var createMethod = function (TYPE) {
-  var IS_MAP = TYPE == 1;
-  var IS_FILTER = TYPE == 2;
-  var IS_SOME = TYPE == 3;
-  var IS_EVERY = TYPE == 4;
-  var IS_FIND_INDEX = TYPE == 6;
-  var IS_FILTER_OUT = TYPE == 7;
-  var NO_HOLES = TYPE == 5 || IS_FIND_INDEX;
-  return function ($this, callbackfn, that, specificCreate) {
-    var O = toObject($this);
-    var self = IndexedObject(O);
-    var boundFunction = bind(callbackfn, that, 3);
-    var length = toLength(self.length);
-    var index = 0;
-    var create = specificCreate || arraySpeciesCreate;
-    var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_OUT ? create($this, 0) : undefined;
-    var value, result;
-    for (;length > index; index++) if (NO_HOLES || index in self) {
-      value = self[index];
-      result = boundFunction(value, index, O);
-      if (TYPE) {
-        if (IS_MAP) target[index] = result; // map
-        else if (result) switch (TYPE) {
-          case 3: return true;              // some
-          case 5: return value;             // find
-          case 6: return index;             // findIndex
-          case 2: push.call(target, value); // filter
-        } else switch (TYPE) {
-          case 4: return false;             // every
-          case 7: push.call(target, value); // filterOut
-        }
-      }
-    }
-    return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : target;
-  };
-};
-
-module.exports = {
-  // `Array.prototype.forEach` method
-  // https://tc39.es/ecma262/#sec-array.prototype.foreach
-  forEach: createMethod(0),
-  // `Array.prototype.map` method
-  // https://tc39.es/ecma262/#sec-array.prototype.map
-  map: createMethod(1),
-  // `Array.prototype.filter` method
-  // https://tc39.es/ecma262/#sec-array.prototype.filter
-  filter: createMethod(2),
-  // `Array.prototype.some` method
-  // https://tc39.es/ecma262/#sec-array.prototype.some
-  some: createMethod(3),
-  // `Array.prototype.every` method
-  // https://tc39.es/ecma262/#sec-array.prototype.every
-  every: createMethod(4),
-  // `Array.prototype.find` method
-  // https://tc39.es/ecma262/#sec-array.prototype.find
-  find: createMethod(5),
-  // `Array.prototype.findIndex` method
-  // https://tc39.es/ecma262/#sec-array.prototype.findIndex
-  findIndex: createMethod(6),
-  // `Array.prototype.filterOut` method
-  // https://github.com/tc39/proposal-array-filtering
-  filterOut: createMethod(7)
 };
 
 
@@ -3658,12 +3525,26 @@ module.exports = function (key) {
 
 /***/ }),
 
-/***/ "fb15":
+/***/ "fae3":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "IamClient", function() { return /* reexport */ easiOidcClient_namespaceObject; });
+__webpack_require__.d(__webpack_exports__, "CallbackPage", function() { return /* reexport */ Callback_namespaceObject; });
+
+// NAMESPACE OBJECT: ./packages/utils/easiOidcClient.ts
+var easiOidcClient_namespaceObject = {};
+__webpack_require__.r(easiOidcClient_namespaceObject);
+__webpack_require__.d(easiOidcClient_namespaceObject, "default", function() { return easiOidcClient; });
+
+// NAMESPACE OBJECT: ./packages/views/Callback.vue
+var Callback_namespaceObject = {};
+__webpack_require__.r(Callback_namespaceObject);
+__webpack_require__.d(Callback_namespaceObject, "default", function() { return Callback; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -3813,9 +3694,6 @@ function _objectSpread2(target) {
 
   return target;
 }
-// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
-var web_dom_collections_for_each = __webpack_require__("159b");
-
 // EXTERNAL MODULE: external "axios"
 var external_axios_ = __webpack_require__("cebe");
 var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_);
@@ -3824,62 +3702,11 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_)
 
 
 
-
  // 创建实例时设置配置的默认值
 
 var instance = external_axios_default.a.create({
   timeout: 10000
-}); // 展示错误信息
-
-function parseErrMsg(errorObj, status) {
-  var error = errorObj.error; // 服务端没有返回错误信息的情况时的一些提示
-
-  if (!error || !(error.details instanceof Array)) {
-    switch (status) {
-      case 400:
-        return '客户端请求错误(400)';
-
-      case 401:
-        // 跳转页面
-        return '未授权，请重新登录(401)';
-
-      case 403:
-        // 跳转页面
-        return '拒绝访问(403)';
-
-      case 404:
-        return '请求资源不存在(404)';
-
-      case 500:
-        return '服务器错误(500)';
-
-      default:
-        return "\u5176\u4ED6\u9519\u8BEF(".concat(error.response.status, ")!");
-    }
-  }
-
-  var str = '';
-  var code_str = ''; // https://cloud.google.com/apis/design/errors
-
-  error && error.details.forEach(function (item) {
-    if (item['@type'] === 'type.googleapis.com/google.rpc.ErrorInfo') {
-      code_str = item.reason;
-    }
-
-    if (item['@type'] === 'type.googleapis.com/google.rpc.LocalizedMessage') {
-      str = item.message;
-    }
-  });
-
-  if (str && !code_str) {
-    return str;
-  } else if (!str && code_str) {
-    return code_str;
-  } else {
-    return error.message;
-  }
-} // 添加请求拦截器
-
+}); // 添加请求拦截器
 
 instance.interceptors.request.use(function (config) {
   return _objectSpread2(_objectSpread2({}, config), {}, {
@@ -3898,10 +3725,7 @@ instance.interceptors.response.use(function (response) {
   return Promise.resolve(data);
 }, function (error) {
   if (error && error.response) {
-    var _error$response = error.response,
-        data = _error$response.data,
-        status = _error$response.status; // message.error(parseErrMsg(data, status))
-
+    var data = error.response.data;
     return Promise.reject(data.error ? data.error : data);
   } else {
     // message.error('连接服务器失败')
@@ -4344,14 +4168,10 @@ Callbackvue_type_script_lang_ts.render = render
 // CONCATENATED MODULE: ./packages/index.ts
 
 
-/* harmony default export */ var packages_0 = ({
-  easiOidcClientUtils: easiOidcClient,
-  CallbackPage: Callback
-});
-// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
-/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (packages_0);
+// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
+
 
 
 
@@ -4366,48 +4186,6 @@ var requireObjectCoercible = __webpack_require__("1d80");
 
 module.exports = function (it) {
   return IndexedObject(requireObjectCoercible(it));
-};
-
-
-/***/ }),
-
-/***/ "fdbc":
-/***/ (function(module, exports) {
-
-// iterable DOM collections
-// flag - `iterable` interface - 'entries', 'keys', 'values', 'forEach' methods
-module.exports = {
-  CSSRuleList: 0,
-  CSSStyleDeclaration: 0,
-  CSSValueList: 0,
-  ClientRectList: 0,
-  DOMRectList: 0,
-  DOMStringList: 0,
-  DOMTokenList: 1,
-  DataTransferItemList: 0,
-  FileList: 0,
-  HTMLAllCollection: 0,
-  HTMLCollection: 0,
-  HTMLFormElement: 0,
-  HTMLSelectElement: 0,
-  MediaList: 0,
-  MimeTypeArray: 0,
-  NamedNodeMap: 0,
-  NodeList: 1,
-  PaintRequestList: 0,
-  Plugin: 0,
-  PluginArray: 0,
-  SVGLengthList: 0,
-  SVGNumberList: 0,
-  SVGPathSegList: 0,
-  SVGPointList: 0,
-  SVGStringList: 0,
-  SVGTransformList: 0,
-  SourceBufferList: 0,
-  StyleSheetList: 0,
-  TextTrackCueList: 0,
-  TextTrackList: 0,
-  TouchList: 0
 };
 
 

@@ -33,14 +33,13 @@ declare module 'easi-iam-sdk-js';
 import 'easi-iam-sdk-js/dist/easiIamSdkJs.css';
 
 // iamSdkUtils.ts
-import easiIamSdk from 'easi-iam-sdk-js';
-const { easiOidcClientUtils, CallbackPage } = easiIamSdk;
+import { IamClient, CallbackPage } from 'easi-iam-sdk-js';
 // code 换 token的相对地址
 const redirect_uri = '/iam/callback';
 // index 页面地址
 const post_logout_redirect_uri = '/iam';
 
-export const iamSdkUtils = easiOidcClientUtils({
+export const iam = IamClient({
   client_id: {
     production: '*****',
     testing: '******',
@@ -114,29 +113,29 @@ css.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/${getIamSdkVersion}/eas
 ```
 
 ### 使用api说明
-- iamSdkUtils.getOidcClientInstance()
+- iam.getOidcClientInstance()
   - 获取oidc-client-js 原本的实例对象（https://github.com/IdentityModel/oidc-client-js/wiki）
-- iamSdkUtils.clearLocalStorageDataExcludeOidc() 
+- iam.clearLocalStorageDataExcludeOidc() 
   - 清除除了oidc认证的key之外的东西
-- iamSdkUtils.clearOidcLocalStorageData()
+- iam.clearOidcLocalStorageData()
   - 清除oidc认证的key的东西
-- iamSdkUtils.getAuthInfoSync()
+- iam.getAuthInfoSync()
   - 获取用户认证信息
-- iamSdkUtils.getAuthInfo()
+- iam.getAuthInfo()
   - 获取用户认证信息，返回Promise对象
-- iamSdkUtils.getUserInfo()
+- iam.getUserInfo()
   - 获取用户信息，返回Promise对象
-- iamSdkUtils.getPermissionsData({ applicationId: string, scopeId?: string | number | null })
+- iam.getPermissionsData({ applicationId: string, scopeId?: string | number | null })
   - applicationId 系统id
   - scopeId 城市/范围id  
   - 获取用户权限点信息，返回Promise对象
-- iamSdkUtils.signIn()
+- iam.signIn()
   - 登录
-- iamSdkUtils.signOut()
+- iam.signOut()
   - 登出
-- iamSdkUtils.getAuthorization()
+- iam.getAuthorization()
   - 获取token值
-- iamSdkUtils.openExpiredModal()
+- iam.openExpiredModal()
   - 开启过期对话框
-- iamSdkUtils.closeExpiredModal()
+- iam.closeExpiredModal()
   - 关闭过期对话框
