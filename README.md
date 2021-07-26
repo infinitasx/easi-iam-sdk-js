@@ -33,7 +33,8 @@ declare module 'easi-iam-sdk-js';
 import 'easi-iam-sdk-js/dist/easiIamSdkJs.css';
 
 // iamSdkUtils.ts
-import { IamClient, CallbackPage } from 'easi-iam-sdk-js';
+import IamSdk from 'easi-iam-sdk-js';
+const { IamClient, CallbackPage } = IamSdk;
 // code 换 token的相对地址
 const redirect_uri = '/iam/callback';
 // index 页面地址
@@ -72,7 +73,7 @@ export const CallBack = CallbackPage;
 let canGo = false;
 try {
   // 此方法会判断是否存在认证信息，如果没有会自动跳转到登录页面的  
-  canGo = await iamSdkUtils.routerGuard();
+  canGo = await iam.routerGuard();
 } catch (e) {
   canGo = false;
 }
