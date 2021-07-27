@@ -6,6 +6,8 @@
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview"
   },
+  "main": "/dist/index.js",
+  "typings": "/dist/index.d.ts",
   "dependencies": {
     "ant-design-vue": "^2.2.2",
     "axios": "^0.21.1",
