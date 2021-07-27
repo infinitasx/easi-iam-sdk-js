@@ -101,16 +101,14 @@ const externals = {
   'easi-iam-sdk-js/dist/easiIamSdkJs.css': 'easiIamSdkJs',// 《=========
 };
 
-// iam-jssdk 版本
-const getIamSdkVersion = require('easi-iam-sdk-js/package.json').version;
 const scriptCdn = [
     // ...
 ];
 const css = [
     // ...
 ];
-scriptCdn.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/${getIamSdkVersion}/easiIamSdkJs.umd.min.js`)
-css.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/${getIamSdkVersion}/easiIamSdkJs.css`);
+scriptCdn.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/0.0.4/easiIamSdkJs.umd.min.js`)
+css.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/0.0.4/easiIamSdkJs.css`);
 ```
 
 ### 使用api说明
