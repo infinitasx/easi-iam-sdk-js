@@ -4,13 +4,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "easi-auto-tag": "easi-auto-tag"
   },
   "main": "/dist/index.js",
   "typings": "/dist/index.d.ts",
   "dependencies": {
     "ant-design-vue": "^2.2.2",
     "axios": "^0.21.1",
+    "easi-auto-tag": "https://github.com/infinitasx/easi-auto-tag.git#main",
     "oidc-client": "^1.11.5",
     "vue": "^3.0.5"
   },
@@ -31,5 +33,15 @@
     "vite": "^2.4.3",
     "vite-plugin-style-import": "^1.0.1",
     "vue-tsc": "^0.0.24"
+  },
+  "easiAssetsDeployConfig": {
+    "backend": {
+      "projectName": "",
+      "repositoryUrl": "",
+      "templateDir": "",
+      "branchName": ""
+    },
+    "assetsFilePattern": "*.html",
+    "asLibrary": true
   }
 }
