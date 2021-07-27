@@ -5,13 +5,15 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "easi-auto-tag": "easi-auto-tag"
+    "easi-auto-tag": "easi-auto-tag",
+    "easi-assets-deploy": "easi-assets-deploy"
   },
   "main": "/dist/index.js",
   "typings": "/dist/index.d.ts",
   "dependencies": {
     "ant-design-vue": "^2.2.2",
     "axios": "^0.21.1",
+    "easi-assets-deploy": "https://github.com/infinitasx/easi-assets-deploy.git#main",
     "easi-auto-tag": "https://github.com/infinitasx/easi-auto-tag.git#main",
     "oidc-client": "^1.11.5",
     "vue": "^3.0.5"
