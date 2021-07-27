@@ -107,8 +107,8 @@ const scriptCdn = [
 const css = [
     // ...
 ];
-scriptCdn.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/0.0.4/easiIamSdkJs.umd.min.js`)
-css.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/0.0.4/easiIamSdkJs.css`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.4/easiIamSdkJs.umd.min.js`)
+css.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.4/easiIamSdkJs.css`);
 ```
 
 ### 使用api说明
