@@ -38,9 +38,9 @@ export default defineConfig({
             fileName: 'index',
             formats: ['umd']
         },
-        cssCodeSplit: false,
+        cssCodeSplit: true,
         rollupOptions: {
-            external: ['vue', "ant-design-vue", "ant-design-vue/dist/antd.css", 'axios', 'oidc-client'],
+            external: ['vue', "ant-design-vue", "ant-design-vue/dist/antd.css", 'axios'],
             output: {
                 exports: 'auto',
                 // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
@@ -49,7 +49,6 @@ export default defineConfig({
                     'ant-design-vue': 'antd',
                     'ant-design-vue/dist/antd.css': 'antd',
                     axios: 'axios',
-                    'oidc-client': 'Oidc'
                 },
                 entryFileNames: 'index.js',
                 format: 'umd',
