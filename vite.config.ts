@@ -53,7 +53,7 @@ export default defineConfig({
                 },
                 entryFileNames: 'index.js',
                 format: 'umd',
-                name: 'EASI-Utils',
+                name: 'easiIamSdkJs',
             }
         }
     }
