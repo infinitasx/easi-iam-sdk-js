@@ -5,7 +5,7 @@
 - dist 最终打包后的供第三方使用的包； 使用easiIamSdkJs.umd.min.js、easiIamSdkJs.css
 - packages 具体的sdk代码
     - 入口 index.ts
-  
+
 ## 工具依赖
 - vue@3
 - ant-design-vue@2
@@ -115,28 +115,28 @@ css.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/${getIamSdkVersion}/eas
 
 ### 使用api说明
 - iam.getOidcClientInstance()
-  - 获取oidc-client-js 原本的实例对象（https://github.com/IdentityModel/oidc-client-js/wiki）
-- iam.clearLocalStorageDataExcludeOidc() 
-  - 清除除了oidc认证的key之外的东西
+    - 获取oidc-client-js 原本的实例对象（https://github.com/IdentityModel/oidc-client-js/wiki）
+- iam.clearLocalStorageDataExcludeOidc()
+    - 清除除了oidc认证的key之外的东西
 - iam.clearOidcLocalStorageData()
-  - 清除oidc认证的key的东西
+    - 清除oidc认证的key的东西
 - iam.getAuthInfoSync()
-  - 获取用户认证信息
+    - 获取用户认证信息
 - iam.getAuthInfo()
-  - 获取用户认证信息，返回Promise对象
+    - 获取用户认证信息，返回Promise对象
 - iam.getUserInfo()
-  - 获取用户信息，返回Promise对象
+    - 获取用户信息，返回Promise对象
 - iam.getPermissionsData({ applicationId: string, scopeId?: string | number | null })
-  - applicationId 系统id
-  - scopeId 城市/范围id  
-  - 获取用户权限点信息，返回Promise对象
+    - applicationId 系统id
+    - scopeId 城市/范围id
+    - 获取用户权限点信息，返回Promise对象
 - iam.signIn()
-  - 登录
+    - 登录
 - iam.signOut()
-  - 登出
+    - 登出
 - iam.getAuthorization()
-  - 获取token值
+    - 获取token值
 - iam.openExpiredModal()
-  - 开启过期对话框
+    - 开启过期对话框
 - iam.closeExpiredModal()
-  - 关闭过期对话框
+    - 关闭过期对话框
