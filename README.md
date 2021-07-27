@@ -20,7 +20,7 @@ yarn run build
 ## 使用说明
 ### 安装依赖
 ```text
-yarn add https://github.com/infinitasx/easi-iam-sdk-js.git
+yarn add https://github.com/infinitasx/easi-iam-sdk-js.git#master
 ```
 ### ts声明
 ```ts
