@@ -1,10 +1,6 @@
 import {UserManager, User} from 'oidc-client'
 
-interface ILangText {
-  refreshToken: string; // 刷新token失败的提示
-  sessionExpiredTitle: string; // 会话过期提示标题
-  sessionExpired: string; // 会话过期内容
-}
+export type ILang = 'cn' | 'en' | 'ja'; // 语言标识
 
 export interface Params {
     client_id: {
@@ -18,15 +14,12 @@ export interface Params {
     env: 'production' | 'testing' | 'development';
     needIntercept?: boolean; // 是否需要拦截
     routers?: any[]; // 定义路由数组
-    lange: string; // 语言标识
-    langTexts?: {
-      [lang:string]: ILangText;
-    }
+    lange: ILang
 }
 
 export interface ResultType {
     getOidcClientInstance: () => UserManager;
-    setLang: (lang: string) => void;
+    setLang: (lang: ILang) => void;
     routerGuard: () => Promise<boolean>;
     clearLocalStorageDataExcludeOidc: () => void;
     clearOidcLocalStorageData: () => void;
