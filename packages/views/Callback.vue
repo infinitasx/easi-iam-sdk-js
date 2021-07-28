@@ -4,8 +4,8 @@
 
 <script lang="ts">
 import Oidc from 'oidc-client'
-import { defineComponent } from 'vue'
-import { message } from 'ant-design-vue'
+import {defineComponent} from 'vue'
+import {message} from 'ant-design-vue'
 import CallbackLoading from '../components/callbackLoading.vue'
 
 /**
@@ -23,7 +23,7 @@ export default defineComponent({
       type: String
     }
   },
-  setup (props) {
+  setup(props) {
     const mgr = new Oidc.UserManager({
       userStore: new (Oidc as any).WebStorageStateStore(),
       loadUserInfo: true,
@@ -38,7 +38,7 @@ export default defineComponent({
         window.location.href = props.homePageUrl || '/'
       })
       .catch(() => {
-        message.error('获取token失败！')
+        message.error('get token failed！')
       })
   }
 })

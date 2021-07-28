@@ -1,7 +1,2 @@
-import IamClient from './utils/easiOidcClient'
-import CallbackPage from './views/Callback.vue'
-
-export default {
-  IamClient,
-  CallbackPage
-}
+export {default as IamClient} from './utils/easiOidcClient'
+export {default as CallbackPage} from './views/Callback.vue'

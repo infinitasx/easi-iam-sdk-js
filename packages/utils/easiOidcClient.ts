@@ -1,14 +1,16 @@
 import Oidc from 'oidc-client'
-import { Modal, message } from 'ant-design-vue'
-import { Params, ResultType } from '../type/settings'
+import {Modal, message} from 'ant-design-vue'
+import {Params, ResultType} from '../type/settings'
+import langTexts from '../lang/index'
+import { ILang } from '../type/settings'
 
-import { PRODUCTION_URL, TESTING_URL, DEVELOPMENT_URL } from '../constant'
+import {PRODUCTION_URL, TESTING_URL, DEVELOPMENT_URL} from '../constant'
 
-import { getPermissions, getUserInfo } from '../api/common'
+import {getPermissions, getUserInfo} from '../api/common'
 
 export default function (params: Params): ResultType {
   Oidc.Log.logger = console
-  Oidc.Log.level = params.env === 'production' ? Oidc.Log.NONE : Oidc.Log.INFO
+  Oidc.Log.level = params.env === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE
 
   const client_id = params.client_id[params.env]
   const authority = params.env === 'production' ? PRODUCTION_URL : params.env === 'testing' ? TESTING_URL : DEVELOPMENT_URL
@@ -20,7 +22,7 @@ export default function (params: Params): ResultType {
 
   // oidc-client 原本的实例对象
   const _oidcClient = new Oidc.UserManager({
-    userStore: new (Oidc as any).WebStorageStateStore({ store: window.localStorage }), // 只能使用
+    userStore: new (Oidc as any).WebStorageStateStore({store: window.localStorage}), // 只能使用
     authority: authority,
     client_id: client_id,
     redirect_uri: params.callbackUrl,
@@ -44,7 +46,7 @@ export default function (params: Params): ResultType {
       })
       .catch(() => {
         setTimeout(() => {
-          message.error('自动更新token失败')
+          message.error(langTexts[params.lange]?.refreshToken)
         }, 2000)
       })
   })
@@ -55,9 +57,10 @@ export default function (params: Params): ResultType {
       // 避免多次弹出过期提示框
       _show_expired_modal = false
       Modal.error({
-        title: '会话到期',
-        content: '会话已到期，请重新登录！',
-        onOk () {
+        title: langTexts[params.lange]?.sessionExpiredTitle,
+        content: langTexts?.[params.lange]?.sessionExpired,
+        okText: langTexts?.[params.lange]?.sessionExpired,
+        onOk() {
           _oidcClient
             .signoutRedirect()
             .then(function (resp: any) {
@@ -72,25 +75,31 @@ export default function (params: Params): ResultType {
   })
 
   _oidcClient.events.addSilentRenewError(function () {
-    message.error('自动更新token失败')
+    message.error(langTexts?.[params.lange]?.refreshToken)
   });
 
-  (async function () {
-    try {
-      auth_info = await _oidcClient.getUser()
-    } catch (e) {
-      auth_info = null
-    }
-  }())
+
+    (async function () {
+      try {
+        auth_info = await _oidcClient.getUser()
+      } catch (e) {
+        auth_info = null
+      }
+    }())
 
   return {
     // 获取oidc-client-js 的 原生实例对象
-    getOidcClientInstance () {
+    getOidcClientInstance() {
       return _oidcClient
     },
 
+    // 更新lang
+    setLang(lang: ILang){
+      params.lange = lang;
+    },
+
     // vue-router 中的路由守卫
-    async routerGuard () {
+    async routerGuard() {
       // 内存变量中，不存在认证信息
       if (!this.getAuthInfoSync()) {
         // 获取一次storage中的
@@ -122,7 +131,7 @@ export default function (params: Params): ResultType {
     },
 
     // 清除localStorage 排除oidc 的信息的
-    clearLocalStorageDataExcludeOidc () {
+    clearLocalStorageDataExcludeOidc() {
       const list = []
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i)
@@ -134,17 +143,17 @@ export default function (params: Params): ResultType {
     },
 
     // 清除oidc 的localstorage信息
-    clearOidcLocalStorageData () {
+    clearOidcLocalStorageData() {
       localStorage.removeItem(`oidc.user:${authority}:${client_id}`)
     },
 
     // 获取认证信息
-    getAuthInfoSync () {
+    getAuthInfoSync() {
       return auth_info
     },
 
     // Get the user who is logged in
-    getAuthInfo () {
+    getAuthInfo() {
       return new Promise((resolve, reject) => {
         _oidcClient
           .getUser()
@@ -163,7 +172,7 @@ export default function (params: Params): ResultType {
     },
 
     // 获取用户信息
-    getUserInfo () {
+    getUserInfo() {
       return getUserInfo({
         baseUrl: authority,
         token: this.getAuthorization()
@@ -176,12 +185,14 @@ export default function (params: Params): ResultType {
     },
 
     // 获取用户权限信息
-    getPermissionsData (params: { applicationId: string, scopeId?: string | number | null }) {
+    getPermissionsData(p: {
+      scopeId?: string | number | null;
+    }) {
       return getPermissions({
         baseUrl: authority,
         token: this.getAuthorization(),
         application_id: params.applicationId,
-        scope_id: params.scopeId
+        scope_id: p.scopeId
       }).catch((e: any) => {
         if (e.code === 401 || e.code === 403) {
           this.clearOidcLocalStorageData()
@@ -191,7 +202,7 @@ export default function (params: Params): ResultType {
     },
 
     // Check if there is any user logged in
-    getSignedIn () {
+    getSignedIn() {
       return new Promise((resolve, reject) => {
         _oidcClient
           .getUser()
@@ -210,14 +221,17 @@ export default function (params: Params): ResultType {
     },
 
     // Redirect of the current window to the authorization endpoint.
-    signIn () {
+    signIn() {
+      if (params.env === 'development' && params.needIntercept === false) {
+        return;
+      }
       _oidcClient.signinRedirect().catch(function (err: any) {
         console.log(err)
       })
     },
 
     // Redirect of the current window to the end session endpoint
-    signOut () {
+    signOut() {
       this.closeExpiredModal()
       _oidcClient
         .signoutRedirect()
@@ -230,7 +244,7 @@ export default function (params: Params): ResultType {
     },
 
     // Get the token id
-    getIdToken () {
+    getIdToken() {
       return new Promise((resolve, reject) => {
         _oidcClient
           .getUser()
@@ -248,17 +262,17 @@ export default function (params: Params): ResultType {
     },
 
     // Get the access token of the logged in user
-    getAuthorization () {
+    getAuthorization() {
       return auth_info ? `Bearer ${auth_info.access_token}` : ''
     },
 
     // 开启过期提醒对话框
-    openExpiredModal () {
+    openExpiredModal() {
       _show_expired_modal = true
     },
 
     // 关闭过期提醒对话框
-    closeExpiredModal () {
+    closeExpiredModal() {
       _show_expired_modal = false
     }
   }
