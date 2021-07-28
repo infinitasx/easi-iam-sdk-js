@@ -8,7 +8,10 @@ export interface Params {
     },
     homePageUrl: string;// 登录成功后跳转的主页
     callbackUrl: string;// code换token页面
+    applicationId: string;// 应用的id
     env: 'production' | 'testing' | 'development';
+    needIntercept?: boolean; // 是否需要拦截
+    routers?: any[]; // 定义路由数组
 }
 
 export interface ResultType {

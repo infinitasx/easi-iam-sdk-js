@@ -4,8 +4,8 @@
 
 <script lang="ts">
 import Oidc from 'oidc-client'
-import { defineComponent } from 'vue'
-import { message } from 'ant-design-vue'
+import {defineComponent} from 'vue'
+import {message} from 'ant-design-vue'
 import CallbackLoading from '../components/callbackLoading.vue'
 
 /**
@@ -23,7 +23,16 @@ export default defineComponent({
       type: String
     }
   },
-  setup (props) {
+  beforeRouteEnter(to: any, from: any, next: any) {
+    if (to.query.code) {
+      return next();
+    } else {
+      return next({
+        path: '/',
+      });
+    }
+  },
+  setup(props) {
     const mgr = new Oidc.UserManager({
       userStore: new (Oidc as any).WebStorageStateStore(),
       loadUserInfo: true,

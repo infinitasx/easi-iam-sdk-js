@@ -91,6 +91,10 @@ export default function (params: Params): ResultType {
 
     // vue-router 中的路由守卫
     async routerGuard () {
+      // 本地开发环境可以不需要校验路由
+      if(params.env === 'development' && params.needIntercept){
+        return true;
+      }
       // 内存变量中，不存在认证信息
       if (!this.getAuthInfoSync()) {
         // 获取一次storage中的
@@ -176,12 +180,14 @@ export default function (params: Params): ResultType {
     },
 
     // 获取用户权限信息
-    getPermissionsData (params: { applicationId: string, scopeId?: string | number | null }) {
+    getPermissionsData ( scopeId?: string | number | null ) {
       return getPermissions({
         baseUrl: authority,
         token: this.getAuthorization(),
         application_id: params.applicationId,
-        scope_id: params.scopeId
+        scope_id: scopeId
+      }).then(res=>{
+
       }).catch((e: any) => {
         if (e.code === 401 || e.code === 403) {
           this.clearOidcLocalStorageData()

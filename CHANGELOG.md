@@ -7,7 +7,8 @@
 ### Changed
 * vite打包
 * 去掉独立css
-* 包内引入oidc-client
+* 包内引入oidc-client依赖
+* 添加本地开发不拦截校验功能
 
 ## [0.0.4] - 2021-07-26
 ### Changed
