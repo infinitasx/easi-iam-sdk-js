@@ -89,6 +89,11 @@ export default function (params: Params): ResultType {
       return _oidcClient
     },
 
+    // 更新lang
+    setLang(lang: string){
+      params.lange = lang;
+    },
+
     // vue-router 中的路由守卫
     async routerGuard() {
       // 本地开发环境可以不需要校验路由
