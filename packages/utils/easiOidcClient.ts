@@ -200,15 +200,14 @@ export default function (params: Params): ResultType {
       }).then((res: any) => {
         let {tree,permissions} = res;
         let _routes: any[] = [];
-        p.routes.forEach(item => {
-          if (permissions.include(item)) {
-            _routes.push(p.routes[item]);
+        for(let key in p.routes){
+          if(permissions.includes(key)){
+            _routes.push(p.routes[key]);
           }
-        })
+        }
         _routes.forEach(item => {
           p.vueRouter.addRoute(item);
         })
-        console.log(_routes)
         return {tree,permissions};
       }).catch((e: any) => {
         if (e.code === 401 || e.code === 403) {
