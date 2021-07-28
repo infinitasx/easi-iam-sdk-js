@@ -8,8 +8,8 @@
     "easi-auto-tag": "easi-auto-tag",
     "easi-assets-deploy": "easi-assets-deploy"
   },
-  "main": "/dist/index.js",
-  "typings": "/dist/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "dependencies": {
     "ant-design-vue": "^2.2.2",
     "axios": "^0.21.1",

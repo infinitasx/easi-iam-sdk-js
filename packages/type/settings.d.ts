@@ -1,5 +1,11 @@
 import {UserManager, User} from 'oidc-client'
 
+interface ILangText {
+  refreshToken: string; // 刷新token失败的提示
+  sessionExpiredTitle: string; // 会话过期提示标题
+  sessionExpired: string; // 会话过期内容
+}
+
 export interface Params {
     client_id: {
         production: string;
@@ -12,6 +18,10 @@ export interface Params {
     env: 'production' | 'testing' | 'development';
     needIntercept?: boolean; // 是否需要拦截
     routers?: any[]; // 定义路由数组
+    lange: string; // 语言标识
+    langTexts?: {
+      [lang:string]: ILangText;
+    }
 }
 
 export interface ResultType {
