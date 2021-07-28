@@ -2,7 +2,7 @@ import Oidc from 'oidc-client'
 import {Modal, message} from 'ant-design-vue'
 import {Params, ResultType} from '../type/settings'
 import langTexts from '../lang/index'
-import { ILang } from '../type/settings.d'
+import { ILang } from '../type/settings'
 
 import {PRODUCTION_URL, TESTING_URL, DEVELOPMENT_URL} from '../constant'
 
@@ -46,7 +46,7 @@ export default function (params: Params): ResultType {
       })
       .catch(() => {
         setTimeout(() => {
-          message.error(langTexts[params.lange]?.refreshToken || '自动更新token失败')
+          message.error(langTexts[params.lange]?.refreshToken)
         }, 2000)
       })
   })
@@ -57,8 +57,9 @@ export default function (params: Params): ResultType {
       // 避免多次弹出过期提示框
       _show_expired_modal = false
       Modal.error({
-        title: langTexts[params.lange]?.sessionExpiredTitle || '会话到期',
-        content: langTexts?.[params.lange]?.sessionExpired || '会话已到期，请重新登录！',
+        title: langTexts[params.lange]?.sessionExpiredTitle,
+        content: langTexts?.[params.lange]?.sessionExpired,
+        okText: langTexts?.[params.lange]?.sessionExpired,
         onOk() {
           _oidcClient
             .signoutRedirect()
@@ -74,7 +75,7 @@ export default function (params: Params): ResultType {
   })
 
   _oidcClient.events.addSilentRenewError(function () {
-    message.error(langTexts?.[params.lange]?.refreshToken || '自动更新token失败')
+    message.error(langTexts?.[params.lange]?.refreshToken)
   });
 
   (async function () {
