@@ -13,7 +13,6 @@ export interface Params {
     applicationId: string;// 应用的id
     env: 'production' | 'testing' | 'development';
     needIntercept?: boolean; // 是否需要拦截
-    routers?: any[]; // 定义路由数组
     lange: ILang
 }
 
