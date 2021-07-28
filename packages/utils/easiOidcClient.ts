@@ -198,7 +198,7 @@ export default function (params: Params): ResultType {
         application_id: params.applicationId,
         scope_id: p.scopeId
       }).then((res: any) => {
-        let {permissions} = res;
+        let {tree,permissions} = res;
         let _routes: any[] = [];
         p.routes.forEach(item => {
           if (permissions.include(item)) {
@@ -208,7 +208,8 @@ export default function (params: Params): ResultType {
         _routes.forEach(item => {
           p.vueRouter.addRoute(item);
         })
-        return res;
+        console.log(_routes)
+        return {tree,permissions};
       }).catch((e: any) => {
         if (e.code === 401 || e.code === 403) {
           this.clearOidcLocalStorageData()
