@@ -78,13 +78,14 @@ export default function (params: Params): ResultType {
     message.error(langTexts?.[params.lange]?.refreshToken)
   });
 
-  (async function () {
-    try {
-      auth_info = await _oidcClient.getUser()
-    } catch (e) {
-      auth_info = null
-    }
-  }())
+
+    (async function () {
+      try {
+        auth_info = await _oidcClient.getUser()
+      } catch (e) {
+        auth_info = null
+      }
+    }())
 
   return {
     // 获取oidc-client-js 的 原生实例对象
@@ -99,10 +100,6 @@ export default function (params: Params): ResultType {
 
     // vue-router 中的路由守卫
     async routerGuard() {
-      // 本地开发环境可以不需要校验路由
-      if (params.env === 'development' && params.needIntercept) {
-        return true;
-      }
       // 内存变量中，不存在认证信息
       if (!this.getAuthInfoSync()) {
         // 获取一次storage中的
@@ -190,27 +187,12 @@ export default function (params: Params): ResultType {
     // 获取用户权限信息
     getPermissionsData(p: {
       scopeId?: string | number | null;
-      routes: any[];
-      parentRouteName: string;
-      vueRouter: any;
     }) {
       return getPermissions({
         baseUrl: authority,
         token: this.getAuthorization(),
         application_id: params.applicationId,
         scope_id: p.scopeId
-      }).then((res: any) => {
-        let {tree,permissions} = res;
-        let _routes: any[] = [];
-        for(let key in p.routes){
-          if(permissions.includes(key)){
-            _routes.push(p.routes[key]);
-          }
-        }
-        _routes.forEach(item => {
-          p.parentRouteName ? p.vueRouter.addRoute(p.parentRouteName,item): p.vueRouter.addRoute(item)
-        })
-        return {tree,permissions};
       }).catch((e: any) => {
         if (e.code === 401 || e.code === 403) {
           this.clearOidcLocalStorageData()
@@ -240,6 +222,9 @@ export default function (params: Params): ResultType {
 
     // Redirect of the current window to the authorization endpoint.
     signIn() {
+      if (params.env === 'development' && params.needIntercept === false) {
+        return;
+      }
       _oidcClient.signinRedirect().catch(function (err: any) {
         console.log(err)
       })

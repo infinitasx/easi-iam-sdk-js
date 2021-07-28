@@ -23,15 +23,6 @@ export default defineComponent({
       type: String
     }
   },
-  beforeRouteEnter(to: any, from: any, next: any) {
-    if (to.query.code) {
-      return next();
-    } else {
-      return next({
-        path: '/',
-      });
-    }
-  },
   setup(props) {
     const mgr = new Oidc.UserManager({
       userStore: new (Oidc as any).WebStorageStateStore(),
@@ -47,7 +38,7 @@ export default defineComponent({
         window.location.href = props.homePageUrl || '/'
       })
       .catch(() => {
-        message.error('获取token失败！')
+        message.error('get token failed！')
       })
   }
 })

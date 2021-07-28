@@ -2,7 +2,7 @@
 > 对接iam的前端sdk代码库
 
 ## 目录说明
-- dist 最终打包后的供第三方使用的包； 使用easiIamSdkJs.umd.min.js、easiIamSdkJs.css
+- dist 最终打包后的供第三方使用的包； 使用index.js
 - packages 具体的sdk代码
     - 入口 index.ts
 
@@ -20,21 +20,14 @@ yarn run build
 ## 使用说明
 ### 安装依赖
 ```text
-yarn add https://github.com/infinitasx/easi-iam-sdk-js.git
-```
-### ts声明
-```ts
-// easi-iam-sdk.d.ts
-declare module 'easi-iam-sdk-js';
+yarn add https://github.com/infinitasx/easi-iam-sdk-js.git#master
 ```
 ### 引入
 ```ts
-// main.ts 引入css（CallbackPage组件的一些css）
-import 'easi-iam-sdk-js/dist/easiIamSdkJs.css';
 
 // iamSdkUtils.ts
-import IamSdk from 'easi-iam-sdk-js';
-const { IamClient, CallbackPage } = IamSdk;
+import { IamClient, CallbackPage } from 'easi-iam-sdk-js';
+
 // code 换 token的相对地址
 const redirect_uri = '/iam/callback';
 // index 页面地址
@@ -46,9 +39,11 @@ export const iam = IamClient({
     testing: '******',
     development: '*******',
   },
+  applicationId: 'iam',
+  lang: 'cn', // 'cn' | 'en' | 'ja'
   homePageUrl: window.location.origin + post_logout_redirect_uri, // 登录成功后跳转的主页
   callbackUrl: window.location.origin + redirect_uri, // code换token页面
-  env: '', // env: 'production' | 'testing' | 'development'，项目对应的运行环境
+  env: 'testing', // env: 'production' | 'testing' | 'development'，项目对应的运行环境
 });
 
 
@@ -93,24 +88,17 @@ if (!canGo) {
 const externals = {
   vue: 'Vue',
   axios: 'axios',
-  'oidc-client': 'Oidc',
   'ant-design-vue': 'antd',
   'ant-design-vue/dist/antd.css': 'antd',
   // ... 
   'easi-iam-sdk-js': 'easiIamSdkJs',// 《=========
-  'easi-iam-sdk-js/dist/easiIamSdkJs.css': 'easiIamSdkJs',// 《=========
 };
 
 // iam-jssdk 版本
-const getIamSdkVersion = require('easi-iam-sdk-js/package.json').version;
 const scriptCdn = [
     // ...
 ];
-const css = [
-    // ...
-];
-scriptCdn.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/${getIamSdkVersion}/easiIamSdkJs.umd.min.js`)
-css.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/${getIamSdkVersion}/easiIamSdkJs.css`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.4/index.js`);
 ```
 
 ### 使用api说明
@@ -126,10 +114,11 @@ css.push(`${process.env.EASI_ASSETS_CDN}/easi-iam-sdk-js/${getIamSdkVersion}/eas
     - 获取用户认证信息，返回Promise对象
 - iam.getUserInfo()
     - 获取用户信息，返回Promise对象
-- iam.getPermissionsData({ applicationId: string, scopeId?: string | number | null })
-    - applicationId 系统id
+- iam.getPermissionsData({scopeId?: string | number | null })
     - scopeId 城市/范围id
     - 获取用户权限点信息，返回Promise对象
+- iam.setLange(lang: 'cn'|'en'|'ja')  
+    - 设置当前国际化语言
 - iam.signIn()
     - 登录
 - iam.signOut()
