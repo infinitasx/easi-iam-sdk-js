@@ -189,9 +189,10 @@ export default function (params: Params): ResultType {
 
     // 获取用户权限信息
     getPermissionsData(p: {
-      scopeId?: string | number | null,
-      routes: any[],
-      vueRouter: any,
+      scopeId?: string | number | null;
+      routes: any[];
+      parentRouteName: string;
+      vueRouter: any;
     }) {
       return getPermissions({
         baseUrl: authority,
@@ -207,7 +208,7 @@ export default function (params: Params): ResultType {
           }
         }
         _routes.forEach(item => {
-          p.vueRouter.addRoute(item);
+          p.parentRouteName ? p.vueRouter.addRoute(p.parentRouteName,item): p.vueRouter.addRoute(item)
         })
         return {tree,permissions};
       }).catch((e: any) => {
