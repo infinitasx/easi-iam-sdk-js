@@ -13,7 +13,7 @@ export interface Params {
     applicationId: string;// 应用的id
     env: 'production' | 'testing' | 'development';
     needIntercept?: boolean; // 是否需要拦截
-    lange: ILang
+    lang: ILang
 }
 
 export interface ResultType {

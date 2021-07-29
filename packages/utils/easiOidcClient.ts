@@ -15,6 +15,8 @@ export default function (params: Params): ResultType {
   const client_id = params.client_id[params.env]
   const authority = params.env === 'production' ? PRODUCTION_URL : params.env === 'testing' ? TESTING_URL : DEVELOPMENT_URL
 
+  params.lang = params.lang ? params.lang : 'cn';
+
   // 是否展示过期提示框
   let _show_expired_modal = false
   // 认证信息
@@ -46,7 +48,7 @@ export default function (params: Params): ResultType {
       })
       .catch(() => {
         setTimeout(() => {
-          message.error(langTexts[params.lange]?.refreshToken)
+          message.error(langTexts[params.lang]?.refreshToken)
         }, 2000)
       })
   })
@@ -57,9 +59,9 @@ export default function (params: Params): ResultType {
       // 避免多次弹出过期提示框
       _show_expired_modal = false
       Modal.error({
-        title: langTexts[params.lange]?.sessionExpiredTitle,
-        content: langTexts?.[params.lange]?.sessionExpired,
-        okText: langTexts?.[params.lange]?.sessionExpired,
+        title: langTexts[params.lang]?.sessionExpiredTitle,
+        content: langTexts?.[params.lang]?.sessionExpired,
+        okText: langTexts?.[params.lang]?.ok,
         onOk() {
           _oidcClient
             .signoutRedirect()
@@ -75,7 +77,7 @@ export default function (params: Params): ResultType {
   })
 
   _oidcClient.events.addSilentRenewError(function () {
-    message.error(langTexts?.[params.lange]?.refreshToken)
+    message.error(langTexts?.[params.lang]?.refreshToken)
   });
 
 
@@ -95,7 +97,7 @@ export default function (params: Params): ResultType {
 
     // 更新lang
     setLang(lang: ILang){
-      params.lange = lang;
+      params.lang = lang;
     },
 
     // vue-router 中的路由守卫
