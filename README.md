@@ -6,7 +6,8 @@
 - packages 具体的sdk代码
     - 入口 index.ts
 
-## 工具依赖
+## 依赖
+- vite
 - vue@3
 - ant-design-vue@2
 - axios
@@ -42,6 +43,7 @@ export const iam = IamClient({
   lang: 'cn', // 'cn' | 'en' | 'ja'
   homePageUrl: window.location.origin + post_logout_redirect_uri, // 登录成功后跳转的主页
   callbackUrl: window.location.origin + redirect_uri, // code换token页面
+  needIntercept: true, // 可不传， development 环境下，false，不跳转登录界面
   env: 'testing', // env: 'production' | 'testing' | 'development'，项目对应的运行环境
 });
 
@@ -79,7 +81,7 @@ if (!canGo) {
 ```
 
 ### 配置cdn
-> !!! 本工具强依赖于vue@3、axios、ant-design-vue@2、oidc-client.
+> !!! 本工具强依赖于vue@3、axios、ant-design-vue@2
 > 所以在使用时，这四个工具必须引入
 ```js
 // vue.config.js
