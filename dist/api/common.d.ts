@@ -1,7 +1,7 @@
 export declare const getUserInfo: (config: {
     token: string;
     baseUrl: string;
-}) => Promise<void>;
+}) => Promise<any>;
 export declare const getPermissions: (config: {
     token: string;
     baseUrl: string;
