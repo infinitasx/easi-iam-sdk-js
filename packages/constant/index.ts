@@ -10,6 +10,10 @@ export const PRODUCTION_URL = 'https://accounts-admin.easi.com.au'
 // 主页路径地址
 export const HOMEPAGE_PATH = '/dashboard'
 
+// 修改初始密码
+export const UPDATE_INIT_PWD_URL = '/dashboard/modify/init';
+
 // 获取用户信息
 export const GET_USERINFO_URL = '/v1/admin/dashboard'
+
 export const GET_PERMISSION_URL = '/v1/admin/users/menus'

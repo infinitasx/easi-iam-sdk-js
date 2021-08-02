@@ -7,6 +7,8 @@ import Oidc from 'oidc-client'
 import {defineComponent} from 'vue'
 import {message} from 'ant-design-vue'
 import CallbackLoading from '../components/callbackLoading.vue'
+import {getLang} from "../utils/i18n";
+import langText from '../lang'
 
 /**
  * code 换 token的中转页面
@@ -38,7 +40,7 @@ export default defineComponent({
         window.location.href = props.homePageUrl || '/'
       })
       .catch(() => {
-        message.error('get token failed！')
+        message.error(langText[getLang()]?.getTokenFailed)
       })
   }
 })

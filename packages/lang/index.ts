@@ -12,6 +12,7 @@ export default {
     sessionExpiredTitle: '会话到期',
     sessionExpired:  '会话已到期，请重新登录！',
     ok: '确定',
+    getTokenFailed: '获取token失败',
   },
   // 英文
   en: {
@@ -19,6 +20,7 @@ export default {
     sessionExpiredTitle: 'Session Expired',
     sessionExpired:  'The session has expired, please log in again!',
     ok: 'OK',
+    getTokenFailed: 'Get token failed！',
   },
   // 日文
   ja: {
@@ -26,6 +28,7 @@ export default {
     sessionExpiredTitle: 'セッションの有効期限が切れ',
     sessionExpired:  'セッションの有効期限が切れました。もう一度ログインしてください。',
     ok: '確認',
+    getTokenFailed: 'Get token failed！',
   }
 }
 

@@ -8,6 +8,7 @@
 * 新增提供iam首页地址的方法
 ### Changed
 * clearLocalStorageDataExcludeOidc 可以排除传入的key值
+* 添加初次登录密码需要重置的限制
 
 
 ## [0.0.7] - 2021-07-29

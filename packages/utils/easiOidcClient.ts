@@ -3,24 +3,28 @@ import {Modal, message} from 'ant-design-vue'
 import {Params, ResultType} from '../type/settings'
 import langTexts from '../lang/index'
 import { ILang } from '../type/settings'
+import {getLang,setLang} from "./i18n";
+import {getAuthInfo,setAuthInfo} from "./authInfo";
+import {getEnv,setEnv,getAuthority} from "./env";
 
-import {PRODUCTION_URL, TESTING_URL, DEVELOPMENT_URL, HOMEPAGE_PATH} from '../constant'
+import {HOMEPAGE_PATH} from '../constant'
 
 import {getPermissions, getUserInfo} from '../api/common'
 
 export default function (params: Params): ResultType {
+  params.lang && setLang(params.lang);
+  setEnv(params.env);
+
   Oidc.Log.logger = console
-  Oidc.Log.level = params.env === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE
+  Oidc.Log.level = getEnv() === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE
 
-  const client_id = params.client_id[params.env]
-  const authority = params.env === 'production' ? PRODUCTION_URL : params.env === 'testing' ? TESTING_URL : DEVELOPMENT_URL
 
-  params.lang = params.lang ? params.lang : 'cn';
+  const client_id = params.client_id[getEnv()]
+  const authority = getAuthority();
+
 
   // 是否展示过期提示框
   let _show_expired_modal = false
-  // 认证信息
-  let auth_info: any = null
 
   // oidc-client 原本的实例对象
   const _oidcClient = new Oidc.UserManager({
@@ -44,11 +48,11 @@ export default function (params: Params): ResultType {
       .signinSilent()
       .then((user) => {
         // 更新本地的缓存
-        auth_info = user
+        setAuthInfo(user)
       })
       .catch(() => {
         setTimeout(() => {
-          message.error(langTexts[params.lang]?.refreshToken)
+          message.error(langTexts[getLang()]?.refreshToken)
         }, 2000)
       })
   })
@@ -59,9 +63,9 @@ export default function (params: Params): ResultType {
       // 避免多次弹出过期提示框
       _show_expired_modal = false
       Modal.error({
-        title: langTexts[params.lang]?.sessionExpiredTitle,
-        content: langTexts?.[params.lang]?.sessionExpired,
-        okText: langTexts?.[params.lang]?.ok,
+        title: langTexts[getLang()]?.sessionExpiredTitle,
+        content: langTexts?.[getLang()]?.sessionExpired,
+        okText: langTexts?.[getLang()]?.ok,
         onOk() {
           _oidcClient
             .signoutRedirect()
@@ -77,15 +81,16 @@ export default function (params: Params): ResultType {
   })
 
   _oidcClient.events.addSilentRenewError(function () {
-    message.error(langTexts?.[params.lang]?.refreshToken)
+    message.error(langTexts?.[getLang()]?.refreshToken)
   });
 
 
     (async function () {
       try {
-        auth_info = await _oidcClient.getUser()
+        let auth_info = await _oidcClient.getUser()
+        setAuthInfo(auth_info)
       } catch (e) {
-        auth_info = null
+        setAuthInfo(null)
       }
     }())
 
@@ -97,7 +102,7 @@ export default function (params: Params): ResultType {
 
     // 更新lang
     setLang(lang: ILang){
-      params.lang = lang;
+      setLang(lang);
     },
 
     // vue-router 中的路由守卫
@@ -155,7 +160,7 @@ export default function (params: Params): ResultType {
 
     // 获取认证信息
     getAuthInfoSync() {
-      return auth_info
+      return getAuthInfo();
     },
 
     // Get the user who is logged in
@@ -167,7 +172,7 @@ export default function (params: Params): ResultType {
             if (user == null) {
               return resolve(null)
             } else {
-              auth_info = user
+              setAuthInfo(user)
               return resolve(user)
             }
           })
@@ -228,7 +233,7 @@ export default function (params: Params): ResultType {
 
     // Redirect of the current window to the authorization endpoint.
     signIn() {
-      if (params.env === 'development' && params.needIntercept === false) {
+      if (getEnv() === 'development' && params.needIntercept === false) {
         return;
       }
       _oidcClient.signinRedirect().catch(function (err: any) {
@@ -269,6 +274,7 @@ export default function (params: Params): ResultType {
 
     // Get the access token of the logged in user
     getAuthorization() {
+      let auth_info = getAuthInfo();
       return auth_info ? `Bearer ${auth_info.access_token}` : ''
     },
 

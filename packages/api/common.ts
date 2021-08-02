@@ -1,5 +1,6 @@
 import request from '../utils/request'
-import {GET_USERINFO_URL,GET_PERMISSION_URL} from '../constant'
+import {getAuthority} from '../utils/env'
+import {GET_USERINFO_URL,GET_PERMISSION_URL,UPDATE_INIT_PWD_URL} from '../constant'
 
 // 获取用户信息
 export const getUserInfo = (config: {
@@ -10,6 +11,11 @@ export const getUserInfo = (config: {
     url: config.baseUrl + GET_USERINFO_URL,
     headers: {
       Authorization: config.token
+    }
+  }).then((res:any)=>{
+    // 判断用户是否初次登录
+    if(res?.user?.set_password && !window.location.href.includes(UPDATE_INIT_PWD_URL)){
+      window.location.replace(getAuthority() + UPDATE_INIT_PWD_URL)
     }
   })
 }
