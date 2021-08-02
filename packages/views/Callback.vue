@@ -39,8 +39,9 @@ export default defineComponent({
       .then(() => {
         window.location.href = props.homePageUrl || '/'
       })
-      .catch(() => {
-        message.error(langText[getLang()]?.getTokenFailed)
+      .catch((err) => {
+        message.error(langText[getLang()]?.getTokenFailed as string)
+        throw err;
       })
   }
 })

@@ -28,7 +28,7 @@ export default function (params: Params): ResultType {
 
   // oidc-client 原本的实例对象
   const _oidcClient = new Oidc.UserManager({
-    userStore: new (Oidc as any).WebStorageStateStore({store: window.localStorage}), // 只能使用
+    userStore: new (Oidc as any).WebStorageStateStore({store: window.localStorage}),
     authority: authority,
     client_id: client_id,
     redirect_uri: params.callbackUrl,
@@ -52,7 +52,7 @@ export default function (params: Params): ResultType {
       })
       .catch(() => {
         setTimeout(() => {
-          message.error(langTexts[getLang()]?.refreshToken)
+          message.error(langTexts[getLang()]?.refreshToken as string)
         }, 2000)
       })
   })
@@ -81,7 +81,7 @@ export default function (params: Params): ResultType {
   })
 
   _oidcClient.events.addSilentRenewError(function () {
-    message.error(langTexts?.[getLang()]?.refreshToken)
+    message.error(langTexts?.[getLang()]?.refreshToken as string)
   });
 
 
@@ -236,7 +236,8 @@ export default function (params: Params): ResultType {
       if (getEnv() === 'development' && params.needIntercept === false) {
         return;
       }
-      _oidcClient.signinRedirect().catch(function (err: any) {
+      _oidcClient.signinRedirect().then(()=>{
+      }).catch(function (err: any) {
         console.log(err)
       })
     },

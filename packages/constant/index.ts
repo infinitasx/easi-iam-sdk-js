@@ -15,5 +15,5 @@ export const UPDATE_INIT_PWD_URL = '/dashboard/modify/init';
 
 // 获取用户信息
 export const GET_USERINFO_URL = '/v1/admin/dashboard'
-
+// 获取权限信息
 export const GET_PERMISSION_URL = '/v1/admin/users/menus'

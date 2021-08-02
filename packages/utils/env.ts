@@ -1,10 +1,9 @@
 import {DEVELOPMENT_URL, PRODUCTION_URL, TESTING_URL} from "../constant";
+import {env as IEvn} from '../type/settings'
 
 /**
  * 当前sdk运行的环境
  */
-type IEvn = 'development' | 'production' | 'testing';
-
 let _env:IEvn = 'development';
 
 
