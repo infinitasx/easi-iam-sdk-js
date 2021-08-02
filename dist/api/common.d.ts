@@ -1,7 +1,7 @@
 export declare const getUserInfo: (config: {
     token: string;
     baseUrl: string;
-}) => import("axios").AxiosPromise<any>;
+}) => Promise<void>;
 export declare const getPermissions: (config: {
     token: string;
     baseUrl: string;
