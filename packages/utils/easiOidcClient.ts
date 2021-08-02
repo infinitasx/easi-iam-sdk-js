@@ -4,7 +4,7 @@ import {Params, ResultType} from '../type/settings'
 import langTexts from '../lang/index'
 import { ILang } from '../type/settings'
 
-import {PRODUCTION_URL, TESTING_URL, DEVELOPMENT_URL} from '../constant'
+import {PRODUCTION_URL, TESTING_URL, DEVELOPMENT_URL, HOMEPAGE_PATH} from '../constant'
 
 import {getPermissions, getUserInfo} from '../api/common'
 
@@ -133,13 +133,17 @@ export default function (params: Params): ResultType {
     },
 
     // 清除localStorage 排除oidc 的信息的
-    clearLocalStorageDataExcludeOidc() {
+    clearLocalStorageDataExcludeOidc(excludeKey?: string[]) {
       const list = []
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i)
-        if (!(key as string).includes('oidc.user:')) {
-          list.push(key)
+        if(excludeKey?.includes(key as string)){
+          continue;
         }
+        if ((key as string).includes('oidc.user:') ) {
+          continue;
+        }
+        list.push(key)
       }
       list.forEach(key => localStorage.removeItem(key as string))
     },
@@ -266,6 +270,10 @@ export default function (params: Params): ResultType {
     // Get the access token of the logged in user
     getAuthorization() {
       return auth_info ? `Bearer ${auth_info.access_token}` : ''
+    },
+
+    getIamHomeUrl(){
+      return authority + HOMEPAGE_PATH;
     },
 
     // 开启过期提醒对话框

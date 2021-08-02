@@ -125,6 +125,8 @@ scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.7/index.js`);
     - 登出
 - iam.getAuthorization()
     - 获取token值
+- iam.getIamHomeUrl()
+    - 获取iam的主页地址
 - iam.openExpiredModal()
     - 开启过期对话框
 - iam.closeExpiredModal()

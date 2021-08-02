@@ -20,7 +20,7 @@ export interface ResultType {
     getOidcClientInstance: () => UserManager;
     setLang: (lang: ILang) => void;
     routerGuard: () => Promise<boolean>;
-    clearLocalStorageDataExcludeOidc: () => void;
+    clearLocalStorageDataExcludeOidc: (excludeKey?: string[]) => void;
     clearOidcLocalStorageData: () => void;
     getAuthInfoSync: () => User;
     getAuthInfo: () => Promise<any>;
@@ -31,6 +31,7 @@ export interface ResultType {
     signOut: () => void;
     getIdToken: () => Promise<any>;
     getAuthorization: () => string;
+    getIamHomeUrl:()=>string;
     openExpiredModal: () => void;
     closeExpiredModal: () => void;
 }

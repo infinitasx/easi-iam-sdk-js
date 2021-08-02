@@ -1,4 +1,5 @@
 import request from '../utils/request'
+import {GET_USERINFO_URL,GET_PERMISSION_URL} from '../constant'
 
 // 获取用户信息
 export const getUserInfo = (config: {
@@ -6,7 +7,7 @@ export const getUserInfo = (config: {
   baseUrl: string;
 }) => {
   return request({
-    url: config.baseUrl + '/v1/admin/dashboard',
+    url: config.baseUrl + GET_USERINFO_URL,
     headers: {
       Authorization: config.token
     }
@@ -22,8 +23,8 @@ export const getPermissions = (config: {
 }) => {
   return request({
     url: config.baseUrl + (config.scope_id
-      ? `/v1/admin/users/menus?application_id=${config.application_id}&scope_id=${config.scope_id}`
-      : `/v1/admin/users/menus?application_id=${config.application_id}`),
+      ? `${GET_PERMISSION_URL}?application_id=${config.application_id}&scope_id=${config.scope_id}`
+      : `${GET_PERMISSION_URL}?application_id=${config.application_id}`),
     headers: {
       Authorization: config.token
     }
