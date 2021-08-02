@@ -1,10 +1,10 @@
 // 地址
 // 开发环境
-export const DEVELOPMENT_URL = 'https://accounts-admin.melbdelivery.com'
+export const DEVELOPMENT_URL = 'https://iam.melbdelivery.com'
 // 测试环境
-export const TESTING_URL = 'https://accounts-admin.melbdelivery.com'
+export const TESTING_URL = 'https://iam.melbdelivery.com'
 // 生产环境
-export const PRODUCTION_URL = 'https://accounts-admin.easi.com.au'
+export const PRODUCTION_URL = 'https://iam.easi.com.au'
 
 
 // 主页路径地址
