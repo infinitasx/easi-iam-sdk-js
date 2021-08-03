@@ -6,6 +6,7 @@ import {getLang, setLang} from "./i18n";
 import {getAuthInfo, setAuthInfo} from "./authInfo";
 import {getEnv, setEnv, getAuthority} from "./env";
 import {setIsDefaultUI,getIsDefaultUI,getMessage,setMessage,getModal,setModal} from "./UI";
+import {Modal,message} from 'ant-design-vue';
 
 import {HOMEPAGE_PATH} from '../constant'
 
@@ -30,7 +31,6 @@ export default function (params: Params): ResultType {
     setModal(params.showErrorMsg)
   }else{// 使用本地UI
     setIsDefaultUI(true);
-    const {Modal,message} = require('ant-design-vue')
     setModal(Modal);
     setMessage(message);
   }

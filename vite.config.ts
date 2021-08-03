@@ -40,14 +40,14 @@ export default defineConfig({
         },
         cssCodeSplit: true,
         rollupOptions: {
-            external: ['vue', "ant-design-vue", "ant-design-vue/dist/antd.css", 'axios'],
+            external: ['vue',/* "ant-design-vue", "ant-design-vue/dist/antd.css",*/ 'axios'],
             output: {
                 exports: 'auto',
                 // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
                 globals: {
                     vue: 'Vue',
-                    'ant-design-vue': 'antd',
-                    'ant-design-vue/dist/antd.css': 'antd',
+                    // 'ant-design-vue': 'antd',
+                    // 'ant-design-vue/dist/antd.css': 'antd',
                     axios: 'axios',
                 },
                 entryFileNames: 'index.js',
