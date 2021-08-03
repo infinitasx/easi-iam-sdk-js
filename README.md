@@ -40,15 +40,18 @@ export const iam = IamClient({
     development: '*******',
   },
   applicationId: 'iam',
-  lang: 'cn', // 'cn' | 'en' | 'ja'
+  lang: 'zh', // 'zh' | 'en' | 'ja'
   homePageUrl: window.location.origin + post_logout_redirect_uri, // 登录成功后跳转的主页
   callbackUrl: window.location.origin + redirect_uri, // code换token页面
   needIntercept: true, // 可不传， development 环境下，false，不跳转登录界面
   env: 'testing', // env: 'production' | 'testing' | 'development'，项目对应的运行环境
 });
 
+export const CallBack = CallbackPage;
+
 
 // code 换 token的页面，直接配置到路由里面即可
+// import { CallBack } from 'iamSdkUtils.ts'
 //{
 //  path: '/callback',
 //  name: 'Callback',
@@ -57,8 +60,7 @@ export const iam = IamClient({
 // },
 // component: CallBack,
 // meta: { title: '正在登录', icon: '' },
-//},
-export const CallBack = CallbackPage;
+//}
 ```
 
 ### vue-router 路由守卫页面
