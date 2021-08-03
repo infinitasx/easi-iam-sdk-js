@@ -14,11 +14,9 @@
 /**
  *  callback 页面的loading
  */
-import { defineComponent } from 'vue'
-
-export default defineComponent({
+export default {
   name: 'callback-loading'
-})
+}
 </script>
 
 <style scoped lang="scss">

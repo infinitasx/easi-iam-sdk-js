@@ -2,19 +2,19 @@
   <callback-loading/>
 </template>
 
-<script lang="ts">
+<script>
 import Oidc from 'oidc-client'
-import {defineComponent} from 'vue'
-import {message} from 'ant-design-vue'
 import CallbackLoading from '../components/callbackLoading.vue'
 import {getLang} from "../utils/i18n";
 import langText from '../lang'
+import {getIsDefaultUI,getMessage} from "../utils/UI";
 
 /**
  * code 换 token的中转页面
  */
 
-export default defineComponent({
+
+export default {
   name: 'Callback',
   components: {
     CallbackLoading
@@ -25,9 +25,9 @@ export default defineComponent({
       type: String
     }
   },
-  setup(props) {
+  created(){
     const mgr = new Oidc.UserManager({
-      userStore: new (Oidc as any).WebStorageStateStore(),
+      userStore: new Oidc.WebStorageStateStore(),
       loadUserInfo: true,
       filterProtocolClaims: true,
       response_mode: 'query'
@@ -37,12 +37,13 @@ export default defineComponent({
     mgr
       .signinRedirectCallback()
       .then(() => {
-        window.location.href = props.homePageUrl || '/'
+        window.location.href = this.homePageUrl || '/'
       })
       .catch((err) => {
-        message.error(langText[getLang()]?.getTokenFailed as string)
+        getIsDefaultUI() ? getMessage().error(langText[getLang()]?.getTokenFailed)
+          : getMessage()(langText[getLang()]?.getTokenFailed)
         throw err;
       })
   }
-})
+}
 </script>

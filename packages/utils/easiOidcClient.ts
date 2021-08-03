@@ -1,26 +1,42 @@
 import Oidc from 'oidc-client'
-import {Modal, message} from 'ant-design-vue'
 import {Params, ResultType} from '../type/settings'
 import langTexts from '../lang/index'
-import { ILang } from '../type/settings'
-import {getLang,setLang} from "./i18n";
-import {getAuthInfo,setAuthInfo} from "./authInfo";
-import {getEnv,setEnv,getAuthority} from "./env";
+import {ILang} from '../type/settings'
+import {getLang, setLang} from "./i18n";
+import {getAuthInfo, setAuthInfo} from "./authInfo";
+import {getEnv, setEnv, getAuthority} from "./env";
+import {setIsDefaultUI,getIsDefaultUI,getMessage,setMessage,getModal,setModal} from "./UI";
 
 import {HOMEPAGE_PATH} from '../constant'
 
 import {getPermissions, getUserInfo} from '../api/common'
 
 export default function (params: Params): ResultType {
+  // 设置初始化语言
   params.lang && setLang(params.lang);
+  // 设置环境变量
   setEnv(params.env);
 
   Oidc.Log.logger = console
   Oidc.Log.level = getEnv() === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE
 
+  // 不使用本地的UI
+  if (params.useDefaultUI === false) {
+    if(!params.showErrorMsg || !params.showTokenExpiredModal){
+      throw new Error('easiIamSdkJs\'s params showErrorMsg or showTokenExpiredModal is must!')
+    }
+    setIsDefaultUI(false);
+    setModal(params.showTokenExpiredModal)
+    setModal(params.showErrorMsg)
+  }else{// 使用本地UI
+    setIsDefaultUI(true);
+    const {Modal,message} = require('ant-design-vue')
+    setModal(Modal);
+    setMessage(message);
+  }
+
 
   const client_id = params.client_id[getEnv()]
-  const authority = getAuthority();
 
 
   // 是否展示过期提示框
@@ -29,7 +45,7 @@ export default function (params: Params): ResultType {
   // oidc-client 原本的实例对象
   const _oidcClient = new Oidc.UserManager({
     userStore: new (Oidc as any).WebStorageStateStore({store: window.localStorage}),
-    authority: authority,
+    authority: getAuthority(),
     client_id: client_id,
     redirect_uri: params.callbackUrl,
     response_type: 'code',
@@ -52,7 +68,8 @@ export default function (params: Params): ResultType {
       })
       .catch(() => {
         setTimeout(() => {
-          message.error(langTexts[getLang()]?.refreshToken as string)
+          getIsDefaultUI() ? getMessage().error(langTexts[getLang()]?.refreshToken as string) :
+            getMessage()(langTexts[getLang()]?.refreshToken as string)
         }, 2000)
       })
   })
@@ -61,38 +78,45 @@ export default function (params: Params): ResultType {
   _oidcClient.events.addAccessTokenExpired(function () {
     if (_show_expired_modal) {
       // 避免多次弹出过期提示框
-      _show_expired_modal = false
-      Modal.error({
+      _show_expired_modal = false;
+      let callback = ()=>{
+        _oidcClient
+          .signoutRedirect()
+          .then(function (resp: any) {
+            console.log('signed out', resp)
+          })
+          .catch(function (err: any) {
+            console.log(err)
+          })
+      }
+      getIsDefaultUI() ? getModal().error({
         title: langTexts[getLang()]?.sessionExpiredTitle,
         content: langTexts?.[getLang()]?.sessionExpired,
         okText: langTexts?.[getLang()]?.ok,
         onOk() {
-          _oidcClient
-            .signoutRedirect()
-            .then(function (resp: any) {
-              console.log('signed out', resp)
-            })
-            .catch(function (err: any) {
-              console.log(err)
-            })
+          callback();
         }
-      })
+      }) : getModal()({
+          title: langTexts[getLang()]?.sessionExpiredTitle,
+          content: langTexts?.[getLang()]?.sessionExpired,
+          okText: langTexts?.[getLang()]?.ok,
+        },callback)
     }
   })
 
   _oidcClient.events.addSilentRenewError(function () {
-    message.error(langTexts?.[getLang()]?.refreshToken as string)
+    getIsDefaultUI()? getMessage().error(langTexts?.[getLang()]?.refreshToken as string): getMessage()(langTexts?.[getLang()]?.refreshToken as string);
   });
 
 
-    (async function () {
-      try {
-        let auth_info = await _oidcClient.getUser()
-        setAuthInfo(auth_info)
-      } catch (e) {
-        setAuthInfo(null)
-      }
-    }())
+  (async function () {
+    try {
+      let auth_info = await _oidcClient.getUser()
+      setAuthInfo(auth_info)
+    } catch (e) {
+      setAuthInfo(null)
+    }
+  }())
 
   return {
     // 获取oidc-client-js 的 原生实例对象
@@ -101,7 +125,7 @@ export default function (params: Params): ResultType {
     },
 
     // 更新lang
-    setLang(lang: ILang){
+    setLang(lang: ILang) {
       setLang(lang);
     },
 
@@ -142,10 +166,10 @@ export default function (params: Params): ResultType {
       const list = []
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i)
-        if(excludeKey?.includes(key as string)){
+        if (excludeKey?.includes(key as string)) {
           continue;
         }
-        if ((key as string).includes('oidc.user:') ) {
+        if ((key as string).includes('oidc.user:')) {
           continue;
         }
         list.push(key)
@@ -155,7 +179,7 @@ export default function (params: Params): ResultType {
 
     // 清除oidc 的localstorage信息
     clearOidcLocalStorageData() {
-      localStorage.removeItem(`oidc.user:${authority}:${client_id}`)
+      localStorage.removeItem(`oidc.user:${getAuthority()}:${client_id}`)
     },
 
     // 获取认证信息
@@ -185,7 +209,6 @@ export default function (params: Params): ResultType {
     // 获取用户信息
     getUserInfo() {
       return getUserInfo({
-        baseUrl: authority,
         token: this.getAuthorization()
       }).catch((e: any) => {
         if (e.code === 401 || e.code === 403) {
@@ -197,10 +220,9 @@ export default function (params: Params): ResultType {
 
     // 获取用户权限信息
     getPermissionsData(p: {
-      scopeId?: string | number | null;
+      scopeId: string | number;
     }) {
       return getPermissions({
-        baseUrl: authority,
         token: this.getAuthorization(),
         application_id: params.applicationId,
         scope_id: p.scopeId
@@ -236,7 +258,7 @@ export default function (params: Params): ResultType {
       if (getEnv() === 'development' && params.needIntercept === false) {
         return;
       }
-      _oidcClient.signinRedirect().then(()=>{
+      _oidcClient.signinRedirect().then(() => {
       }).catch(function (err: any) {
         console.log(err)
       })
@@ -279,8 +301,8 @@ export default function (params: Params): ResultType {
       return auth_info ? `Bearer ${auth_info.access_token}` : ''
     },
 
-    getIamHomeUrl(){
-      return authority + HOMEPAGE_PATH;
+    getIamHomeUrl() {
+      return getAuthority() + HOMEPAGE_PATH;
     },
 
     // 开启过期提醒对话框

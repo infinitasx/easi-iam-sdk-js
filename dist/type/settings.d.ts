@@ -13,6 +13,13 @@ export interface Params {
     env: env;
     needIntercept?: boolean;
     lang: ILang;
+    useDefaultUI?: boolean;
+    showErrorMsg?: (errorMsg: string) => void;
+    showTokenExpiredModal?: (text: {
+        title: string;
+        content: string;
+        okText: string;
+    }, okCallback: () => void) => void;
 }
 export interface ResultType {
     getOidcClientInstance: () => UserManager;
@@ -24,7 +31,7 @@ export interface ResultType {
     getAuthInfo: () => Promise<any>;
     getUserInfo: () => Promise<any>;
     getPermissionsData: (arg0: {
-        scopeId?: string | number | null;
+        scopeId: string | number;
     }) => Promise<any>;
     getSignedIn: () => Promise<any>;
     signIn: () => void;
