@@ -98,13 +98,13 @@ const externals = {
 const scriptCdn = [
     // ...
 ];
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.7/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.8/index.js`);
 ```
 
 ### 使用api说明
 - iam.getOidcClientInstance()
     - 获取oidc-client-js 原本的实例对象（https://github.com/IdentityModel/oidc-client-js/wiki）
-- iam.clearLocalStorageDataExcludeOidc()
+- iam.clearLocalStorageDataExcludeOidc(excludeKey?: string[])
     - 清除除了oidc认证的key之外的东西
 - iam.clearOidcLocalStorageData()
     - 清除oidc认证的key的东西
