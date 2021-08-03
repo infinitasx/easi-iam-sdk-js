@@ -1,5 +1,5 @@
 declare const _default: {
-    cn: {
+    zh: {
         refreshToken: string;
         sessionExpiredTitle: string;
         sessionExpired: string;

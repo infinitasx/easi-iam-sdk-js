@@ -7,7 +7,7 @@ interface ILangText {
 
 export default {
   // 中文
-  cn: {
+  zh: {
     refreshToken: '自动更新token失败',
     sessionExpiredTitle: '会话到期',
     sessionExpired:  '会话已到期，请重新登录！',

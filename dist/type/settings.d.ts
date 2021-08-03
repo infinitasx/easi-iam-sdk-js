@@ -1,5 +1,5 @@
 import { UserManager, User } from 'oidc-client';
-export declare type ILang = 'cn' | 'en' | 'ja';
+export declare type ILang = 'zh' | 'en' | 'ja';
 export declare type env = 'production' | 'testing' | 'development';
 export interface Params {
     client_id: {

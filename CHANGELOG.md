@@ -3,6 +3,10 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.9] - 2021-08-03
+### Changed
+* 修改国际化中文标识
+
 ## [0.0.8] - 2021-08-02
 ### Added
 * 新增提供iam首页地址的方法

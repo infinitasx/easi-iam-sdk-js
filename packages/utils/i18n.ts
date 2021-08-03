@@ -2,7 +2,7 @@
  * 单独记录国际化标记
  */
 import {ILang} from '../type/settings'
-let _lang:ILang = 'cn';
+let _lang:ILang = 'zh';
 
 export function getLang() : ILang{
   return _lang;

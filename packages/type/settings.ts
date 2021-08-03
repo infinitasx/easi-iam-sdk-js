@@ -1,6 +1,6 @@
 import {UserManager, User} from 'oidc-client'
 
-export type ILang = 'cn' | 'en' | 'ja'; // 语言标识
+export type ILang = 'zh' | 'en' | 'ja'; // 语言标识
 
 export type env = 'production' | 'testing' | 'development';
 
