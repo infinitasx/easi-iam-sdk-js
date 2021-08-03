@@ -117,7 +117,7 @@ scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.8/index.js`);
 - iam.getPermissionsData({scopeId?: string | number | null })
     - scopeId 城市/范围id
     - 获取用户权限点信息，返回Promise对象
-- iam.setLange(lang: 'cn'|'en'|'ja')  
+- iam.setLange(lang: 'zh'|'en'|'ja')  
     - 设置当前国际化语言
 - iam.signIn()
     - 登录
