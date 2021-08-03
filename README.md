@@ -100,7 +100,7 @@ const externals = {
 const scriptCdn = [
     // ...
 ];
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.8/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.9/index.js`);
 ```
 
 ### 使用api说明
