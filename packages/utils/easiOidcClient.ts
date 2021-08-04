@@ -7,6 +7,7 @@ import {getAuthInfo, setAuthInfo} from "./authInfo";
 import {getEnv, setEnv, getAuthority} from "./env";
 import {setIsDefaultUI,getIsDefaultUI,getMessage,setMessage,getModal,setModal} from "./UI";
 import {Modal,message} from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css'
 
 import {HOMEPAGE_PATH} from '../constant'
 
