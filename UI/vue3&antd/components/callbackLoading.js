@@ -1,5 +1,6 @@
+import {h} from 'vue';
+
 export default () => {
-  import {h} from 'vue';
   let style = document.querySelector('style#iamCallbackPageStyle');
   if (!style) {
     style = document.createElement('style');
