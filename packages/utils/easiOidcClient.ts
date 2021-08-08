@@ -5,7 +5,8 @@ import {ILang} from '../type'
 import {getLang, setLang} from "./i18n";
 import {getAuthInfo, setAuthInfo} from "./authInfo";
 import {getEnv, setEnv, getAuthority} from "./env";
-import {getMessage,setMessage,getModal,setModal} from "./UI";
+import {getMessage, setMessage, getModal, setModal, setPage, getPage} from "./UI";
+import codeExchangeToken from "./codeExchangeToken";
 
 import {HOMEPAGE_PATH} from '../constant'
 
@@ -21,12 +22,13 @@ export default function (params: Params): ResultType {
   Oidc.Log.level = getEnv() === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE
 
   // 不使用本地的UI
-  if(!params.UI.showErrorMsg || !params.UI.showTokenExpiredModal){
+  if (!params.UI.showErrorMsg || !params.UI.showTokenExpiredModal) {
     throw new Error('easiIamSdkJs\'s params showErrorMsg or showTokenExpiredModal is must!')
   }
   // 设置UI
   setModal(params.UI.showTokenExpiredModal)
   setMessage(params.UI.showErrorMsg)
+  setPage(params.UI.codeExchangeTokenPage)
 
 
   const client_id = params.client_id[getEnv()]
@@ -71,7 +73,7 @@ export default function (params: Params): ResultType {
     if (_show_expired_modal) {
       // 避免多次弹出过期提示框
       _show_expired_modal = false;
-      let callback = ()=>{
+      let callback = () => {
         _oidcClient
           .signoutRedirect()
           .then(function (resp: any) {
@@ -85,7 +87,7 @@ export default function (params: Params): ResultType {
         title: langTexts[getLang()]?.sessionExpiredTitle,
         content: langTexts?.[getLang()]?.sessionExpired,
         okText: langTexts?.[getLang()]?.ok,
-      },callback)
+      }, callback)
     }
   })
 
@@ -107,6 +109,11 @@ export default function (params: Params): ResultType {
     // 获取oidc-client-js 的 原生实例对象
     getOidcClientInstance() {
       return _oidcClient
+    },
+
+    // 获取code换token 的页面
+    codeExchangeTokenPage(homePageUrl: string) {
+      return codeExchangeToken(getPage(), homePageUrl);
     },
 
     // 更新lang

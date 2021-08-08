@@ -5,6 +5,8 @@
 let _Modal:any = null;
 // 提示框
 let _message:any = null;
+// 中转页面
+let _page:any = null;
 
 export function getModal(){
   return _Modal;
@@ -20,4 +22,12 @@ export function getMessage(){
 
 export function setMessage(message: any){
   _message = message;
+}
+
+export function setPage(page:any){
+  _page = page;
+}
+
+export function getPage(){
+  return _page;
 }

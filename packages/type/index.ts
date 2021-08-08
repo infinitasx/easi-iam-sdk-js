@@ -32,6 +32,7 @@ export interface Params {
 
 export interface ResultType {
   getOidcClientInstance: () => UserManager;
+  codeExchangeTokenPage: (homePageUrl: string) => any;
   setLang: (lang: ILang) => void;
   routerGuard: () => Promise<boolean>;
   clearLocalStorageDataExcludeOidc: (excludeKey?: string[]) => void;
