@@ -1,7 +1,7 @@
 /**
  * 单独记录国际化标记
  */
-import {ILang} from '../type/settings'
+import {ILang} from '../type'
 let _lang:ILang = 'zh';
 
 export function getLang() : ILang{

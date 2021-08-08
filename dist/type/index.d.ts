@@ -1,6 +1,15 @@
 import { UserManager, User } from 'oidc-client';
 export declare type ILang = 'zh' | 'en' | 'ja';
 export declare type env = 'production' | 'testing' | 'development';
+interface IUi {
+    showErrorMsg: (errorMsg: string) => void;
+    showTokenExpiredModal: (text: {
+        title: string;
+        content: string;
+        okText: string;
+    }, okCallback: () => void) => void;
+    codeExchangeTokenPage: (callback: () => void) => any;
+}
 export interface Params {
     client_id: {
         production: string;
@@ -13,13 +22,7 @@ export interface Params {
     env: env;
     needIntercept?: boolean;
     lang: ILang;
-    useDefaultUI?: boolean;
-    showErrorMsg?: (errorMsg: string) => void;
-    showTokenExpiredModal?: (text: {
-        title: string;
-        content: string;
-        okText: string;
-    }, okCallback: () => void) => void;
+    UI: IUi;
 }
 export interface ResultType {
     getOidcClientInstance: () => UserManager;
@@ -42,3 +45,4 @@ export interface ResultType {
     openExpiredModal: () => void;
     closeExpiredModal: () => void;
 }
+export {};

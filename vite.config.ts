@@ -21,7 +21,7 @@ export default defineConfig({
                         declaration: true,
                         declarationMap: false
                     },
-                    exclude: ['examples/utils/iamSdkUtils.ts', 'examples/main.ts']
+                    exclude: ['examples','UI']
                 }
             }),
             enforce: 'pre'
@@ -40,14 +40,11 @@ export default defineConfig({
         },
         cssCodeSplit: true,
         rollupOptions: {
-            external: ['vue',/* "ant-design-vue", "ant-design-vue/dist/antd.css",*/ 'axios'],
+            external: ['axios'],
             output: {
                 exports: 'auto',
                 // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
                 globals: {
-                    vue: 'Vue',
-                    // 'ant-design-vue': 'antd',
-                    // 'ant-design-vue/dist/antd.css': 'antd',
                     axios: 'axios',
                 },
                 entryFileNames: 'index.js',

@@ -1,3 +1,2 @@
-import { Params, ResultType } from '../type/settings';
-import 'ant-design-vue/dist/antd.css';
+import { Params, ResultType } from '../type';
 export default function (params: Params): ResultType;

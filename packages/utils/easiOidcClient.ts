@@ -1,13 +1,11 @@
 import Oidc from 'oidc-client'
-import {Params, ResultType} from '../type/settings'
+import {Params, ResultType} from '../type'
 import langTexts from '../lang/index'
-import {ILang} from '../type/settings'
+import {ILang} from '../type'
 import {getLang, setLang} from "./i18n";
 import {getAuthInfo, setAuthInfo} from "./authInfo";
 import {getEnv, setEnv, getAuthority} from "./env";
-import {setIsDefaultUI,getIsDefaultUI,getMessage,setMessage,getModal,setModal} from "./UI";
-import {Modal,message} from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css'
+import {getMessage,setMessage,getModal,setModal} from "./UI";
 
 import {HOMEPAGE_PATH} from '../constant'
 
@@ -23,18 +21,12 @@ export default function (params: Params): ResultType {
   Oidc.Log.level = getEnv() === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE
 
   // 不使用本地的UI
-  if (params.useDefaultUI === false) {
-    if(!params.showErrorMsg || !params.showTokenExpiredModal){
-      throw new Error('easiIamSdkJs\'s params showErrorMsg or showTokenExpiredModal is must!')
-    }
-    setIsDefaultUI(false);
-    setModal(params.showTokenExpiredModal)
-    setModal(params.showErrorMsg)
-  }else{// 使用本地UI
-    setIsDefaultUI(true);
-    setModal(Modal);
-    setMessage(message);
+  if(!params.UI.showErrorMsg || !params.UI.showTokenExpiredModal){
+    throw new Error('easiIamSdkJs\'s params showErrorMsg or showTokenExpiredModal is must!')
   }
+  // 设置UI
+  setModal(params.UI.showTokenExpiredModal)
+  setMessage(params.UI.showErrorMsg)
 
 
   const client_id = params.client_id[getEnv()]
@@ -69,8 +61,7 @@ export default function (params: Params): ResultType {
       })
       .catch(() => {
         setTimeout(() => {
-          getIsDefaultUI() ? getMessage().error(langTexts[getLang()]?.refreshToken as string) :
-            getMessage()(langTexts[getLang()]?.refreshToken as string)
+          getMessage()(langTexts[getLang()]?.refreshToken as string)
         }, 2000)
       })
   })
@@ -90,23 +81,16 @@ export default function (params: Params): ResultType {
             console.log(err)
           })
       }
-      getIsDefaultUI() ? getModal().error({
+      getModal()({
         title: langTexts[getLang()]?.sessionExpiredTitle,
         content: langTexts?.[getLang()]?.sessionExpired,
         okText: langTexts?.[getLang()]?.ok,
-        onOk() {
-          callback();
-        }
-      }) : getModal()({
-          title: langTexts[getLang()]?.sessionExpiredTitle,
-          content: langTexts?.[getLang()]?.sessionExpired,
-          okText: langTexts?.[getLang()]?.ok,
-        },callback)
+      },callback)
     }
   })
 
   _oidcClient.events.addSilentRenewError(function () {
-    getIsDefaultUI()? getMessage().error(langTexts?.[getLang()]?.refreshToken as string): getMessage()(langTexts?.[getLang()]?.refreshToken as string);
+    getMessage()(langTexts?.[getLang()]?.refreshToken as string);
   });
 
 

@@ -1,5 +1,5 @@
 import {DEVELOPMENT_URL, PRODUCTION_URL, TESTING_URL} from "../constant";
-import {env as IEvn} from '../type/settings'
+import {env as IEvn} from '../type'
 
 /**
  * 当前sdk运行的环境
