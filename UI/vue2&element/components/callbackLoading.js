@@ -1,4 +1,5 @@
 export default {
+  name: 'callback-loading',
   render(createElement) {
     let style = document.querySelector('style#iamCallbackPageStyle');
     if (!style) {
