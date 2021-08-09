@@ -31,7 +31,7 @@ export default {
     }, [
       createElement('g', {
         stroke: 'none',
-        file: 'none',
+        fill: 'none',
       }, [
         createElement('path', {
           stroke: '#979797',

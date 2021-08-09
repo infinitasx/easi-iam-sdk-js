@@ -32,7 +32,7 @@ export default () => {
   }, [
     h('g', {
       stroke: 'none',
-      file: 'none',
+      fill: 'none',
     }, [
       h('path', {
         stroke: '#979797',
