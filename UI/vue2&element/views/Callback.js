@@ -1,15 +1,13 @@
-import {h} from 'vue';
 import CallbackLoading from "../components/callbackLoading";
 
 export default function (callback) {
   return {
-    setup() {
+    created() {
       callback();
-      return {}
     },
-    render() {
-      return h('callback-loading', {}, [
-        CallbackLoading(),
+    render(createElement) {
+      return createElement('callback-loading', {}, [
+        CallbackLoading,
       ]);
     }
   }
