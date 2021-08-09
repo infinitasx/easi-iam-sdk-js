@@ -8,9 +8,7 @@ export default function (callback) {
       return {}
     },
     render() {
-      return h('callback-loading', {}, [
-        CallbackLoading(),
-      ]);
+      return h(CallbackLoading, {}, []);
     }
   }
 }

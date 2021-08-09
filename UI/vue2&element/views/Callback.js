@@ -6,9 +6,7 @@ export default function (callback) {
       callback();
     },
     render(createElement) {
-      return createElement('callback-loading', {}, [
-        CallbackLoading,
-      ]);
+      return createElement(CallbackLoading, {}, []);
     }
   }
 }
