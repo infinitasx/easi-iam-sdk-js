@@ -6,7 +6,8 @@
 ## [0.0.10] - 2021-08-04
 ### Changed
 * 重构，将UI拆分出去
-* 添加vue3和antdv的UI
+* 添加vue3和antdv的UI代码
+* 添加vue2和element的UI代码
 
 ## [0.0.9] - 2021-08-03
 ### Changed
