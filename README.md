@@ -8,8 +8,6 @@
 
 ## 依赖
 - vite
-- vue@3
-- ant-design-vue@2
 - axios
 - oidc-client
 
@@ -26,7 +24,13 @@ yarn add https://github.com/infinitasx/easi-iam-sdk-js.git#master
 ### 引入
 ```ts
 // iamSdkUtils.ts
-import { IamClient, CallbackPage } from 'easi-iam-sdk-js';
+import { IamClient } from 'easi-iam-sdk-js';
+// 文件中提供两种UI模式
+// 1. vue3 antdv 的UI 
+// import UI from 'easi-iam-sdk-js/UI/vue3&antd/index'
+
+// 2. vue2 element 的UI
+import UI from 'easi-iam-sdk-js/UI/vue2&element/index'
 
 // code 换 token的相对地址
 const redirect_uri = '/iam/callback';
@@ -45,27 +49,38 @@ export const iam = IamClient({
   callbackUrl: window.location.origin + redirect_uri, // code换token页面
   needIntercept: true, // 可不传， development 环境下，false，不跳转登录界面
   env: 'testing', // env: 'production' | 'testing' | 'development'，项目对应的运行环境
+  UI,
 });
 
-export const CallBack = CallbackPage;
 
 
 // code 换 token的页面，直接配置到路由里面即可
-// import { CallBack } from 'iamSdkUtils.ts'
-//{
+// import { iam } from 'iamSdkUtils.ts'
+// {
 //  path: '/callback',
 //  name: 'Callback',
-// props: {
-//   homePageUrl: '/iam',
-// },
-// component: CallBack,
-// meta: { title: '正在登录', icon: '' },
-//}
+//  component: iam.codeExchangeTokenPage('/'),
+//  meta: { title: '正在登录', icon: '' },
+// }
 ```
 
 ### vue-router 路由守卫页面
 ```ts
 // 在vue-router的路由守卫beforeEach函数中添加如下:
+// 放开callback
+if (to.name === 'Callback') {
+  if (to.query.code) {
+    next()
+    return
+  } else {
+    // 不允许直接进入callback页面
+    next({
+      name: 'Home' // 系统中首页的地址
+    })
+    return
+  }
+}
+
 // 判断是否已经存在认证信息
 // ...
 let canGo = false;
@@ -83,29 +98,27 @@ if (!canGo) {
 ```
 
 ### 配置cdn
-> !!! 本工具强依赖于vue@3、axios、ant-design-vue@2
-> 所以在使用时，这四个工具必须引入
+> !!! 本工具强依赖于axios
+> 所以在使用时，axios必须引入
 ```js
 // vue.config.js
 
 const externals = {
-  vue: 'Vue',
   axios: 'axios',
-  'ant-design-vue': 'antd',
-  'ant-design-vue/dist/antd.css': 'antd',
-  // ... 
   'easi-iam-sdk-js': 'easiIamSdkJs',// 《=========
 };
 
 const scriptCdn = [
     // ...
 ];
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.9/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.10/index.js`);
 ```
 
 ### 使用api说明
 - iam.getOidcClientInstance()
     - 获取oidc-client-js 原本的实例对象（https://github.com/IdentityModel/oidc-client-js/wiki）
+- iam.codeExchangeTokenPage(homePageUrl: string)
+    - 获取callback组件
 - iam.clearLocalStorageDataExcludeOidc(excludeKey?: string[])
     - 清除除了oidc认证的key之外的东西
 - iam.clearOidcLocalStorageData()

@@ -4,12 +4,9 @@ import {babel} from '@rollup/plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import ts2 from 'rollup-plugin-typescript2';
 
-import vue from '@vitejs/plugin-vue'
-
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
-        vue(),
         commonjs(),
         {
             ...ts2({
