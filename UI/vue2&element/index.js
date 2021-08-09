@@ -7,6 +7,7 @@ export default {
   }),
   showTokenExpiredModal: ({title, content, okText}, callback) => {
     MessageBox.alert(content, title, {
+      type: 'error',
       confirmButtonText: okText,
       callback: () => {
         callback();

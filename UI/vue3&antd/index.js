@@ -4,7 +4,7 @@ import CallbackPage from './views/Callback.js'
 export default {
   showErrorMsg: (msg) => message.error(msg),
   showTokenExpiredModal: ({title, content, okText}, callback) => {
-    Modal({
+    Modal.error({
       title,
       content,
       okText,
