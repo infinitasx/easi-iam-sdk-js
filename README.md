@@ -2,9 +2,12 @@
 > 对接iam的前端sdk代码库
 
 ## 目录说明
-- dist 最终打包后的供第三方使用的包； 使用index.js
+- dist 由packages打出来的的内容，最终供第三方使用的包； 使用index.js
 - packages 具体的sdk代码
     - 入口 index.ts
+- UI  原来的packages中拆分出来的UI，不同技术栈有不同的UI使用
+  - vue2&element 依赖vue2 和 element-ui技术的iam-jssdk的ui （使用说明见下文）
+  - vue3&antd 依赖vue3 和 antdv技术的iam-jssdk的ui （使用说明见下文）
 
 ## 依赖
 - vite
@@ -26,6 +29,7 @@ yarn add https://github.com/infinitasx/easi-iam-sdk-js.git#master
 // iamSdkUtils.ts
 import { IamClient } from 'easi-iam-sdk-js';
 // 文件中提供两种UI模式
+// 注意，如果使用ts时，在 easi-iam-sdk-js.d.ts中声明：declare module 'easi-iam-sdk-js/UI/vue3&antd/index.js';
 // 1. vue3 antdv 的UI 
 // import UI from 'easi-iam-sdk-js/UI/vue3&antd/index'
 
