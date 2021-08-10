@@ -31,10 +31,10 @@ import { IamClient } from 'easi-iam-sdk-js';
 // 文件中提供两种UI模式
 // 注意，如果使用ts时，在 easi-iam-sdk-js.d.ts中声明：declare module 'easi-iam-sdk-js/UI/vue3_antd/index.js';
 // 1. vue3 antdv 的UI 
-// import UI from 'easi-iam-sdk-js/UI/vue3_antd/index'
+// import UI from 'easi-iam-sdk-js/UI/vue3_antd/index.js'
 
 // 2. vue2 element 的UI
-import UI from 'easi-iam-sdk-js/UI/vue2_element/index'
+import UI from 'easi-iam-sdk-js/UI/vue2_element/index.js'
 
 // code 换 token的相对地址
 const redirect_uri = '/iam/callback';
