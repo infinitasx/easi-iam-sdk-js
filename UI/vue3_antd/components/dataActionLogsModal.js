@@ -23,6 +23,9 @@ export default function (params, getDataActionLog) {
       // 开关对话框
       const showChange = () => {
         visible.value = !visible.value;
+        if(!visible.value){
+          queryHandler();
+        }
       };
 
       // 数据查询

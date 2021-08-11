@@ -118,8 +118,11 @@ export default function (params: Params): ResultType {
     },
 
     // 获取日志操作组件
-    dataActionLogComp(params: IDataActionLogCompParams) {
-      return getLog()(params, getDataActionLog);
+    dataActionLogComp(function_type: string) {
+      return getLog()({
+        application_id: params.applicationId,
+        function_type: function_type,
+      }, getDataActionLog);
     },
 
     // 更新lang

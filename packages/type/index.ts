@@ -5,9 +5,7 @@ export type ILang = 'zh' | 'en' | 'ja'; // 语言标识
 export type env = 'production' | 'testing' | 'development';
 
 export interface IDataActionLogCompParams {
-  application_id: string;
   function_type: string;
-  // data_id: string | number;
 }
 
 // 对应的UI
@@ -40,7 +38,7 @@ export interface Params {
 export interface ResultType {
   getOidcClientInstance: () => UserManager;
   codeExchangeTokenPage: (homePageUrl: string) => any;
-  dataActionLogComp: (params: IDataActionLogCompParams) => any;
+  dataActionLogComp: (function_type: string) => any;
   setLang: (lang: ILang) => void;
   routerGuard: () => Promise<boolean>;
   clearLocalStorageDataExcludeOidc: (excludeKey?: string[]) => void;

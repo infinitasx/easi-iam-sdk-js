@@ -2,7 +2,6 @@ import { UserManager, User } from 'oidc-client';
 export declare type ILang = 'zh' | 'en' | 'ja';
 export declare type env = 'production' | 'testing' | 'development';
 export interface IDataActionLogCompParams {
-    application_id: string;
     function_type: string;
 }
 interface IUi {
@@ -32,7 +31,7 @@ export interface Params {
 export interface ResultType {
     getOidcClientInstance: () => UserManager;
     codeExchangeTokenPage: (homePageUrl: string) => any;
-    dataActionLogComp: (params: IDataActionLogCompParams) => any;
+    dataActionLogComp: (function_type: string) => any;
     setLang: (lang: ILang) => void;
     routerGuard: () => Promise<boolean>;
     clearLocalStorageDataExcludeOidc: (excludeKey?: string[]) => void;
