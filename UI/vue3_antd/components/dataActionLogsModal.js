@@ -100,15 +100,18 @@ export default function (params, getDataActionLog) {
               h(Table, {
                 loading: loading.value,
                 dataSource: dataSource.value,
+                pagination: false,
                 columns: [
                   {
                     title: '操作内容',
-                    dataIndex: 'content',
+                    customRender({record}){
+                      return `${record.content}，操作IP：${record.ip}`;
+                    }
                   },
                   {
                     title: '操作时间',
                     width: '200px',
-                    dataIndex: 'created_at',
+                    dataIndex: 'created_at_str',
                   },
                 ],
               }),
