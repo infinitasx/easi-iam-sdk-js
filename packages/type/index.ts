@@ -4,6 +4,12 @@ export type ILang = 'zh' | 'en' | 'ja'; // 语言标识
 
 export type env = 'production' | 'testing' | 'development';
 
+export interface IDataActionLogCompParams {
+  application_id: string;
+  function_type: string;
+  // data_id: string | number;
+}
+
 // 对应的UI
 interface IUi {
   showErrorMsg: (errorMsg: string) => void; // 展示错误信息的方法，接受错误信息
@@ -13,6 +19,7 @@ interface IUi {
     okText: string;
   }, okCallback: () => void) => void;
   codeExchangeTokenPage: (callback: () => void) => any; // code换token的函数
+  dataActionLogComp: (params: IDataActionLogCompParams) => any; // 数据操作日志组件
 }
 
 export interface Params {
@@ -33,6 +40,7 @@ export interface Params {
 export interface ResultType {
   getOidcClientInstance: () => UserManager;
   codeExchangeTokenPage: (homePageUrl: string) => any;
+  dataActionLogComp: (params: IDataActionLogCompParams) => any;
   setLang: (lang: ILang) => void;
   routerGuard: () => Promise<boolean>;
   clearLocalStorageDataExcludeOidc: (excludeKey?: string[]) => void;

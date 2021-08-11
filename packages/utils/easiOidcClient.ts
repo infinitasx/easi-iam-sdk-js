@@ -1,16 +1,16 @@
 import Oidc from 'oidc-client'
-import {Params, ResultType} from '../type'
+import {IDataActionLogCompParams, Params, ResultType} from '../type'
 import langTexts from '../lang/index'
 import {ILang} from '../type'
 import {getLang, setLang} from "./i18n";
 import {getAuthInfo, setAuthInfo} from "./authInfo";
 import {getEnv, setEnv, getAuthority} from "./env";
-import {getMessage, setMessage, getModal, setModal, setPage, getPage} from "./UI";
+import {getMessage, setMessage, getModal, setModal, setPage, getPage, setLog, getLog} from "./UI";
 import codeExchangeToken from "./codeExchangeToken";
 
 import {HOMEPAGE_PATH} from '../constant'
 
-import {getPermissions, getUserInfo} from '../api/common'
+import {getPermissions, getUserInfo, getDataActionLog} from '../api/common'
 
 export default function (params: Params): ResultType {
   // 设置初始化语言
@@ -22,13 +22,14 @@ export default function (params: Params): ResultType {
   Oidc.Log.level = getEnv() === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE
 
   // 不使用本地的UI
-  if (!params.UI.showErrorMsg || !params.UI.showTokenExpiredModal) {
-    throw new Error('easiIamSdkJs\'s params showErrorMsg or showTokenExpiredModal is must!')
+  if (!params.UI.showErrorMsg || !params.UI.showTokenExpiredModal || !params.UI.codeExchangeTokenPage) {
+    throw new Error('参数UI缺少具体内容')
   }
   // 设置UI
   setModal(params.UI.showTokenExpiredModal)
   setMessage(params.UI.showErrorMsg)
   setPage(params.UI.codeExchangeTokenPage)
+  setLog(params.UI.dataActionLogComp)
 
 
   const client_id = params.client_id[getEnv()]
@@ -114,6 +115,11 @@ export default function (params: Params): ResultType {
     // 获取code换token 的页面
     codeExchangeTokenPage(homePageUrl: string) {
       return codeExchangeToken(getPage(), homePageUrl);
+    },
+
+    // 获取日志操作组件
+    dataActionLogComp(params: IDataActionLogCompParams) {
+      return getLog()(params, getDataActionLog);
     },
 
     // 更新lang

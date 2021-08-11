@@ -1,6 +1,6 @@
 import request from '../utils/request'
 import {getAuthority} from '../utils/env'
-import {GET_USERINFO_URL,GET_PERMISSION_URL,UPDATE_INIT_PWD_URL} from '../constant'
+import {GET_USERINFO_URL, GET_PERMISSION_URL, UPDATE_INIT_PWD_URL} from '../constant'
 
 // 获取用户信息
 export const getUserInfo = (config: {
@@ -11,9 +11,9 @@ export const getUserInfo = (config: {
     headers: {
       Authorization: config.token
     }
-  }).then((res:any)=>{
+  }).then((res: any) => {
     // 判断用户是否初次登录
-    if(res?.user?.set_password && !window.location.href.includes(UPDATE_INIT_PWD_URL)){
+    if (res?.user?.set_password && !window.location.href.includes(UPDATE_INIT_PWD_URL)) {
       window.location.replace(getAuthority() + UPDATE_INIT_PWD_URL)
     }
     return res;
@@ -32,6 +32,30 @@ export const getPermissions = (config: {
       : `${GET_PERMISSION_URL}?application_id=${config.application_id}`),
     headers: {
       Authorization: config.token
+    }
+  })
+}
+
+// 查询数据的日志信息
+export const getDataActionLog = (config: {
+  token: string;
+  application_id: string;
+  function_type: string;
+  data_id: string|number;
+  page: number;
+  page_size: number;
+}) => {
+  return request({
+    url: '/v1/admin/logs/timeline',
+    headers: {
+      Authorization: config.token
+    },
+    params: {
+      application_id: config.application_id,
+      function_type: config.function_type,
+      data_id: config.data_id,
+      page: config.page,
+      page_size: config.page_size,
     }
   })
 }

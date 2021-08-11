@@ -7,6 +7,8 @@ let _Modal:any = null;
 let _message:any = null;
 // 中转页面
 let _page:any = null;
+// 日志查询
+let _log:any = null;
 
 export function getModal(){
   return _Modal;
@@ -30,4 +32,12 @@ export function setPage(page:any){
 
 export function getPage(){
   return _page;
+}
+
+export function setLog(log: any){
+  _log = log;
+}
+
+export function getLog(){
+  return _log;
 }

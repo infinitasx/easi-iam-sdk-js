@@ -1,6 +1,10 @@
 import { UserManager, User } from 'oidc-client';
 export declare type ILang = 'zh' | 'en' | 'ja';
 export declare type env = 'production' | 'testing' | 'development';
+export interface IDataActionLogCompParams {
+    application_id: string;
+    function_type: string;
+}
 interface IUi {
     showErrorMsg: (errorMsg: string) => void;
     showTokenExpiredModal: (text: {
@@ -9,6 +13,7 @@ interface IUi {
         okText: string;
     }, okCallback: () => void) => void;
     codeExchangeTokenPage: (callback: () => void) => any;
+    dataActionLogComp: (params: IDataActionLogCompParams) => any;
 }
 export interface Params {
     client_id: {
@@ -27,6 +32,7 @@ export interface Params {
 export interface ResultType {
     getOidcClientInstance: () => UserManager;
     codeExchangeTokenPage: (homePageUrl: string) => any;
+    dataActionLogComp: (params: IDataActionLogCompParams) => any;
     setLang: (lang: ILang) => void;
     routerGuard: () => Promise<boolean>;
     clearLocalStorageDataExcludeOidc: (excludeKey?: string[]) => void;
