@@ -17,13 +17,13 @@ export default function (params, getDataActionLog) {
       const dataSource = ref([]);
       const pagination = ref({
         current: 1,
-        total: 50,
+        total: 0,
         pageSize: 30,
       });
       // 开关对话框
       const showChange = () => {
         visible.value = !visible.value;
-        if(!visible.value){
+        if(visible.value){
           queryHandler();
         }
       };
@@ -32,6 +32,7 @@ export default function (params, getDataActionLog) {
       const queryHandler = () => {
         loading.value = true;
         getDataActionLog({
+          token: params.token,
           application_id: params.application_id,
           function_type: params.function_type,
           page: pagination.value.current - 1,

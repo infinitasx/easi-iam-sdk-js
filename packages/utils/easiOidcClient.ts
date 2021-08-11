@@ -122,6 +122,7 @@ export default function (params: Params): ResultType {
       return getLog()({
         application_id: params.applicationId,
         function_type: function_type,
+        token: this.getAuthorization(),
       }, getDataActionLog);
     },
 
