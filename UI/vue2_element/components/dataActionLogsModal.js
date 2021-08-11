@@ -10,7 +10,7 @@ export default function (params, getDataActionLog) {
     },
     data() {
       return {
-        visible: true,
+        visible: false,
         loading: false,
         // 表格数据
         data: [],
@@ -94,7 +94,14 @@ export default function (params, getDataActionLog) {
                 footer: props => h(Button, {}, '关闭')
               }
             }, [
-              h(Table, {}, [
+              h(Table, {
+                directives: [
+                  {
+                    name: 'loading',
+                    value: this.loading
+                  }
+                ]
+              }, [
                 h(TableColumn, {
                   props: {
                     prop: 'content',
