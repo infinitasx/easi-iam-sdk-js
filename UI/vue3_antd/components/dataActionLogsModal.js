@@ -36,7 +36,7 @@ export default function (params, getDataActionLog) {
           application_id: params.application_id,
           function_type: params.function_type,
           page: pagination.value.current - 1,
-          pageSize: pagination.value.pageSize,
+          page_size: pagination.value.pageSize,
           data_id: props.data_id,
         })
           .then(res => {
