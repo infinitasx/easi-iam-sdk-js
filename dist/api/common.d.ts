@@ -14,3 +14,6 @@ export declare const getDataActionLog: (config: {
     page: number;
     page_size: number;
 }) => import("axios").AxiosPromise<any>;
+export declare const getLogSearchParams: (config: {
+    token: string;
+}) => void;

@@ -59,3 +59,10 @@ export const getDataActionLog = (config: {
     }
   })
 }
+
+// 查询日志查询条件的接口
+export const getLogSearchParams = (config: {
+  token: string;
+})=>{
+
+}

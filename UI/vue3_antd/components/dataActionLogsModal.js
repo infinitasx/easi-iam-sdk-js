@@ -1,5 +1,5 @@
-import { h, defineComponent, ref } from 'vue';
-import { Button, Modal, Table, Pagination } from 'ant-design-vue';
+import {h, defineComponent, ref} from 'vue';
+import {Button, Modal, Table, Pagination,} from 'ant-design-vue';
 
 // 传入的参数： 1、国际化文字，2、查询的回调方法，
 export default function (params, getDataActionLog) {
@@ -11,9 +11,10 @@ export default function (params, getDataActionLog) {
         required: true,
       },
     },
-    setup(props, { slots }) {
+    setup(props, {slots}) {
       const visible = ref(false);
       const loading = ref(false);
+      const searchItems = ref([]);
       const dataSource = ref([]);
       const pagination = ref({
         current: 1,
@@ -23,7 +24,7 @@ export default function (params, getDataActionLog) {
       // 开关对话框
       const showChange = () => {
         visible.value = !visible.value;
-        if(visible.value){
+        if (visible.value) {
           queryHandler();
         }
       };
@@ -69,7 +70,7 @@ export default function (params, getDataActionLog) {
             type: 'link',
             onClick: showChange,
           },
-          { default: () => '操作日志' },
+          {default: () => '操作日志'},
           ),
         visible.value
           ? h(
@@ -93,7 +94,7 @@ export default function (params, getDataActionLog) {
                     showChange();
                   },
                 },
-                { default: () => '关闭' },
+                {default: () => '关闭'},
               ),
             default: () => [
               // 表格数据
@@ -104,9 +105,7 @@ export default function (params, getDataActionLog) {
                 columns: [
                   {
                     title: '操作内容',
-                    customRender({record}){
-                      return `${record.content}，操作IP：${record.ip}`;
-                    }
+                    dataIndex: 'content',
                   },
                   {
                     title: '操作时间',
