@@ -7,7 +7,7 @@ export const getUserInfo = (config: {
   token: string; // 认证信息
 }) => {
   return request({
-    url: GET_USERINFO_URL,
+    url: getAuthority() + GET_USERINFO_URL,
     headers: {
       Authorization: config.token
     }
@@ -27,7 +27,7 @@ export const getPermissions = (config: {
   scope_id: string | number;
 }) => {
   return request({
-    url: config.scope_id
+    url: getAuthority() + config.scope_id
       ? `${GET_PERMISSION_URL}?application_id=${config.application_id}&scope_id=${config.scope_id}`
       : `${GET_PERMISSION_URL}?application_id=${config.application_id}`,
     headers: {

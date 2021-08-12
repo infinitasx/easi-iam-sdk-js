@@ -1,9 +1,7 @@
 import axios from 'axios'
-import {getAuthority} from "./env";
 
 // 创建实例时设置配置的默认值
 const instance = axios.create({
-  baseURL: getAuthority(),
   timeout: 10000
 })
 

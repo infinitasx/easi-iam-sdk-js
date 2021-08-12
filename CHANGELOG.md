@@ -3,6 +3,10 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.11] - 2021-08-12
+### Fixed
+* 修复ajax访问基地址错误
+
 ## [0.0.10] - 2021-08-04
 ### Changed
 * 重构，将UI拆分出去
