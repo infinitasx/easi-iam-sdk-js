@@ -27,9 +27,9 @@ export const getPermissions = (config: {
   scope_id: string | number;
 }) => {
   return request({
-    url: getAuthority() + config.scope_id
+    url: getAuthority() + (config.scope_id
       ? `${GET_PERMISSION_URL}?application_id=${config.application_id}&scope_id=${config.scope_id}`
-      : `${GET_PERMISSION_URL}?application_id=${config.application_id}`,
+      : `${GET_PERMISSION_URL}?application_id=${config.application_id}`),
     headers: {
       Authorization: config.token
     }
