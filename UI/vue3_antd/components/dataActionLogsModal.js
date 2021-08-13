@@ -124,6 +124,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 h(Select, {
                     allowClear: true,
                     value: log_type.value,
+                    placeholder: '请选择日志类型',
                     style: {
                       width: '200px'
                     },
@@ -131,11 +132,11 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                       log_type.value = val;
                     }
                   }, {
-                    placeholder: () => '请选择日志类型',
                     default: () => searchItems.value.map(item => {
                       return h(SelectOption, {
-                        title: item.name,
                         value: item.type_id,
+                      }, {
+                        default: () => item.name,
                       })
                     })
                   }
@@ -157,6 +158,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 loading: loading.value,
                 dataSource: dataSource.value,
                 pagination: false,
+                rowKey: 'id',
                 columns: [
                   {
                     title: '操作内容',
