@@ -137,6 +137,9 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                   })
                 ),
                 h(Button, {
+                  style:{
+                    marginLeft: '10px',
+                  },
                   onClick() {
                     queryHandler();
                   }

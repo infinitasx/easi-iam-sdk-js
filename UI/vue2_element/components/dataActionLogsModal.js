@@ -114,7 +114,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 style: {
                   marginBottom: '10px',
                 }
-            }, [
+              }, [
                 h(Select, {
                   props: {
                     size: 'small',
@@ -139,12 +139,15 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                   })
                 ]),
                 h(Button, {
+                  style: {
+                    marginLeft: '10px',
+                  },
                   props: {
                     size: 'small',
                     type: 'primary',
                   },
                   on: {
-                    click() {
+                    click: () => {
                       this.queryData();
                     }
                   }
