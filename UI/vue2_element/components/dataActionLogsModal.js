@@ -42,7 +42,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
           application_id: params.application_id,
           function_type: params.function_type,
         }).then(res => {
-          this.searchItems = res.types;
+          this.searchItems = res.types || [];
         }).catch(() => {
         });
       },
@@ -110,9 +110,14 @@ export default function (params, getDataActionLog, getLogSearchParams) {
               }
             }, [
               // 内容展示
-              h('header', {}, [
+              /*this.searchItems.length > 0 &&*/ h('header', {
+                style: {
+                  marginBottom: '10px',
+                }
+            }, [
                 h(Select, {
                   props: {
+                    size: 'small',
                     clearable: true,
                     value: this.log_type,
                     valueKey: 'id',
@@ -134,6 +139,10 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                   })
                 ]),
                 h(Button, {
+                  props: {
+                    size: 'small',
+                    type: 'primary',
+                  },
                   on: {
                     click() {
                       this.queryData();
