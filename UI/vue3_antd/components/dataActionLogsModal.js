@@ -42,6 +42,10 @@ export default function (params, getDataActionLog, getLogSearchParams) {
         if (visible.value) {
           querySearchItem();
           queryHandler();
+        } else {
+          pagination.value.current = 1;
+          dataSource.value = [];
+          log_type.value = null;
         }
       };
 
@@ -116,7 +120,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
               ),
             default: () => [
               // 筛选框
-              /*searchItems.value.length > 0 &&*/ h('header', {
+              searchItems.value.length > 0 && h('header', {
                 style: {
                   marginBottom: '10px',
                 }

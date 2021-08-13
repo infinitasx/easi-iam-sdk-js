@@ -110,7 +110,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
               }
             }, [
               // 内容展示
-              /*this.searchItems.length > 0 &&*/ h('header', {
+            this.searchItems.length > 0 && h('header', {
                 style: {
                   marginBottom: '10px',
                 }
