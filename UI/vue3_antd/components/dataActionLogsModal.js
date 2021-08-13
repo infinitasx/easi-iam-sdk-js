@@ -1,5 +1,5 @@
 import {h, defineComponent, ref} from 'vue';
-import {Button, Modal, Table, Pagination,} from 'ant-design-vue';
+import {Button, Modal, Table, Pagination, Select, Option} from 'ant-design-vue';
 
 // 传入的参数： 1、国际化文字，2、查询的回调方法，3、获取查询的回调条件
 export default function (params, getDataActionLog, getLogSearchParams) {
@@ -14,6 +14,8 @@ export default function (params, getDataActionLog, getLogSearchParams) {
     setup(props, {slots}) {
       const visible = ref(false);
       const loading = ref(false);
+      const log_type = ref('');
+      // 筛选选择项
       const searchItems = ref([]);
       const dataSource = ref([]);
       const pagination = ref({
@@ -29,6 +31,19 @@ export default function (params, getDataActionLog, getLogSearchParams) {
         }
       };
 
+      // 筛选项查询
+      const querySearchItem = () => {
+        getLogSearchParams({
+          application_id: params.application_id,
+          type_id: params.function_type,
+        }).then(res => {
+          searchItems.value = res.types;
+        }).catch(() => {
+        });
+      }
+
+      querySearchItem();
+
       // 数据查询
       const queryHandler = () => {
         loading.value = true;
@@ -37,6 +52,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
           application_id: params.application_id,
           function_type: params.function_type,
           page: pagination.value.current - 1,
+          log_type,
           page_size: pagination.value.pageSize,
           data_id: props.data_id,
         })
@@ -97,6 +113,27 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 {default: () => '关闭'},
               ),
             default: () => [
+              // 筛选框
+              searchItems.value?.length > 0 && h('header', {}, [
+                h(Select, {
+                    value: log_type.value,
+                    onChange(val) {
+                      log_type.value = val;
+                    }
+                  }, searchItems.value.map(item => {
+                    return h(Option, {
+                      key: item.id,
+                      title: item.name,
+                      value: item.type_id,
+                    })
+                  })
+                ),
+                h(Button, {
+                  onClick() {
+                    queryHandler();
+                  }
+                }, '查询')
+              ]),
               // 表格数据
               h(Table, {
                 loading: loading.value,

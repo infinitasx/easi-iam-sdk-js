@@ -47,7 +47,7 @@ export const getDataActionLog = (config: {
   page_size: number;
 }) => {
   return request({
-    url: '/v1/admin/logs/timeline',
+    url: getAuthority() + '/v1/admin/logs/timeline',
     headers: {
       Authorization: config.token
     },
@@ -69,7 +69,7 @@ export const getLogSearchParams = (config: {
   type_id: string;
 }) => {
   return request({
-    url: `/v1/admin/logs/timeline-types`,
+    url: getAuthority() + `/v1/admin/logs/timeline-types`,
     headers: {
       Authorization: config.token
     },
