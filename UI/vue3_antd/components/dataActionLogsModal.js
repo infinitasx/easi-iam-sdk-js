@@ -14,7 +14,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
     setup(props, {slots}) {
       const visible = ref(false);
       const loading = ref(false);
-      const log_type = ref('');
+      const log_type = ref(null);
       // 筛选选择项
       const searchItems = ref([]);
       const dataSource = ref([]);
@@ -125,6 +125,9 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                     allowClear: true,
                     value: log_type.value,
                     placeholder: '请选择日志类型',
+                    style: {
+                      width: '200px'
+                    },
                     onChange(val) {
                       log_type.value = val;
                     }
@@ -137,13 +140,16 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                   })
                 ),
                 h(Button, {
-                  style:{
+                  type: 'primary',
+                  style: {
                     marginLeft: '10px',
                   },
                   onClick() {
                     queryHandler();
                   }
-                }, '查询')
+                }, {
+                  default: () => '查询'
+                })
               ]),
               // 表格数据
               h(Table, {
