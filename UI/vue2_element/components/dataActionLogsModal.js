@@ -1,6 +1,7 @@
-import {Button, Dialog, Table, TableColumn, Pagination} from 'element-ui'
+import {Button, Dialog, Table, TableColumn, Pagination, Select, Option} from 'element-ui'
 
-export default function (params, getDataActionLog) {
+// 传入的参数： 、国际化文字，、查询的回调方法，、获取查询的回调条件
+export default function (params, getDataActionLog, getLogSearchParams) {
   return {
     props: {
       data_id: {
@@ -12,8 +13,10 @@ export default function (params, getDataActionLog) {
       return {
         visible: false,
         loading: false,
+        log_type: '',
         // 表格数据
         data: [],
+        searchItem: [],
         pagination: {
           total: 0,
           pageSize: 30,
@@ -24,13 +27,24 @@ export default function (params, getDataActionLog) {
     watch: {
       visible(val) {
         if (val) {
-          this.queryData()
+          this.querySearchItem();
+          this.queryData();
         }
       }
     },
     methods: {
       showChange() {
         this.visible = !this.visible
+      },
+      querySearchItem() {
+        getLogSearchParams({
+          token: params.token,
+          application_id: params.application_id,
+          function_type: params.function_type,
+        }).then(res => {
+          this.searchItems = res.types;
+        }).catch(() => {
+        });
       },
       queryData() {
         this.loading = true
@@ -40,7 +54,8 @@ export default function (params, getDataActionLog) {
           function_type: params.function_type,
           page: this.pagination.currentPage - 1,
           page_size: this.pagination.pageSize,
-          data_id: this.data_id
+          data_id: this.data_id,
+          log_type: this.log_type,
         })
           .then(res => {
             this.pagination.total = res.total
@@ -94,6 +109,39 @@ export default function (params, getDataActionLog) {
                 footer: props => h(Button, {}, '关闭')
               }
             }, [
+              // 内容展示
+              h('header', {}, [
+                h(Select, {
+                  props: {
+                    clearable: true,
+                    value: this.log_type,
+                    valueKey: 'id',
+                    placeholder: '请选择日志类型',
+                  },
+                  on: {
+                    change(val) {
+                      this.log_type = val;
+                    }
+                  }
+                }, [
+                  this.searchItems.map(item => {
+                    return h(Option, {
+                      props: {
+                        label: item.name,
+                        value: item.type_id,
+                      }
+                    })
+                  })
+                ]),
+                h(Button, {
+                  on: {
+                    click() {
+                      this.queryData();
+                    }
+                  }
+                }, '查询')
+              ]),
+              // 表格数据
               h(Table, {
                 directives: [
                   {

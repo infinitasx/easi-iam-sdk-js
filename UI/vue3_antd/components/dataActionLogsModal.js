@@ -1,7 +1,7 @@
 import {h, defineComponent, ref} from 'vue';
 import {Button, Modal, Table, Pagination, Select, SelectOption} from 'ant-design-vue';
 
-// 传入的参数： 1、国际化文字，2、查询的回调方法，3、获取查询的回调条件
+// 传入的参数： 、国际化文字，、查询的回调方法，、获取查询的回调条件
 export default function (params, getDataActionLog, getLogSearchParams) {
   return defineComponent({
     name: 'easi-action-log',
@@ -118,7 +118,9 @@ export default function (params, getDataActionLog, getLogSearchParams) {
               // 筛选框
               searchItems.value.length > 0 && h('header', {}, [
                 h(Select, {
+                    allowClear: true,
                     value: log_type.value,
+                    placeholder: '请选择日志类型',
                     onChange(val) {
                       log_type.value = val;
                     }
@@ -144,7 +146,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 columns: [
                   {
                     title: '操作内容',
-                    dataIndex: 'content',
+                    dataIndex: 'desc',
                   },
                   {
                     title: '操作时间',
