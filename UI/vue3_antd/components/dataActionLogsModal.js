@@ -1,5 +1,5 @@
 import {h, defineComponent, ref} from 'vue';
-import {Button, Modal, Table, Pagination, Select, Option} from 'ant-design-vue';
+import {Button, Modal, Table, Pagination, Select, SelectOption} from 'ant-design-vue';
 
 // 传入的参数： 1、国际化文字，2、查询的回调方法，3、获取查询的回调条件
 export default function (params, getDataActionLog, getLogSearchParams) {
@@ -23,17 +23,11 @@ export default function (params, getDataActionLog, getLogSearchParams) {
         total: 0,
         pageSize: 30,
       });
-      // 开关对话框
-      const showChange = () => {
-        visible.value = !visible.value;
-        if (visible.value) {
-          queryHandler();
-        }
-      };
 
       // 筛选项查询
       const querySearchItem = () => {
         getLogSearchParams({
+          token: params.token,
           application_id: params.application_id,
           function_type: params.function_type,
         }).then(res => {
@@ -42,7 +36,15 @@ export default function (params, getDataActionLog, getLogSearchParams) {
         });
       }
 
-      querySearchItem();
+      // 开关对话框
+      const showChange = () => {
+        visible.value = !visible.value;
+        if (visible.value) {
+          querySearchItem();
+          queryHandler();
+        }
+      };
+
 
       // 数据查询
       const queryHandler = () => {
@@ -121,7 +123,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                       log_type.value = val;
                     }
                   }, searchItems.value.map(item => {
-                    return h(Option, {
+                    return h(SelectOption, {
                       key: item.id,
                       title: item.name,
                       value: item.type_id,
