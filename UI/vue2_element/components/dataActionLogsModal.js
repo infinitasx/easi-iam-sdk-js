@@ -191,12 +191,12 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                     total: this.pagination.total
                   },
                   on: {
-                    sizeChange: (val) => {
+                    "size-change": (val) => {
                       this.pagination.pageSize = val
                       this.pagination.currentPage = 1
                       this.queryData()
                     },
-                    currentChange: (val) => {
+                    "current-change": (val) => {
                       this.pagination.currentPage = val
                       this.queryData()
                     }
