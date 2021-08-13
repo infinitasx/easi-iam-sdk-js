@@ -15,7 +15,6 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
     props: {
       data_id: {
         type: [String, Number],
-        required: true
       }
     },
     data() {

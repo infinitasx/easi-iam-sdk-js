@@ -17,7 +17,6 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
     props: {
       data_id: {
         type: [Number, String],
-        required: true,
       },
     },
     setup(props, {slots}) {
