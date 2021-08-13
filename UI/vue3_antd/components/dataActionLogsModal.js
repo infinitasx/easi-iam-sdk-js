@@ -1,8 +1,8 @@
 import {h, defineComponent, ref} from 'vue';
 import {Button, Modal, Table, Pagination,} from 'ant-design-vue';
 
-// 传入的参数： 1、国际化文字，2、查询的回调方法，
-export default function (params, getDataActionLog) {
+// 传入的参数： 1、国际化文字，2、查询的回调方法，3、获取查询的回调条件
+export default function (params, getDataActionLog, getLogSearchParams) {
   return defineComponent({
     name: 'easi-action-log',
     props: {

@@ -1,5 +1,5 @@
 import Oidc from 'oidc-client'
-import {IDataActionLogCompParams, Params, ResultType} from '../type'
+import {Params, ResultType} from '../type'
 import langTexts from '../lang/index'
 import {ILang} from '../type'
 import {getLang, setLang} from "./i18n";
@@ -10,7 +10,7 @@ import codeExchangeToken from "./codeExchangeToken";
 
 import {HOMEPAGE_PATH} from '../constant'
 
-import {getPermissions, getUserInfo, getDataActionLog} from '../api/common'
+import {getPermissions, getUserInfo, getDataActionLog, getLogSearchParams} from '../api/common'
 
 export default function (params: Params): ResultType {
   // 设置初始化语言
@@ -123,7 +123,7 @@ export default function (params: Params): ResultType {
         application_id: params.applicationId,
         function_type: function_type,
         token: this.getAuthorization(),
-      }, getDataActionLog);
+      }, getDataActionLog, getLogSearchParams);
     },
 
     // 更新lang

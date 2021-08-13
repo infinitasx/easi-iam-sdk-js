@@ -41,7 +41,8 @@ export const getDataActionLog = (config: {
   token: string;
   application_id: string;
   function_type: string;
-  data_id: string|number;
+  data_id: string | number;
+  log_type: string | number;
   page: number;
   page_size: number;
 }) => {
@@ -54,6 +55,7 @@ export const getDataActionLog = (config: {
       application_id: config.application_id,
       function_type: config.function_type,
       data_id: config.data_id,
+      log_type: config.log_type,
       page: config.page,
       page_size: config.page_size,
     }
@@ -63,6 +65,17 @@ export const getDataActionLog = (config: {
 // 查询日志查询条件的接口
 export const getLogSearchParams = (config: {
   token: string;
-})=>{
-
+  application_id: string;
+  type_id: string;
+}) => {
+  return request({
+    url: `/v1/admin/logs/timeline-types`,
+    headers: {
+      Authorization: config.token
+    },
+    params: {
+      application_id: config.application_id,
+      type_id: config.type_id,
+    }
+  })
 }
