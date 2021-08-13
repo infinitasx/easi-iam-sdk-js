@@ -124,20 +124,21 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 h(Select, {
                     allowClear: true,
                     value: log_type.value,
-                    placeholder: '请选择日志类型',
                     style: {
                       width: '200px'
                     },
                     onChange(val) {
                       log_type.value = val;
                     }
-                  }, searchItems.value.map(item => {
-                    return h(SelectOption, {
-                      key: item.id,
-                      title: item.name,
-                      value: item.type_id,
+                  }, {
+                    placeholder: () => '请选择日志类型',
+                    default: () => searchItems.value.map(item => {
+                      return h(SelectOption, {
+                        title: item.name,
+                        value: item.type_id,
+                      })
                     })
-                  })
+                  }
                 ),
                 h(Button, {
                   type: 'primary',
