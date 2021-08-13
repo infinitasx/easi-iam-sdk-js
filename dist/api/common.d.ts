@@ -18,5 +18,5 @@ export declare const getDataActionLog: (config: {
 export declare const getLogSearchParams: (config: {
     token: string;
     application_id: string;
-    type_id: string;
+    function_type: string;
 }) => import("axios").AxiosPromise<any>;

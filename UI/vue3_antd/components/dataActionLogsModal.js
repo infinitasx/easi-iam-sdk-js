@@ -54,7 +54,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
           application_id: params.application_id,
           function_type: params.function_type,
           page: pagination.value.current - 1,
-          log_type,
+          log_type: log_type.value,
           page_size: pagination.value.pageSize,
           data_id: props.data_id,
         })
