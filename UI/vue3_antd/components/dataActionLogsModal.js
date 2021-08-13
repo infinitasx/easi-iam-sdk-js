@@ -35,7 +35,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
       const querySearchItem = () => {
         getLogSearchParams({
           application_id: params.application_id,
-          type_id: params.function_type,
+          function_type: params.function_type,
         }).then(res => {
           searchItems.value = res.types;
         }).catch(() => {
@@ -114,7 +114,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
               ),
             default: () => [
               // 筛选框
-              searchItems.value?.length > 0 && h('header', {}, [
+              searchItems.value.length > 0 && h('header', {}, [
                 h(Select, {
                     value: log_type.value,
                     onChange(val) {

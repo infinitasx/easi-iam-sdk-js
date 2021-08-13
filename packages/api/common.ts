@@ -66,7 +66,7 @@ export const getDataActionLog = (config: {
 export const getLogSearchParams = (config: {
   token: string;
   application_id: string;
-  type_id: string;
+  function_type: string;
 }) => {
   return request({
     url: getAuthority() + `/v1/admin/logs/timeline-types`,
@@ -75,7 +75,7 @@ export const getLogSearchParams = (config: {
     },
     params: {
       application_id: config.application_id,
-      type_id: config.type_id,
+      function_type: config.function_type,
     }
   })
 }
