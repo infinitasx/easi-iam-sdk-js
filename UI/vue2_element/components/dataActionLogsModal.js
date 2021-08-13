@@ -16,7 +16,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
         log_type: '',
         // 表格数据
         data: [],
-        searchItem: [],
+        searchItems: [],
         pagination: {
           total: 0,
           pageSize: 30,
@@ -152,7 +152,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
               }, [
                 h(TableColumn, {
                   props: {
-                    prop: 'content',
+                    prop: 'desc',
                     label: '操作内容'
                   }
                 }),
