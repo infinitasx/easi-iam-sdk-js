@@ -3,6 +3,10 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.13] - 20201-08-13
+### Added
+* 操作日志文字国际化处理
+
 ## [0.0.12] - 20201-08-13
 ### Added
 * 添加数据的操作日志查询功能

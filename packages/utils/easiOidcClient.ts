@@ -123,7 +123,7 @@ export default function (params: Params): ResultType {
         application_id: params.applicationId,
         function_type: function_type,
         token: this.getAuthorization(),
-      }, getDataActionLog, getLogSearchParams);
+      }, getDataActionLog, getLogSearchParams, langTexts[getLang()]?.actionLog);
     },
 
     // 更新lang

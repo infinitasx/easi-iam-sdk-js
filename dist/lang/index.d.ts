@@ -5,6 +5,14 @@ declare const _default: {
         sessionExpired: string;
         ok: string;
         getTokenFailed: string;
+        actionLog: {
+            actionLog: string;
+            placeholder: string;
+            query: string;
+            actionContent: string;
+            actionTime: string;
+            close: string;
+        };
     };
     en: {
         refreshToken: string;
@@ -12,6 +20,14 @@ declare const _default: {
         sessionExpired: string;
         ok: string;
         getTokenFailed: string;
+        actionLog: {
+            actionLog: string;
+            placeholder: string;
+            query: string;
+            actionContent: string;
+            actionTime: string;
+            close: string;
+        };
     };
     ja: {
         refreshToken: string;
@@ -19,6 +35,14 @@ declare const _default: {
         sessionExpired: string;
         ok: string;
         getTokenFailed: string;
+        actionLog: {
+            actionLog: string;
+            placeholder: string;
+            query: string;
+            actionContent: string;
+            actionTime: string;
+            close: string;
+        };
     };
 };
 export default _default;

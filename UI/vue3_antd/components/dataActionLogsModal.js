@@ -1,8 +1,17 @@
 import {h, defineComponent, ref} from 'vue';
 import {Button, Modal, Table, Pagination, Select, SelectOption} from 'ant-design-vue';
 
-// 传入的参数： 、国际化文字，、查询的回调方法，、获取查询的回调条件
-export default function (params, getDataActionLog, getLogSearchParams) {
+/**
+ * 查询操作日志组件
+ * @param params
+ * @param params.application_id 应用id
+ * @param params.function_type 模块类型
+ * @param params.token 令牌
+ * @param getDataActionLog 获取操作日志的request方法
+ * @param getLogSearchParams 获取日志查询的类型
+ * @param langTexts 国际化文字
+ */
+export default function (params, getDataActionLog, getLogSearchParams, langTexts) {
   return defineComponent({
     name: 'easi-action-log',
     props: {
@@ -92,7 +101,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
             type: 'link',
             onClick: showChange,
           },
-          {default: () => '操作日志'},
+          {default: () => langTexts.actionLog},
           ),
         visible.value
           ? h(
@@ -107,7 +116,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
             },
           },
           {
-            title: () => '操作日志',
+            title: () => langTexts.actionLog,
             footer: () =>
               h(
                 Button,
@@ -116,7 +125,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                     showChange();
                   },
                 },
-                {default: () => '关闭'},
+                {default: () => langTexts.close},
               ),
             default: () => [
               // 筛选框
@@ -128,7 +137,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 h(Select, {
                     allowClear: true,
                     value: log_type.value,
-                    placeholder: '请选择日志类型',
+                    placeholder: langTexts.placeholder,
                     style: {
                       width: '200px'
                     },
@@ -154,7 +163,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                     queryHandler();
                   }
                 }, {
-                  default: () => '查询'
+                  default: () => langTexts.query
                 })
               ]),
               // 表格数据
@@ -165,11 +174,11 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 rowKey: 'id',
                 columns: [
                   {
-                    title: '操作内容',
+                    title: langTexts.actionContent,
                     dataIndex: 'desc',
                   },
                   {
-                    title: '操作时间',
+                    title: langTexts.actionTime,
                     width: '200px',
                     dataIndex: 'created_at_str',
                   },

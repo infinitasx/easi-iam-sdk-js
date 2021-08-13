@@ -1,7 +1,16 @@
 import {Button, Dialog, Table, TableColumn, Pagination, Select, Option} from 'element-ui'
 
-// 传入的参数： 、国际化文字，、查询的回调方法，、获取查询的回调条件
-export default function (params, getDataActionLog, getLogSearchParams) {
+/**
+ * 查询操作日志组件
+ * @param params
+ * @param params.application_id 应用id
+ * @param params.function_type 模块类型
+ * @param params.token 令牌
+ * @param getDataActionLog 获取操作日志的request方法
+ * @param getLogSearchParams 获取日志查询的类型
+ * @param langTexts 国际化文字
+ */
+export default function (params, getDataActionLog, getLogSearchParams, langTexts) {
   return {
     props: {
       data_id: {
@@ -90,7 +99,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
             on: {
               click: this.showChange
             }
-          }, '操作日志'),
+          }, langTexts.actionLog),
           this.visible ? h(Dialog, {
               props: {
                 visible: this.visible,
@@ -105,8 +114,8 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 }
               },
               scopedSlots: {
-                title: props => h('div', {}, '操作日志'),
-                footer: props => h(Button, {}, '关闭')
+                title: props => h('div', {}, langTexts.actionLog),
+                footer: props => h(Button, {}, langTexts.close)
               }
             }, [
               // 内容展示
@@ -121,7 +130,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                     clearable: true,
                     value: this.log_type,
                     valueKey: 'id',
-                    placeholder: '请选择日志类型',
+                    placeholder: langTexts.placeholder,
                   },
                   on: {
                     change(val) {
@@ -151,7 +160,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                       this.queryData();
                     }
                   }
-                }, '查询')
+                }, langTexts.query)
               ]),
               // 表格数据
               h(Table, {
@@ -165,14 +174,14 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                 h(TableColumn, {
                   props: {
                     prop: 'desc',
-                    label: '操作内容'
+                    label: langTexts.actionContent
                   }
                 }),
                 h(TableColumn, {
                   props: {
                     width: '200px',
                     prop: 'created_at_str',
-                    label: '操作时间'
+                    label: langTexts.actionTime
                   }
                 })
               ]),
@@ -214,7 +223,7 @@ export default function (params, getDataActionLog, getLogSearchParams) {
                     on: {
                       click: this.showChange
                     }
-                  }, '关闭')
+                  }, langTexts.close)
                 ])
               ])
             ]
