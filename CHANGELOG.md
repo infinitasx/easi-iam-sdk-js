@@ -3,11 +3,11 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
-## [0.0.12] - 20201-08-10
+## [0.0.12] - 20201-08-13
 ### Added
 * 添加数据的操作日志查询功能
-* 添加vue2 和 elementUI的Ui组件
-* 添加vue3 和 antdv的UI组件
+* 添加日志查询的vue2_elementUI的Ui组件
+* 添加日志查询的vue3_antdv的UI组件
 
 ## [0.0.11] - 2021-08-12
 ### Fixed
