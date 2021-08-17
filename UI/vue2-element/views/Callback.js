@@ -1,4 +1,4 @@
-import CallbackLoading from "../components/callbackLoading";
+import CallbackLoading from "../components/CallbackLoading";
 
 export default function (callback) {
   return {

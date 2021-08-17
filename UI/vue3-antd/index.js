@@ -1,6 +1,6 @@
 import {Modal, message} from "ant-design-vue";
 import CallbackPage from './views/Callback.js'
-import dataActionLogComp from './components/dataActionLogsModal.js'
+import dataActionLogComp from './components/DataActionLogsModal.js'
 
 export default {
   showErrorMsg: (msg) => message.error(msg),

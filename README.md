@@ -29,12 +29,12 @@ yarn add https://github.com/infinitasx/easi-iam-sdk-js.git#master
 // iamSdkUtils.ts
 import { IamClient } from 'easi-iam-sdk-js';
 // 文件中提供两种UI模式
-// 注意，如果使用ts时，在 easi-iam-sdk-js.d.ts中声明：declare module 'easi-iam-sdk-js/UI/vue3_antd/index.js';
+// 注意，如果使用ts时，在 easi-iam-sdk-js.d.ts中声明：declare module 'easi-iam-sdk-js/UI/vue3-antd/index.js';
 // 1. vue3 antdv 的UI 
-// import UI from 'easi-iam-sdk-js/UI/vue3_antd/index.js'
+// import UI from 'easi-iam-sdk-js/UI/vue3-antd/index.js'
 
 // 2. vue2 element 的UI
-import UI from 'easi-iam-sdk-js/UI/vue2_element/index.js'
+import UI from 'easi-iam-sdk-js/UI/vue2-element/index.js'
 
 // code 换 token的相对地址
 const redirect_uri = '/iam/callback';
@@ -115,13 +115,13 @@ const externals = {
 const scriptCdn = [
     // ...
 ];
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.11/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.14/index.js`);
 ```
 
 ### 使用api说明
 - iam.getOidcClientInstance()
     - 获取oidc-client-js 原本的实例对象（https://github.com/IdentityModel/oidc-client-js/wiki）
-- iam.codeExchangeTokenPage(homePageUrl: string)
+- iam.codeExchangeTokenPage(homePageUrl?: string)
     - 获取callback组件
 - iam.clearLocalStorageDataExcludeOidc(excludeKey?: string[])
     - 清除除了oidc认证的key之外的东西
