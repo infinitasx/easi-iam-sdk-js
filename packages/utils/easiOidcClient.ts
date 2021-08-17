@@ -98,8 +98,6 @@ export default function (params: Params): ResultType {
 
 
   (async function () {
-    // 记录最初的地址
-    window.localStorage.setItem('iam-href',window.location.href);
     try {
       let auth_info = await _oidcClient.getUser()
       setAuthInfo(auth_info)
