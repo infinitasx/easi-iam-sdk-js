@@ -28,17 +28,11 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   function (response) {
     // 对响应数据做点什么
-    const { data } = response
+    const {data} = response
     return Promise.resolve(data)
   },
   function (error) {
-    if (error && error.response) {
-      const { data } = error.response
-      return Promise.reject(data.error ? data.error : data)
-    } else {
-      // message.error('连接服务器失败')
-      return Promise.reject(error)
-    }
+    return Promise.reject(error)
   }
 )
 
