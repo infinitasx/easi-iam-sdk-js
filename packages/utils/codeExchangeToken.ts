@@ -17,17 +17,7 @@ export default function (Component: any, homePageUrl: string) {
     mgr
       .signinRedirectCallback()
       .then(() => {
-        // 最初进入的地址
-        let url = window.localStorage.getItem('iam-url');
-        if (url) {
-          if (url.indexOf('login') > -1) {
-            window.location.href = homePageUrl || '/';
-          } else {
-            window.location.href = url;
-          }
-        } else {
-          window.location.href = homePageUrl || '/';
-        }
+        window.location.href = homePageUrl || '/'
       })
       .catch((err) => {
         getMessage()(langText[getLang()]?.getTokenFailed)
