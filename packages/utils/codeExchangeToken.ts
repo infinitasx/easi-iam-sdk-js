@@ -17,7 +17,8 @@ export default function (Component: any, homePageUrl: string) {
     mgr
       .signinRedirectCallback()
       .then(() => {
-        window.location.href = homePageUrl || '/'
+        let url = window.sessionStorage.getItem('iam-start-url');
+        window.location.href = url || homePageUrl || '/'
       })
       .catch((err) => {
         getMessage()(langText[getLang()]?.getTokenFailed)
