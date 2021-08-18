@@ -55,7 +55,7 @@ export const getDataActionLog = (config: {
       application_id: config.application_id,
       function_type: config.function_type,
       data_id: config.data_id,
-      log_type: config.log_type,
+      log_type_id: config.log_type,
       page: config.page,
       page_size: config.page_size,
     }
