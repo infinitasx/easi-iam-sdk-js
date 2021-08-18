@@ -186,8 +186,9 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
               ]),
               h('div', {
                 style: {
-                  textAlign: 'right',
-                  marginTop: '12px'
+                  marginTop: '12px',
+                  display: 'flex',
+                  flexDirection: 'row-reverse',
                 }
               }, [
                 h(Pagination, {

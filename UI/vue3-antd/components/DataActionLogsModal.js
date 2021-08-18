@@ -189,7 +189,8 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
                 {
                   style: {
                     marginTop: '12px',
-                    textAlign: 'right',
+                    display: 'flex',
+                    flexDirection: 'row-reverse',
                   },
                 },
                 [
