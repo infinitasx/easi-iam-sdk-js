@@ -1,5 +1,5 @@
-import {h, defineComponent, ref} from 'vue';
-import {Button, Modal, Table, Pagination, Select, SelectOption} from 'ant-design-vue';
+import { h, defineComponent, ref } from 'vue';
+import { Button, Modal, Table, Pagination, Select, SelectOption } from 'ant-design-vue';
 
 /**
  * 查询操作日志组件
@@ -19,7 +19,7 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
         type: [Number, String],
       },
     },
-    setup(props, {slots}) {
+    setup(props, { slots }) {
       const visible = ref(false);
       const loading = ref(false);
       const log_type = ref(null);
@@ -38,25 +38,13 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
           token: params.token,
           application_id: params.application_id,
           function_type: params.function_type,
-        }).then(res => {
-          searchItems.value = res.types || [];
-        }).catch(() => {
-        });
-      }
-
-      // 开关对话框
-      const showChange = () => {
-        visible.value = !visible.value;
-        if (visible.value) {
-          querySearchItem();
-          queryHandler();
-        } else {
-          pagination.value.current = 1;
-          dataSource.value = [];
-          log_type.value = null;
-        }
+        })
+          .then(res => {
+            searchItems.value = res.types || [];
+          })
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          .catch(() => {});
       };
-
 
       // 数据查询
       const queryHandler = () => {
@@ -82,141 +70,171 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
           });
       };
 
+      // 开关对话框
+      const showChange = () => {
+        visible.value = !visible.value;
+        if (visible.value) {
+          querySearchItem();
+          queryHandler();
+        } else {
+          pagination.value.current = 1;
+          dataSource.value = [];
+          log_type.value = null;
+        }
+      };
+
       return () => [
         slots.default
           ? h(
-          'div',
-          {
-            style: {
-              display: 'inline-block',
-            },
-            onClick: showChange,
-          },
-          [h(slots.default)],
-          )
+              'div',
+              {
+                style: {
+                  display: 'inline-block',
+                },
+                onClick: showChange,
+              },
+              [h(slots.default)],
+            )
           : h(
-          Button,
-          {
-            type: 'link',
-            onClick: showChange,
-          },
-          {default: () => langTexts.actionLog},
-          ),
+              Button,
+              {
+                type: 'link',
+                onClick: showChange,
+              },
+              { default: () => langTexts.actionLog },
+            ),
         visible.value
           ? h(
-          Modal,
-          {
-            width: '1000px',
-            maskClosable: false,
-            visible: visible.value,
-            destroyOnClose: true,
-            onCancel() {
-              showChange();
-            },
-          },
-          {
-            title: () => langTexts.actionLog,
-            footer: () =>
-              h(
-                Button,
-                {
-                  onClick() {
-                    showChange();
-                  },
+              Modal,
+              {
+                width: '1000px',
+                maskClosable: false,
+                visible: visible.value,
+                destroyOnClose: true,
+                onCancel() {
+                  showChange();
                 },
-                {default: () => langTexts.close},
-              ),
-            default: () => [
-              // 筛选框
-              searchItems.value.length > 0 && h('header', {
-                style: {
-                  marginBottom: '10px',
-                }
-              }, [
-                h(Select, {
-                    allowClear: true,
-                    value: log_type.value,
-                    placeholder: langTexts.placeholder,
-                    style: {
-                      width: '200px'
+              },
+              {
+                title: () => langTexts.actionLog,
+                footer: () =>
+                  h(
+                    Button,
+                    {
+                      onClick() {
+                        showChange();
+                      },
                     },
-                    onChange(val) {
-                      log_type.value = val;
-                    }
-                  }, {
-                    default: () => searchItems.value.map(item => {
-                      return h(SelectOption, {
-                        value: item.type_id,
-                      }, {
-                        default: () => item.name,
-                      })
-                    })
-                  }
-                ),
-                h(Button, {
-                  type: 'primary',
-                  style: {
-                    marginLeft: '10px',
-                  },
-                  onClick() {
-                    queryHandler();
-                  }
-                }, {
-                  default: () => langTexts.query
-                })
-              ]),
-              // 表格数据
-              h(Table, {
-                loading: loading.value,
-                dataSource: dataSource.value,
-                pagination: false,
-                rowKey: 'id',
-                columns: [
-                  {
-                    title: langTexts.actionContent,
-                    dataIndex: 'desc',
-                  },
-                  {
-                    title: langTexts.actionTime,
-                    width: '200px',
-                    dataIndex: 'created_at_str',
-                  },
-                ],
-              }),
-              // 分页模块
-              h(
-                'footer',
-                {
-                  style: {
-                    marginTop: '12px',
-                    display: 'flex',
-                    flexDirection: 'row-reverse',
-                  },
-                },
-                [
-                  h(Pagination, {
-                    showQuickJumper: true,
-                    showSizeChanger: true,
-                    total: pagination.value.total,
-                    current: pagination.value.current,
-                    pageSize: pagination.value.pageSize,
-                    pageSizeOptions: ['20', '30', '50'],
-                    onChange(page, pageSize) {
-                      pagination.value.current = page;
-                      pagination.value.pageSize = pageSize;
-                      queryHandler();
-                    },
-                    onShowSizeChange(current, size) {
-                      pagination.value.current = 1;
-                      pagination.value.pageSize = size;
-                      queryHandler();
-                    },
+                    { default: () => langTexts.close },
+                  ),
+                default: () => [
+                  // 筛选框
+                  searchItems.value.length > 0 &&
+                    h(
+                      'header',
+                      {
+                        style: {
+                          marginBottom: '10px',
+                        },
+                      },
+                      [
+                        h(
+                          Select,
+                          {
+                            allowClear: true,
+                            value: log_type.value,
+                            placeholder: langTexts.placeholder,
+                            style: {
+                              width: '200px',
+                            },
+                            onChange(val) {
+                              log_type.value = val;
+                            },
+                          },
+                          {
+                            default: () =>
+                              searchItems.value.map(item => {
+                                return h(
+                                  SelectOption,
+                                  {
+                                    value: item.type_id,
+                                  },
+                                  {
+                                    default: () => item.name,
+                                  },
+                                );
+                              }),
+                          },
+                        ),
+                        h(
+                          Button,
+                          {
+                            type: 'primary',
+                            style: {
+                              marginLeft: '10px',
+                            },
+                            onClick() {
+                              queryHandler();
+                            },
+                          },
+                          {
+                            default: () => langTexts.query,
+                          },
+                        ),
+                      ],
+                    ),
+                  // 表格数据
+                  h(Table, {
+                    loading: loading.value,
+                    dataSource: dataSource.value,
+                    pagination: false,
+                    rowKey: 'id',
+                    columns: [
+                      {
+                        title: langTexts.actionContent,
+                        dataIndex: 'desc',
+                      },
+                      {
+                        title: langTexts.actionTime,
+                        width: '200px',
+                        dataIndex: 'created_at_str',
+                      },
+                    ],
                   }),
+                  // 分页模块
+                  h(
+                    'footer',
+                    {
+                      style: {
+                        marginTop: '12px',
+                        display: 'flex',
+                        flexDirection: 'row-reverse',
+                      },
+                    },
+                    [
+                      h(Pagination, {
+                        showQuickJumper: true,
+                        showSizeChanger: true,
+                        total: pagination.value.total,
+                        current: pagination.value.current,
+                        pageSize: pagination.value.pageSize,
+                        pageSizeOptions: ['20', '30', '50'],
+                        onChange(page, pageSize) {
+                          pagination.value.current = page;
+                          pagination.value.pageSize = pageSize;
+                          queryHandler();
+                        },
+                        onShowSizeChange(current, size) {
+                          pagination.value.current = 1;
+                          pagination.value.pageSize = size;
+                          queryHandler();
+                        },
+                      }),
+                    ],
+                  ),
                 ],
-              ),
-            ],
-          },
-          )
+              },
+            )
           : '',
       ];
     },

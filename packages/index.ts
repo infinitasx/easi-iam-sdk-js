@@ -1,1 +1,1 @@
-export {default as IamClient} from './utils/easiOidcClient'
+export { default as IamClient } from './utils/easiOidcClient';

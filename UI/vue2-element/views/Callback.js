@@ -1,4 +1,4 @@
-import CallbackLoading from "../components/CallbackLoading";
+import CallbackLoading from '../components/CallbackLoading';
 
 export default function (callback) {
   return {
@@ -8,6 +8,6 @@ export default function (callback) {
     },
     render(createElement) {
       return createElement(CallbackLoading, {}, []);
-    }
-  }
+    },
+  };
 }

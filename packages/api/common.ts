@@ -1,24 +1,24 @@
-import request from '../utils/request'
-import {getAuthority} from '../utils/env'
-import {GET_USERINFO_URL, GET_PERMISSION_URL, UPDATE_INIT_PWD_URL} from '../constant'
+import request from '../utils/request';
+import { getAuthority } from '../utils/env';
+import { GET_USERINFO_URL, GET_PERMISSION_URL, UPDATE_INIT_PWD_URL } from '../constant';
 
 // 获取用户信息
-export const getUserInfo = (config: {
+export const getUserInfo = (config:   {
   token: string; // 认证信息
 }) => {
   return request({
     url: getAuthority() + GET_USERINFO_URL,
     headers: {
-      Authorization: config.token
-    }
+      Authorization: config.token,
+    },
   }).then((res: any) => {
     // 判断用户是否初次登录
     if (res?.user?.set_password && !window.location.href.includes(UPDATE_INIT_PWD_URL)) {
-      window.location.replace(getAuthority() + UPDATE_INIT_PWD_URL)
+      window.location.replace(getAuthority() + UPDATE_INIT_PWD_URL);
     }
     return res;
-  })
-}
+  });
+};
 
 // 获取权限信息
 export const getPermissions = (config: {
@@ -27,14 +27,16 @@ export const getPermissions = (config: {
   scope_id: string | number;
 }) => {
   return request({
-    url: getAuthority() + (config.scope_id
-      ? `${GET_PERMISSION_URL}?application_id=${config.application_id}&scope_id=${config.scope_id}`
-      : `${GET_PERMISSION_URL}?application_id=${config.application_id}`),
+    url:
+      getAuthority() +
+      (config.scope_id
+        ? `${GET_PERMISSION_URL}?application_id=${config.application_id}&scope_id=${config.scope_id}`
+        : `${GET_PERMISSION_URL}?application_id=${config.application_id}`),
     headers: {
-      Authorization: config.token
-    }
-  })
-}
+      Authorization: config.token,
+    },
+  });
+};
 
 // 查询数据的日志信息
 export const getDataActionLog = (config: {
@@ -49,7 +51,7 @@ export const getDataActionLog = (config: {
   return request({
     url: getAuthority() + '/v1/admin/logs/timeline',
     headers: {
-      Authorization: config.token
+      Authorization: config.token,
     },
     params: {
       application_id: config.application_id,
@@ -58,9 +60,9 @@ export const getDataActionLog = (config: {
       log_type_id: config.log_type,
       page: config.page,
       page_size: config.page_size,
-    }
-  })
-}
+    },
+  });
+};
 
 // 查询日志查询条件的接口
 export const getLogSearchParams = (config: {
@@ -71,11 +73,11 @@ export const getLogSearchParams = (config: {
   return request({
     url: getAuthority() + `/v1/admin/logs/timeline-types`,
     headers: {
-      Authorization: config.token
+      Authorization: config.token,
     },
     params: {
       application_id: config.application_id,
       function_type: config.function_type,
-    }
-  })
-}
+    },
+  });
+};

@@ -1,20 +1,23 @@
-import {DEVELOPMENT_URL, PRODUCTION_URL, TESTING_URL} from "../constant";
-import {env as IEvn} from '../type'
+import { DEVELOPMENT_URL, PRODUCTION_URL, TESTING_URL } from '../constant';
+import { env as IEvn } from '../type';
 
 /**
  * 当前sdk运行的环境
  */
-let _env:IEvn = 'development';
+let _env: IEvn = 'development';
 
-
-export function getEnv():IEvn{
+export function getEnv(): IEvn {
   return _env;
 }
 
-export function setEnv(env: IEvn){
+export function setEnv(env: IEvn) {
   _env = env;
 }
 
-export function getAuthority(){
-  return _env === 'production' ? PRODUCTION_URL : _env === 'testing' ? TESTING_URL : DEVELOPMENT_URL
+export function getAuthority() {
+  return _env === 'production'
+    ? PRODUCTION_URL
+    : _env === 'testing'
+    ? TESTING_URL
+    : DEVELOPMENT_URL;
 }

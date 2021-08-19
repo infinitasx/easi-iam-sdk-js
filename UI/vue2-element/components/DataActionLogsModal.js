@@ -1,4 +1,4 @@
-import {Button, Dialog, Table, TableColumn, Pagination, Select, Option} from 'element-ui'
+import { Button, Dialog, Table, TableColumn, Pagination, Select, Option } from 'element-ui';
 
 /**
  * 查询操作日志组件
@@ -15,7 +15,7 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
     props: {
       data_id: {
         type: [String, Number],
-      }
+      },
     },
     data() {
       return {
@@ -28,9 +28,9 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
         pagination: {
           total: 0,
           pageSize: 30,
-          currentPage: 1
-        }
-      }
+          currentPage: 1,
+        },
+      };
     },
     watch: {
       visible(val) {
@@ -38,24 +38,26 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
           this.querySearchItem();
           this.queryData();
         }
-      }
+      },
     },
     methods: {
       showChange() {
-        this.visible = !this.visible
+        this.visible = !this.visible;
       },
       querySearchItem() {
         getLogSearchParams({
           token: params.token,
           application_id: params.application_id,
           function_type: params.function_type,
-        }).then(res => {
-          this.searchItems = res.types || [];
-        }).catch(() => {
-        });
+        })
+          .then(res => {
+            this.searchItems = res.types || [];
+          })
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          .catch(() => {});
       },
       queryData() {
-        this.loading = true
+        this.loading = true;
         getDataActionLog({
           token: params.token,
           application_id: params.application_id,
@@ -66,169 +68,216 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
           log_type: this.log_type,
         })
           .then(res => {
-            this.pagination.total = res.total
-            this.data = res.events
+            this.pagination.total = res.total;
+            this.data = res.events;
           })
           .catch(err => {
-            console.log(err)
+            console.log(err);
           })
           .finally(() => {
-            this.loading = false
-          })
-      }
+            this.loading = false;
+          });
+      },
     },
     render(h) {
-      return h('div', {
+      return h(
+        'div',
+        {
           style: {
-            display: 'inline-block'
-          }
+            display: 'inline-block',
+          },
         },
         [
-          this.$slots.default ? h('div', {
-            style: {
-              display: 'inline-block'
-            },
-            on: {
-              click: this.showChange
-            }
-          }, [this.$slots.default]) : h(Button, {
-            props: {
-              type: 'text'
-            },
-            on: {
-              click: this.showChange
-            }
-          }, langTexts.actionLog),
-          this.visible ? h(Dialog, {
-              props: {
-                visible: this.visible,
-                width: '1000px',
-                destroyOnClose: true,
-                center: false,
-                closeOnClickModal: false
-              },
-              on: {
-                close: () => {
-                  this.showChange()
-                }
-              },
-              scopedSlots: {
-                title: props => h('div', {}, langTexts.actionLog),
-                footer: props => h(Button, {}, langTexts.close)
-              }
-            }, [
-              // 内容展示
-              this.searchItems.length > 0 && h('header', {
-                style: {
-                  marginBottom: '10px',
-                }
-              }, [
-                h(Select, {
-                  props: {
-                    size: 'small',
-                    clearable: true,
-                    value: this.log_type,
-                    valueKey: 'id',
-                    placeholder: langTexts.placeholder,
-                  },
-                  on: {
-                    change(val) {
-                      this.log_type = val;
-                    }
-                  }
-                }, [
-                  this.searchItems.map(item => {
-                    return h(Option, {
-                      props: {
-                        label: item.name,
-                        value: item.type_id,
-                      }
-                    })
-                  })
-                ]),
-                h(Button, {
+          this.$slots.default
+            ? h(
+                'div',
+                {
                   style: {
-                    marginLeft: '10px',
-                  },
-                  props: {
-                    size: 'small',
-                    type: 'primary',
+                    display: 'inline-block',
                   },
                   on: {
-                    click: () => {
-                      this.queryData();
-                    }
-                  }
-                }, langTexts.query)
-              ]),
-              // 表格数据
-              h(Table, {
-                directives: [
-                  {
-                    name: 'loading',
-                    value: this.loading
-                  }
-                ]
-              }, [
-                h(TableColumn, {
+                    click: this.showChange,
+                  },
+                },
+                [this.$slots.default],
+              )
+            : h(
+                Button,
+                {
                   props: {
-                    prop: 'desc',
-                    label: langTexts.actionContent
-                  }
-                }),
-                h(TableColumn, {
-                  props: {
-                    width: '200px',
-                    prop: 'created_at_str',
-                    label: langTexts.actionTime
-                  }
-                })
-              ]),
-              h('div', {
-                style: {
-                  marginTop: '12px',
-                  display: 'flex',
-                  flexDirection: 'row-reverse',
-                }
-              }, [
-                h(Pagination, {
-                  props: {
-                    currentPage: this.pagination.currentPage,
-                    pageSize: this.pagination.pageSize,
-                    pageSizes: [20, 30, 50],
-                    layout: 'total, sizes, prev, pager, next, jumper',
-                    total: this.pagination.total
+                    type: 'text',
                   },
                   on: {
-                    "size-change": (val) => {
-                      this.pagination.pageSize = val
-                      this.pagination.currentPage = 1
-                      this.queryData()
+                    click: this.showChange,
+                  },
+                },
+                langTexts.actionLog,
+              ),
+          this.visible
+            ? h(
+                Dialog,
+                {
+                  props: {
+                    visible: this.visible,
+                    width: '1000px',
+                    destroyOnClose: true,
+                    center: false,
+                    closeOnClickModal: false,
+                  },
+                  on: {
+                    close: () => {
+                      this.showChange();
                     },
-                    "current-change": (val) => {
-                      this.pagination.currentPage = val
-                      this.queryData()
-                    }
-                  }
-                }),
-                h('div', {
-                  style: {
-                    marginTop: '12px'
-                  }
-                }, [
-                  h(Button, {
-                    props: {
-                      size: 'mini'
+                  },
+                  scopedSlots: {
+                    title: () => h('div', {}, langTexts.actionLog),
+                    footer: () => h(Button, {}, langTexts.close),
+                  },
+                },
+                [
+                  // 内容展示
+                  this.searchItems.length > 0 &&
+                    h(
+                      'header',
+                      {
+                        style: {
+                          marginBottom: '10px',
+                        },
+                      },
+                      [
+                        h(
+                          Select,
+                          {
+                            props: {
+                              size: 'small',
+                              clearable: true,
+                              value: this.log_type,
+                              valueKey: 'id',
+                              placeholder: langTexts.placeholder,
+                            },
+                            on: {
+                              change(val) {
+                                this.log_type = val;
+                              },
+                            },
+                          },
+                          [
+                            this.searchItems.map(item => {
+                              return h(Option, {
+                                props: {
+                                  label: item.name,
+                                  value: item.type_id,
+                                },
+                              });
+                            }),
+                          ],
+                        ),
+                        h(
+                          Button,
+                          {
+                            style: {
+                              marginLeft: '10px',
+                            },
+                            props: {
+                              size: 'small',
+                              type: 'primary',
+                            },
+                            on: {
+                              click: () => {
+                                this.queryData();
+                              },
+                            },
+                          },
+                          langTexts.query,
+                        ),
+                      ],
+                    ),
+                  // 表格数据
+                  h(
+                    Table,
+                    {
+                      directives: [
+                        {
+                          name: 'loading',
+                          value: this.loading,
+                        },
+                      ],
                     },
-                    on: {
-                      click: this.showChange
-                    }
-                  }, langTexts.close)
-                ])
-              ])
-            ]
-          ) : ''
-        ])
-    }
-  }
+                    [
+                      h(TableColumn, {
+                        props: {
+                          prop: 'desc',
+                          label: langTexts.actionContent,
+                        },
+                      }),
+                      h(TableColumn, {
+                        props: {
+                          width: '200px',
+                          prop: 'created_at_str',
+                          label: langTexts.actionTime,
+                        },
+                      }),
+                    ],
+                  ),
+                  h(
+                    'div',
+                    {
+                      style: {
+                        marginTop: '12px',
+                        display: 'flex',
+                        flexDirection: 'row-reverse',
+                      },
+                    },
+                    [
+                      h(Pagination, {
+                        props: {
+                          currentPage: this.pagination.currentPage,
+                          pageSize: this.pagination.pageSize,
+                          pageSizes: [20, 30, 50],
+                          layout: 'total, sizes, prev, pager, next, jumper',
+                          total: this.pagination.total,
+                        },
+                        on: {
+                          'size-change': val => {
+                            this.pagination.pageSize = val;
+                            this.pagination.currentPage = 1;
+                            this.queryData();
+                          },
+                          'current-change': val => {
+                            this.pagination.currentPage = val;
+                            this.queryData();
+                          },
+                        },
+                      }),
+                      h(
+                        'div',
+                        {
+                          style: {
+                            marginTop: '12px',
+                          },
+                        },
+                        [
+                          h(
+                            Button,
+                            {
+                              props: {
+                                size: 'mini',
+                              },
+                              on: {
+                                click: this.showChange,
+                              },
+                            },
+                            langTexts.close,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : '',
+        ],
+      );
+    },
+  };
 }
