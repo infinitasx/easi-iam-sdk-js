@@ -3,7 +3,7 @@ import { getAuthority } from '../utils/env';
 import { GET_USERINFO_URL, GET_PERMISSION_URL, UPDATE_INIT_PWD_URL } from '../constant';
 
 // 获取用户信息
-export const getUserInfo = (config:   {
+export const getUserInfo = (config: {
   token: string; // 认证信息
 }) => {
   return request({
