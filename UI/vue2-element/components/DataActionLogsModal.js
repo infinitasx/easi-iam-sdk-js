@@ -95,11 +95,23 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
                   style: {
                     display: 'inline-block',
                   },
-                  on: {
-                    click: this.showChange,
-                  },
                 },
-                [this.$slots.default],
+                [
+                  this.$slots.left,
+                  h(
+                    'div',
+                    {
+                      style: {
+                        display: 'inline-block',
+                      },
+                      on: {
+                        click: this.showChange,
+                      },
+                    },
+                    this.$slots.default,
+                  ),
+                  this.$slots.right,
+                ],
               )
             : h(
                 Button,
@@ -219,60 +231,63 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
                       }),
                     ],
                   ),
-                  h(
-                    'div',
-                    {
-                      style: {
-                        marginTop: '12px',
-                        display: 'flex',
-                        flexDirection: 'row-reverse',
+                  [
+                    h(
+                      'div',
+                      {
+                        style: {
+                          marginTop: '12px',
+                          display: 'flex',
+                          flexDirection: 'row-reverse',
+                        },
                       },
-                    },
-                    [
-                      h(Pagination, {
-                        props: {
-                          currentPage: this.pagination.currentPage,
-                          pageSize: this.pagination.pageSize,
-                          pageSizes: [20, 30, 50],
-                          layout: 'total, sizes, prev, pager, next, jumper',
-                          total: this.pagination.total,
-                        },
-                        on: {
-                          'size-change': val => {
-                            this.pagination.pageSize = val;
-                            this.pagination.currentPage = 1;
-                            this.queryData();
+                      [
+                        h(Pagination, {
+                          props: {
+                            currentPage: this.pagination.currentPage,
+                            pageSize: this.pagination.pageSize,
+                            pageSizes: [20, 30, 50],
+                            layout: 'total, sizes, prev, pager, next, jumper',
+                            total: this.pagination.total,
                           },
-                          'current-change': val => {
-                            this.pagination.currentPage = val;
-                            this.queryData();
-                          },
-                        },
-                      }),
-                      h(
-                        'div',
-                        {
-                          style: {
-                            marginTop: '12px',
-                          },
-                        },
-                        [
-                          h(
-                            Button,
-                            {
-                              props: {
-                                size: 'mini',
-                              },
-                              on: {
-                                click: this.showChange,
-                              },
+                          on: {
+                            'size-change': val => {
+                              this.pagination.pageSize = val;
+                              this.pagination.currentPage = 1;
+                              this.queryData();
                             },
-                            langTexts.close,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                            'current-change': val => {
+                              this.pagination.currentPage = val;
+                              this.queryData();
+                            },
+                          },
+                        }),
+                      ],
+                    ),
+                    h(
+                      'div',
+                      {
+                        style: {
+                          marginTop: '12px',
+                          textAlign: 'right',
+                        },
+                      },
+                      [
+                        h(
+                          Button,
+                          {
+                            props: {
+                              size: 'mini',
+                            },
+                            on: {
+                              click: this.showChange,
+                            },
+                          },
+                          langTexts.close,
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               )
             : '',

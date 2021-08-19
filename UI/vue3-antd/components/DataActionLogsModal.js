@@ -85,16 +85,20 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
 
       return () => [
         slots.default
-          ? h(
-              'div',
-              {
-                style: {
-                  display: 'inline-block',
+          ? [
+              slots.left && h(slots.left),
+              h(
+                'div',
+                {
+                  style: {
+                    display: 'inline-block',
+                  },
+                  onClick: showChange,
                 },
-                onClick: showChange,
-              },
-              [h(slots.default)],
-            )
+                h(slots.default),
+              ),
+              slots.right && h(slots.right),
+            ]
           : h(
               Button,
               {
