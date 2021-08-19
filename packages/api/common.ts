@@ -1,5 +1,5 @@
 import request from '../utils/request';
-import { getAuthority } from '../utils/env';
+import { getAuthority } from '../setter-getter/env';
 import { GET_USERINFO_URL, GET_PERMISSION_URL, UPDATE_INIT_PWD_URL } from '../constant';
 
 // 获取用户信息

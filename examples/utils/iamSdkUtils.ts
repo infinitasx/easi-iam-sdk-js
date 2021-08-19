@@ -15,5 +15,6 @@ export const iamSdkUtils = easiOidcClientUtils({
     showErrorMsg: () => {},
     codeExchangeTokenPage: () => {},
     showTokenExpiredModal: () => {},
+    dataActionLogComp: ()=>{}
   },
 });

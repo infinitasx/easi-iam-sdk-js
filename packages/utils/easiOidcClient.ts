@@ -2,10 +2,19 @@ import Oidc from 'oidc-client';
 import { Params, ResultType } from '../type';
 import langTexts from '../lang/index';
 import { ILang } from '../type';
-import { getLang, setLang } from './i18n';
-import { getAuthInfo, setAuthInfo } from './authInfo';
-import { getEnv, setEnv, getAuthority } from './env';
-import { getMessage, setMessage, getModal, setModal, setPage, getPage, setLog, getLog } from './UI';
+import { getLang, setLang } from '../setter-getter/i18n';
+import { getAuthInfo, setAuthInfo } from '../setter-getter/authInfo';
+import { getEnv, setEnv, getAuthority } from '../setter-getter/env';
+import {
+  getMessage,
+  setMessage,
+  getModal,
+  setModal,
+  setPage,
+  getPage,
+  setLog,
+  getLog,
+} from '../setter-getter/ui';
 import codeExchangeToken from './codeExchangeToken';
 
 import { HOMEPAGE_PATH } from '../constant';
@@ -316,7 +325,7 @@ export default function (params: Params): ResultType {
       });
     },
 
-    // Get the access token of the logged in user
+    // 获取token
     getAuthorization() {
       const auth_info = getAuthInfo();
       return auth_info ? `Bearer ${auth_info.access_token}` : '';

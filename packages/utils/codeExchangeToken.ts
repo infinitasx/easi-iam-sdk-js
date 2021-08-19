@@ -1,6 +1,6 @@
 import Oidc from 'oidc-client';
-import { getMessage } from './UI';
-import { getLang } from './i18n';
+import { getMessage } from '../setter-getter/ui';
+import { getLang } from '../setter-getter/i18n';
 import langText from '../lang/index';
 
 // code => token 方法
