@@ -8,12 +8,14 @@ module.exports = {
     node: true,
     serviceworker: true,
     worker: true,
+    'jest/globals': true,
   },
 
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:jest/recommended',
   ],
 
   parserOptions: {
@@ -22,7 +24,7 @@ module.exports = {
     sourceType: 'module',
   },
 
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'jest'],
 
   rules: {
     'no-console': 0, // process.env.NODE_ENV === 'production' ? 1 : 0, //禁用 console

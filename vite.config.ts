@@ -18,7 +18,7 @@ export default defineConfig({
             declaration: true,
             declarationMap: false,
           },
-          exclude: ['examples', 'UI'],
+          exclude: ['UI'],
         },
       }),
       enforce: 'pre',
