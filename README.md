@@ -68,6 +68,41 @@ export const iam = IamClient({
 // }
 ```
 
+### 操作日志查询 组件
+### api
+| 参数 | 说明 | 其他 |
+| --- | --- | --- |
+| data_id | number/string | 必填 |
+| left | slot| 不必填 | 
+| right | slot | 不必填 | 
+
+### 使用案例
+```vue
+  <template>
+    <data-log :data_id="123123123123">
+      <!-- 可以省略 -->
+      <template #left>
+        <a-divider type="vertical" />
+      </template>
+      <EASIButton type="link">操作日志</EASIButton>
+      <!-- 可以省略 -->
+      <template #left>
+        <a-divider type="vertical" />
+      </template>
+    </data-log>
+  </template>
+<script>
+import { defineComponent } from 'vue';
+import {iamSdkUtils} from '@/utils/iamSdkUtils.ts'
+// vue2的用法类似
+export default defineComponent({
+  components: {
+    DataLog: iamSdkUtils.dataActionLogComp('apps'), // 参数为当前的模块名
+  },
+});
+</script>
+```
+
 ### vue-router 路由守卫页面
 ```ts
 // 在vue-router的路由守卫beforeEach函数中添加如下:
@@ -115,7 +150,7 @@ const externals = {
 const scriptCdn = [
     // ...
 ];
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.14/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.19/index.js`);
 ```
 
 ### 使用api说明
