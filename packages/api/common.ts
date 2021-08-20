@@ -13,7 +13,7 @@ export const getUserInfo = (config: {
     },
   }).then((res: any) => {
     // 判断用户是否初次登录
-    if (res?.user?.set_password && !window.location.href.includes(UPDATE_INIT_PWD_URL)) {
+    if (res?.set_password && !window.location.href.includes(UPDATE_INIT_PWD_URL)) {
       window.location.replace(getAuthority() + UPDATE_INIT_PWD_URL);
     }
     return res;
