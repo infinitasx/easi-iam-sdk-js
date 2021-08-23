@@ -1,2 +1,2 @@
 export { default as IamClient } from './utils/easiOidcClient';
-export const version = '0.0.22';
+export const version = '0.0.23';
