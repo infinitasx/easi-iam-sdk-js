@@ -21,7 +21,7 @@ import { v4 } from 'uuid';
 import { HOMEPAGE_PATH } from '../constant';
 
 import { getPermissions, getUserInfo, getDataActionLog, getLogSearchParams } from '../api/common';
-import { setDeviceId } from '../setter-getter/deviceId';
+import { setDeviceId, getDeviceId } from '../setter-getter/deviceId';
 
 export default function (params: Params): ResultType {
   // 设置初始化语言
@@ -139,6 +139,11 @@ export default function (params: Params): ResultType {
     // 获取code换token 的页面
     codeExchangeTokenPage(homePageUrl: string) {
       return codeExchangeToken(getPage(), homePageUrl);
+    },
+
+    // 获取设备id
+    getDeviceId() {
+      return getDeviceId();
     },
 
     // 获取日志操作组件

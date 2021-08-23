@@ -42,6 +42,7 @@ export interface Params {
 export interface ResultType {
   getOidcClientInstance: () => UserManager;
   codeExchangeTokenPage: (homePageUrl: string) => any;
+  getDeviceId: () => string;
   dataActionLogComp: (function_type: string) => any;
   setLang: (lang: ILang) => void;
   getLang: () => ILang;

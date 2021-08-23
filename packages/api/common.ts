@@ -1,5 +1,6 @@
 import request from '../utils/request';
 import { getAuthority } from '../setter-getter/env';
+import { getDeviceId } from '../setter-getter/deviceId';
 import { GET_USERINFO_URL, GET_PERMISSION_URL, UPDATE_INIT_PWD_URL } from '../constant';
 
 // 获取用户信息
@@ -10,6 +11,7 @@ export const getUserInfo = (config: {
     url: getAuthority() + GET_USERINFO_URL,
     headers: {
       Authorization: config.token,
+      'Easi-Device-Id': getDeviceId(),
     },
   }).then((res: any) => {
     // 判断用户是否初次登录
@@ -33,6 +35,7 @@ export const getPermissions = (config: {
         ? `${GET_PERMISSION_URL}?application_id=${config.application_id}&scope_id=${config.scope_id}`
         : `${GET_PERMISSION_URL}?application_id=${config.application_id}`),
     headers: {
+      'Easi-Device-Id': getDeviceId(),
       Authorization: config.token,
     },
   });
@@ -51,6 +54,7 @@ export const getDataActionLog = (config: {
   return request({
     url: getAuthority() + '/v1/admin/logs/timeline',
     headers: {
+      'Easi-Device-Id': getDeviceId(),
       Authorization: config.token,
     },
     params: {
@@ -73,6 +77,7 @@ export const getLogSearchParams = (config: {
   return request({
     url: getAuthority() + `/v1/admin/logs/timeline-types`,
     headers: {
+      'Easi-Device-Id': getDeviceId(),
       Authorization: config.token,
     },
     params: {
