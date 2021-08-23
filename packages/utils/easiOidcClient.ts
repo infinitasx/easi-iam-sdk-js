@@ -31,9 +31,9 @@ export default function (params: Params): ResultType {
   Oidc.Log.level = getEnv() === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE;
 
   // 设备id
-  const deviceId =
-    window.localStorage.getItem('easi:deviceid') ||
-    `easi:deviceid:${Math.random() + '-' + Date.now()}`;
+  let deviceId = window.localStorage.getItem('easi:deviceid');
+  deviceId = deviceId ? deviceId : `easi:deviceid:${Math.random() + '-' + Date.now()}`;
+  window.localStorage.setItem('easi:deviceid', deviceId);
 
   // 不使用本地的UI
   if (

@@ -12,6 +12,6 @@ export const HOMEPAGE_PATH = '/dashboard';
 // 修改初始密码
 export const UPDATE_INIT_PWD_URL = '/dashboard/modify/init';
 // 获取用户信息
-export const GET_USERINFO_URL = '/v1/admin/userinfo';
+export const GET_USERINFO_URL = '/v1/admin/users/login-success';
 // 获取权限信息
 export const GET_PERMISSION_URL = '/v1/admin/users/menus';

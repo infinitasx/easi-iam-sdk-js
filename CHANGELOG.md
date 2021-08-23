@@ -3,9 +3,13 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.22] - 2021-08-24
+### Changed
+* 修改获取用户信息的接口地址
+
 ## [0.0.21] - 2021-08-23
 ### Fixed
-### 修改导出版本号错误运行报错
+* 修改导出版本号错误运行报错
 
 ## [0.0.20] - 2021-08-23
 ### Added
