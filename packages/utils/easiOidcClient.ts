@@ -16,10 +16,12 @@ import {
   getLog,
 } from '../setter-getter/ui';
 import codeExchangeToken from './codeExchangeToken';
+import { v4 } from 'uuid';
 
 import { HOMEPAGE_PATH } from '../constant';
 
 import { getPermissions, getUserInfo, getDataActionLog, getLogSearchParams } from '../api/common';
+import { setDeviceId } from '../setter-getter/deviceId';
 
 export default function (params: Params): ResultType {
   // 设置初始化语言
@@ -31,9 +33,10 @@ export default function (params: Params): ResultType {
   Oidc.Log.level = getEnv() === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE;
 
   // 设备id
-  let deviceId = window.localStorage.getItem('easi:deviceid');
-  deviceId = deviceId ? deviceId : `easi:deviceid:${Math.random() + '-' + Date.now()}`;
-  window.localStorage.setItem('easi:deviceid', deviceId);
+  let deviceId = window.localStorage.getItem('iam:deviceid');
+  deviceId = deviceId ? deviceId : v4();
+  window.localStorage.setItem('iam:deviceid', deviceId);
+  setDeviceId(deviceId);
 
   // 不使用本地的UI
   if (
@@ -203,7 +206,7 @@ export default function (params: Params): ResultType {
     // 清除localStorage 排除oidc 的信息的
     clearLocalStorageDataExcludeOidc(excludeKey?: string[]) {
       excludeKey = excludeKey ? excludeKey : [];
-      excludeKey.push('easi:deviceid');
+      excludeKey.push('iam:deviceid');
       const list = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);

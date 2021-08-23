@@ -16,7 +16,8 @@
     "axios": "^0.21.1",
     "easi-assets-deploy": "https://github.com/infinitasx/easi-assets-deploy.git#main",
     "easi-auto-tag": "https://github.com/infinitasx/easi-auto-tag.git#main",
-    "oidc-client": "^1.11.5"
+    "oidc-client": "^1.11.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.8",
@@ -28,6 +29,7 @@
     "@rollup/plugin-babel": "^5.3.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.4.3",
+    "@types/uuid": "^8.3.1",
     "@types/webpack-env": "^1.16.2",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",

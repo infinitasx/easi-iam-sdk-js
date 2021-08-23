@@ -1,5 +1,5 @@
 # easi-iam-sdk-js
-> 对接iam的前端sdk代码库
+> 对接IAM的前端sdk代码库
 
 ## 目录说明
 - dist 由packages打出来的的内容，最终供第三方使用的包； 使用index.js
