@@ -30,6 +30,11 @@ export default function (params: Params): ResultType {
   Oidc.Log.logger = console;
   Oidc.Log.level = getEnv() === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE;
 
+  // 设备id
+  const deviceId =
+    window.localStorage.getItem('easi:deviceid') ||
+    `easi:deviceid:${Math.random() + '-' + Date.now()}`;
+
   // 不使用本地的UI
   if (
     !params.UI.showErrorMsg ||
@@ -59,10 +64,10 @@ export default function (params: Params): ResultType {
     scope: 'openid offline',
     max_age: 7200,
     post_logout_redirect_uri: params.homePageUrl,
-    // silent_redirect_uri: '',
     accessTokenExpiringNotificationTime: 8,
     filterProtocolClaims: true,
     loadUserInfo: true,
+    acr_values: deviceId,
   });
 
   // 删除陈旧的oidc 的参数
@@ -152,6 +157,11 @@ export default function (params: Params): ResultType {
       setLang(lang);
     },
 
+    // 获取lang
+    getLang() {
+      return getLang();
+    },
+
     // vue-router 中的路由守卫
     async routerGuard() {
       const func = () => {
@@ -192,6 +202,8 @@ export default function (params: Params): ResultType {
 
     // 清除localStorage 排除oidc 的信息的
     clearLocalStorageDataExcludeOidc(excludeKey?: string[]) {
+      excludeKey = excludeKey ? excludeKey : [];
+      excludeKey.push('easi:deviceid');
       const list = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);

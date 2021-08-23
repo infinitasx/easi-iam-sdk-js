@@ -174,6 +174,8 @@ scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.19/index.js`);
     - 获取用户权限点信息，返回Promise对象
 - iam.setLange(lang: 'zh'|'en'|'ja')  
     - 设置当前国际化语言
+- iam.getLang()
+    - 获取当前的国际化语言标识
 - iam.signIn()
     - 登录
 - iam.signOut()

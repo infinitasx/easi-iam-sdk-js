@@ -44,6 +44,7 @@ export interface ResultType {
   codeExchangeTokenPage: (homePageUrl: string) => any;
   dataActionLogComp: (function_type: string) => any;
   setLang: (lang: ILang) => void;
+  getLang: () => ILang;
   routerGuard: () => Promise<boolean>;
   clearLocalStorageDataExcludeOidc: (excludeKey?: string[]) => void;
   clearOidcLocalStorageData: () => void;

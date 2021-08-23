@@ -1,8 +1,9 @@
-import { IamClient } from '../../packages/index';
+import { IamClient, version } from '../../packages/index';
 import { UserManager } from 'oidc-client';
 
-test('测试', () => {
+describe('测试sdk-js的基本东西', () => {
   const env = 'production';
+  const lang = 'zh';
   const iamClient = IamClient({
     client_id: {
       production: 'production',
@@ -13,7 +14,7 @@ test('测试', () => {
     callbackUrl: 'callbackUrl',
     applicationId: 'applicationId',
     env,
-    lang: 'zh',
+    lang,
     UI: {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       showErrorMsg() {},
@@ -25,6 +26,18 @@ test('测试', () => {
       dataActionLogComp() {},
     },
   });
-  const instance = iamClient.getOidcClientInstance();
-  expect(instance).toBeInstanceOf(UserManager);
+
+  test('version', () => {
+    expect(version).toBe('');
+  });
+
+  test('oidc实例', () => {
+    const instance = iamClient.getOidcClientInstance();
+    expect(instance).toBeInstanceOf(UserManager);
+  });
+
+  test('国际化设置', () => {
+    iamClient.setLang('en');
+    expect(iamClient.getLang()).toBe('en');
+  });
 });
