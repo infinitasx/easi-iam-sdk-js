@@ -6,8 +6,8 @@
 - packages 具体的sdk代码
     - 入口 index.ts
 - UI  原来的packages中拆分出来的UI，不同技术栈有不同的UI使用
-  - vue2&element 依赖vue2 和 element-ui技术的iam-jssdk的ui （使用说明见下文）
-  - vue3&antd 依赖vue3 和 antdv技术的iam-jssdk的ui （使用说明见下文）
+  - vue2-element 依赖vue2 和 element-ui技术的iam-jssdk的ui （使用说明见下文）
+  - vue3-antd 依赖vue3 和 antdv技术的iam-jssdk的ui （使用说明见下文）
 
 ## 依赖
 - vite
@@ -79,6 +79,7 @@ export const iam = IamClient({
 ### 使用案例
 ```vue
   <template>
+    <!-- 当前数据的id（后端上报给iam的数据id） -->
     <data-log :data_id="123123123123">
       <!-- 可以省略 -->
       <template #left>
@@ -97,7 +98,7 @@ import {iamSdkUtils} from '@/utils/iamSdkUtils.ts'
 // vue2的用法类似
 export default defineComponent({
   components: {
-    DataLog: iamSdkUtils.dataActionLogComp('apps'), // 参数为当前的模块名
+    DataLog: iamSdkUtils.dataActionLogComp('apps'), // 参数为当前的模块名（对应的业务系统后端上报给iam的模块名）
   },
 });
 </script>
