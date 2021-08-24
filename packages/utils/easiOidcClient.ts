@@ -115,11 +115,6 @@ export default function (params: Params): ResultType {
     getMessage()(langTexts?.[getLang()]?.refreshToken as string);
   });
 
-  _oidcClient.events.addUserLoaded(user => {
-    console.log('获取了新的user');
-    console.log(user);
-  });
-
   (async function () {
     try {
       const auth_info = await _oidcClient.getUser();
