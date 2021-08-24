@@ -3,6 +3,11 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.28] - 2021-08-24
+### Changed
+* 完善部分单元测试
+* 优化oidc-client的相关方法
+
 ## [0.0.27] - 2021-08-24
 ### Changed
 * UI日志查询支持自定义title

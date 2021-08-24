@@ -65,6 +65,8 @@ export default function (params: Params): ResultType {
     loadUserInfo: true,
   });
 
+  //
+
   // 删除陈旧的oidc 的参数
   _oidcClient.clearStaleState();
 
@@ -111,6 +113,11 @@ export default function (params: Params): ResultType {
 
   _oidcClient.events.addSilentRenewError(function () {
     getMessage()(langTexts?.[getLang()]?.refreshToken as string);
+  });
+
+  _oidcClient.events.addUserLoaded(user => {
+    console.log('获取了新的user');
+    console.log(user);
   });
 
   (async function () {
