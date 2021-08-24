@@ -1,10 +1,10 @@
 export default {
   name: 'callback-loading',
   render(createElement) {
-    let style = document.querySelector('style#iamCallbackPageStyle');
+    let style = document.querySelector('style#IAMCallbackPageStyle');
     if (!style) {
       style = document.createElement('style');
-      style.id = 'iamCallbackPageStyle';
+      style.id = 'IAMCallbackPageStyle';
       style.innerHTML = `
         @keyframes draw {
           0% {

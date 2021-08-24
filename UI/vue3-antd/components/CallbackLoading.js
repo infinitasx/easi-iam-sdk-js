@@ -1,10 +1,10 @@
 import { h } from 'vue';
 
 export default () => {
-  let style = document.querySelector('style#iamCallbackPageStyle');
+  let style = document.querySelector('style#IAMCallbackPageStyle');
   if (!style) {
     style = document.createElement('style');
-    style.id = 'iamCallbackPageStyle';
+    style.id = 'IAMCallbackPageStyle';
     style.innerHTML = `
         @keyframes draw {
           0% {

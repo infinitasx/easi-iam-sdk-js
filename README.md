@@ -6,8 +6,8 @@
 - packages 具体的sdk代码
     - 入口 index.ts
 - UI  原来的packages中拆分出来的UI，不同技术栈有不同的UI使用
-  - vue2-element 依赖vue2 和 element-ui技术的iam-jssdk的ui （使用说明见下文）
-  - vue3-antd 依赖vue3 和 antdv技术的iam-jssdk的ui （使用说明见下文）
+  - vue2-element 依赖vue2 和 element-ui技术的IAM-SDK的ui （使用说明见下文）
+  - vue3-antd 依赖vue3 和 antdv技术的IAM-SDK的ui （使用说明见下文）
 
 ## 依赖
 - vite
@@ -27,7 +27,7 @@ yarn add https://github.com/infinitasx/easi-iam-sdk-js.git#master
 ### 引入
 ```ts
 // iamSdkUtils.ts
-import { IamClient } from 'easi-iam-sdk-js';
+import { IAMClient } from 'easi-iam-sdk-js';
 // 文件中提供两种UI模式
 // 注意，如果使用ts时，在 easi-iam-sdk-js.d.ts中声明：declare module 'easi-iam-sdk-js/UI/vue3-antd/index.js';
 // 1. vue3 antdv 的UI 
@@ -41,7 +41,7 @@ const redirect_uri = '/iam/callback';
 // index 页面地址
 const post_logout_redirect_uri = '/iam';
 
-export const iam = IamClient({
+export const IAM = IAMClient({
   client_id: {
     production: '*****',
     testing: '******',
@@ -59,11 +59,11 @@ export const iam = IamClient({
 
 
 // code 换 token的页面，直接配置到路由里面即可
-// import { iam } from 'iamSdkUtils.ts'
+// import { IAM } from 'iamSdkUtils.ts'
 // {
 //  path: '/callback',
 //  name: 'Callback',
-//  component: iam.codeExchangeTokenPage('/'),
+//  component: IAM.codeExchangeTokenPage('/'),
 //  meta: { title: '正在登录', icon: '' },
 // }
 ```
@@ -94,11 +94,11 @@ export const iam = IamClient({
   </template>
 <script>
 import { defineComponent } from 'vue';
-import {iamSdkUtils} from '@/utils/iamSdkUtils.ts'
+import { IAMSdkUtils } from '@/utils/iamSdkUtils.ts'
 // vue2的用法类似
 export default defineComponent({
   components: {
-    DataLog: iamSdkUtils.dataActionLogComp('apps'), // 参数为当前的模块名（对应的业务系统后端上报给iam的模块名）
+    DataLog: IAMSdkUtils.dataActionLogComp('apps'), // 参数为当前的模块名（对应的业务系统后端上报给iam的模块名）
   },
 });
 </script>
@@ -126,7 +126,7 @@ if (to.name === 'Callback') {
 let canGo = false;
 try {
   // 此方法会判断是否存在认证信息，如果没有会自动跳转到登录页面的  
-  canGo = await iam.routerGuard();
+  canGo = await IAM.routerGuard();
 } catch (e) {
   canGo = false;
 }
@@ -155,36 +155,36 @@ scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.19/index.js`);
 ```
 
 ### 使用api说明
-- iam.getOidcClientInstance()
+- IAM.getOidcClientInstance()
     - 获取oidc-client-js 原本的实例对象（https://github.com/IdentityModel/oidc-client-js/wiki）
-- iam.codeExchangeTokenPage(homePageUrl?: string)
+- IAM.codeExchangeTokenPage(homePageUrl?: string)
     - 获取callback组件
-- iam.clearLocalStorageDataExcludeOidc(excludeKey?: string[])
+- IAM.clearLocalStorageDataExcludeOidc(excludeKey?: string[])
     - 清除除了oidc认证的key之外的东西
-- iam.clearOidcLocalStorageData()
+- IAM.clearOidcLocalStorageData()
     - 清除oidc认证的key的东西
-- iam.getAuthInfoSync()
+- IAM.getAuthInfoSync()
     - 获取用户认证信息
-- iam.getAuthInfo()
+- IAM.getAuthInfo()
     - 获取用户认证信息，返回Promise对象
-- iam.getUserInfo()
+- IAM.getUserInfo()
     - 获取用户信息，返回Promise对象
-- iam.getPermissionsData({scopeId?: string | number | null })
+- IAM.getPermissionsData({scopeId?: string | number | null })
     - scopeId 城市/范围id
     - 获取用户权限点信息，返回Promise对象
-- iam.setLange(lang: 'zh'|'en'|'ja')  
+- IAM.setLange(lang: 'zh'|'en'|'ja')  
     - 设置当前国际化语言
-- iam.getLang()
+- IAM.getLang()
     - 获取当前的国际化语言标识
-- iam.signIn()
+- IAM.signIn()
     - 登录
-- iam.signOut()
+- IAM.signOut()
     - 登出
-- iam.getAuthorization()
+- IAM.getAuthorization()
     - 获取token值
-- iam.getIamHomeUrl()
+- IAM.getIAMHomeUrl()
     - 获取iam的主页地址
-- iam.openExpiredModal()
+- IAM.openExpiredModal()
     - 开启过期对话框
-- iam.closeExpiredModal()
+- IAM.closeExpiredModal()
     - 关闭过期对话框

@@ -343,7 +343,7 @@ export default function (params: Params): ResultType {
       return auth_info ? `Bearer ${auth_info.access_token}` : '';
     },
 
-    getIamHomeUrl() {
+    getIAMHomeUrl() {
       return getAuthority() + HOMEPAGE_PATH;
     },
 

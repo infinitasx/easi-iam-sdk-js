@@ -49,7 +49,7 @@ export interface ResultType {
     signOut: () => void;
     getIdToken: () => Promise<any>;
     getAuthorization: () => string;
-    getIamHomeUrl: () => string;
+    getIAMHomeUrl: () => string;
     openExpiredModal: () => void;
     closeExpiredModal: () => void;
 }
