@@ -16,12 +16,11 @@ import {
   getLog,
 } from '../setter-getter/ui';
 import codeExchangeToken from './codeExchangeToken';
-import { v4 } from 'uuid';
 
 import { HOMEPAGE_PATH } from '../constant';
 
 import { getPermissions, getUserInfo, getDataActionLog, getLogSearchParams } from '../api/common';
-import { setDeviceId, getDeviceId } from '../setter-getter/deviceId';
+import { getDeviceId } from '../setter-getter/deviceId';
 
 export default function (params: Params): ResultType {
   // 设置初始化语言
@@ -31,12 +30,6 @@ export default function (params: Params): ResultType {
 
   Oidc.Log.logger = console;
   Oidc.Log.level = getEnv() === 'development' ? Oidc.Log.INFO : Oidc.Log.NONE;
-
-  // 设备id
-  let deviceId = window.localStorage.getItem('iam:deviceid');
-  deviceId = deviceId ? deviceId : v4();
-  window.localStorage.setItem('iam:deviceid', deviceId);
-  setDeviceId(deviceId);
 
   // 不使用本地的UI
   if (
@@ -70,7 +63,6 @@ export default function (params: Params): ResultType {
     accessTokenExpiringNotificationTime: 8,
     filterProtocolClaims: true,
     loadUserInfo: true,
-    acr_values: deviceId,
   });
 
   // 删除陈旧的oidc 的参数
@@ -175,7 +167,7 @@ export default function (params: Params): ResultType {
       const func = () => {
         const url = window.location.href;
         if (url.indexOf('login') === -1 && url.indexOf('callback') === -1) {
-          window.sessionStorage.setItem('iam-start-url', url);
+          window.sessionStorage.setItem('IAM-start-url', url);
         }
       };
 
@@ -211,7 +203,7 @@ export default function (params: Params): ResultType {
     // 清除localStorage 排除oidc 的信息的
     clearLocalStorageDataExcludeOidc(excludeKey?: string[]) {
       excludeKey = excludeKey ? excludeKey : [];
-      excludeKey.push('iam:deviceid');
+      excludeKey.push('IAM:deviceId');
       const list = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
