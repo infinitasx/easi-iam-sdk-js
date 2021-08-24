@@ -43,7 +43,7 @@ export interface ResultType {
   getOidcClientInstance: () => UserManager;
   codeExchangeTokenPage: (homePageUrl: string) => any;
   getDeviceId: () => string;
-  dataActionLogComp: (function_type: string) => any;
+  dataActionLogComp: (function_type: string, title?: string) => any;
   setLang: (lang: ILang) => void;
   getLang: () => ILang;
   routerGuard: () => Promise<boolean>;

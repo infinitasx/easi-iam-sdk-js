@@ -7,6 +7,7 @@ import { Button, Modal, Table, Pagination, Select, SelectOption } from 'ant-desi
  * @param params.application_id 应用id
  * @param params.function_type 模块类型
  * @param params.token 令牌
+ * @param params.title 标题
  * @param getDataActionLog 获取操作日志的request方法
  * @param getLogSearchParams 获取日志查询的类型
  * @param langTexts 国际化文字
@@ -120,7 +121,7 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
                 },
               },
               {
-                title: () => langTexts.actionLog,
+                title: params.title ? params.title : () => langTexts.actionLog,
                 footer: () =>
                   h(
                     Button,

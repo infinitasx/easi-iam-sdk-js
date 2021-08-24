@@ -139,12 +139,13 @@ export default function (params: Params): ResultType {
     },
 
     // 获取日志操作组件
-    dataActionLogComp(function_type: string) {
+    dataActionLogComp(function_type: string, title?: string) {
       return getLog()(
         {
           application_id: params.applicationId,
           function_type: function_type,
           token: this.getAuthorization(),
+          title,
         },
         getDataActionLog,
         getLogSearchParams,
