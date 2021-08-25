@@ -205,8 +205,6 @@ export default function (params: Params): ResultType {
 
     // 清除localStorage 排除oidc 的信息的
     clearLocalStorageDataExcludeOidc(excludeKey?: string[]) {
-      excludeKey = excludeKey ? excludeKey : [];
-      excludeKey.push('IAM:deviceId');
       const list = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);

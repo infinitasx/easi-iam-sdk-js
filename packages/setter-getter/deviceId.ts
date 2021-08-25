@@ -12,5 +12,6 @@ export function getDeviceId(): string {
 }
 
 export function setDeviceId(_deviceId: string) {
+  window.sessionStorage.setItem('IAM:deviceId', _deviceId);
   deviceId = _deviceId;
 }
