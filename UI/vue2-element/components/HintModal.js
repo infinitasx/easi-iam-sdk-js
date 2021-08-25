@@ -8,13 +8,11 @@ import { MessageBox } from 'element-ui';
  * @param callback 确定的回调
  */
 export default (langTexts, callback) => {
-  MessageBox.alert({
-    title: langTexts.title, // '登录设备通知',
+  MessageBox.alert(langTexts.title, langTexts.content, {
     centered: true,
     showClose: false,
     closeOnClickModal: false,
     closeOnPressEscape: false,
-    message: langTexts.content, // '您的账号在另一设备上已经登录，由于登录设备限制，当前设备将会强制下线。',
     confirmButtonText: langTexts.okText, // '确认',
     callback: () => {
       callback();
