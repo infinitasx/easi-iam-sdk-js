@@ -164,7 +164,7 @@ export default function (params: Params): ResultType {
         getLogSearchParams,
         langTexts[getLang()]?.actionLog,
         // 错误检验的
-        that.ajaxErrorCheck,
+        that.ajaxErrorCheck.bind(that),
       );
     },
 
