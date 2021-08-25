@@ -8,7 +8,7 @@ import { MessageBox } from 'element-ui';
  * @param callback 确定的回调
  */
 export default (langTexts, callback) => {
-  MessageBox.alert(langTexts.title, langTexts.content, {
+  MessageBox.alert(langTexts.content, langTexts.title, {
     centered: true,
     showClose: false,
     closeOnClickModal: false,
