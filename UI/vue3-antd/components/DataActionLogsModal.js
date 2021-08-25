@@ -121,7 +121,7 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
                 },
               },
               {
-                title: () => (params.title ? params.title : () => langTexts.actionLog),
+                title: () => (params.title ? params.title : langTexts.actionLog),
                 footer: () =>
                   h(
                     Button,
