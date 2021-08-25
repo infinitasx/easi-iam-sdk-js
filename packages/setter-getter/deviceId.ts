@@ -4,7 +4,7 @@
 
 let deviceId: string;
 
-const d = window.sessionStorage.getItem('IAM:deviceId');
+const d = window.localStorage.getItem('IAM:deviceId');
 deviceId = d ? d : '';
 
 export function getDeviceId(): string {
@@ -12,6 +12,6 @@ export function getDeviceId(): string {
 }
 
 export function setDeviceId(_deviceId: string) {
-  window.sessionStorage.setItem('IAM:deviceId', _deviceId);
+  window.localStorage.setItem('IAM:deviceId', _deviceId);
   deviceId = _deviceId;
 }
