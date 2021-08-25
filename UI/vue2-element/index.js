@@ -1,6 +1,7 @@
 import { Message, MessageBox } from 'element-ui';
 import CallbackPage from './views/Callback.js';
 import dataActionLogComp from './components/DataActionLogsModal.js';
+import hintModalComp from './components/HintModal.js';
 
 export default {
   showErrorMsg: msg =>
@@ -18,4 +19,5 @@ export default {
   },
   codeExchangeTokenPage: CallbackPage,
   dataActionLogComp,
+  hintModalComp,
 };
