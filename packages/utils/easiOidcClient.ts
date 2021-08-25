@@ -151,6 +151,8 @@ export default function (params: Params): ResultType {
 
     // 获取日志操作组件
     dataActionLogComp(function_type: string, title?: string) {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const that = this;
       return getLog()(
         {
           application_id: params.applicationId,
@@ -162,7 +164,7 @@ export default function (params: Params): ResultType {
         getLogSearchParams,
         langTexts[getLang()]?.actionLog,
         // 错误检验的
-        this.ajaxErrorCheck,
+        that.ajaxErrorCheck,
       );
     },
 
