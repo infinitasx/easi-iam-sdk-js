@@ -140,7 +140,7 @@ export default function (params: Params): ResultType {
     // ajax错误检测-（检测设备被踢下去的情况）
     ajaxErrorCheck(error: any) {
       return clientLimitErrorCheckUtil(error, langTexts?.[getLang()].hintModalForDevice, () => {
-        this.signIn();
+        this.signOut();
       });
     },
 
