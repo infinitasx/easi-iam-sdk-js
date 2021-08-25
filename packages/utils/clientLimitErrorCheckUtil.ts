@@ -8,12 +8,16 @@ import { getHintModal } from '../setter-getter/ui';
  * @return false 没有匹配上
  * @return true 有匹配上
  */
+let number = 0;
 export default function (error: any, langText: any, callback: any) {
   const details = error?.error?.details || [];
   const b = details.some((item: any) => item.reason === 'NOT_MATCHED_ACTIVE_DEVICE');
   // 设备唯一，被挤下线
   if (b) {
-    getHintModal()(langText, callback);
+    if (number === 0) {
+      getHintModal()(langText, callback);
+    }
+    number++;
     return true;
   }
 
