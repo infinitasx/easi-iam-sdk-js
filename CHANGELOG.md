@@ -3,6 +3,10 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.32] - 2021-08-25
+### Added
+* 多设备登录约束校验
+
 ## [0.0.31] - 2021-08-25
 ### Fixed
 * 修复antdv vue3版UI操作日志Modal默认的title无法显示的问题

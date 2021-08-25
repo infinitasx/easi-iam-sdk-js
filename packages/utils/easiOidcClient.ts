@@ -14,8 +14,10 @@ import {
   getPage,
   setLog,
   getLog,
+  setHintModal,
 } from '../setter-getter/ui';
 import codeExchangeToken from './codeExchangeToken';
+import clientLimitErrorCheckUtil from './clientLimitErrorCheckUtil';
 
 import { HOMEPAGE_PATH } from '../constant';
 
@@ -35,7 +37,8 @@ export default function (params: Params): ResultType {
   if (
     !params.UI.showErrorMsg ||
     !params.UI.showTokenExpiredModal ||
-    !params.UI.codeExchangeTokenPage
+    !params.UI.codeExchangeTokenPage ||
+    !params.UI.hintModalComp
   ) {
     throw new Error('参数UI缺少具体内容');
   }
@@ -44,6 +47,7 @@ export default function (params: Params): ResultType {
   setMessage(params.UI.showErrorMsg);
   setPage(params.UI.codeExchangeTokenPage);
   setLog(params.UI.dataActionLogComp);
+  setHintModal(params.UI.hintModalComp);
 
   const client_id = params.client_id[getEnv()];
 
@@ -64,8 +68,6 @@ export default function (params: Params): ResultType {
     filterProtocolClaims: true,
     loadUserInfo: true,
   });
-
-  //
 
   // 删除陈旧的oidc 的参数
   _oidcClient.clearStaleState();
@@ -135,6 +137,13 @@ export default function (params: Params): ResultType {
       return codeExchangeToken(getPage(), homePageUrl);
     },
 
+    // ajax错误检测-（检测设备被踢下去的情况）
+    ajaxErrorCheck(error: any) {
+      return clientLimitErrorCheckUtil(error, langTexts?.[getLang()].hintModalForDevice, () => {
+        this.signIn();
+      });
+    },
+
     // 获取设备id
     getDeviceId() {
       return getDeviceId();
@@ -152,6 +161,8 @@ export default function (params: Params): ResultType {
         getDataActionLog,
         getLogSearchParams,
         langTexts[getLang()]?.actionLog,
+        // 错误检验的
+        this.ajaxErrorCheck,
       );
     },
 
@@ -253,9 +264,13 @@ export default function (params: Params): ResultType {
       return getUserInfo({
         token: this.getAuthorization(),
       }).catch((e: any) => {
-        if (e.code === 401 || e.code === 403) {
-          this.clearOidcLocalStorageData();
-          this.signIn();
+        // 检测是否匹配上错误
+        const b = this.ajaxErrorCheck(e);
+        if (!b) {
+          if (e.code === 401 || e.code === 403) {
+            this.clearOidcLocalStorageData();
+            this.signIn();
+          }
         }
       });
     },
@@ -267,9 +282,13 @@ export default function (params: Params): ResultType {
         application_id: params.applicationId,
         scope_id: p.scopeId,
       }).catch((e: any) => {
-        if (e.code === 401 || e.code === 403) {
-          this.clearOidcLocalStorageData();
-          this.signIn();
+        // 检测是否匹配上错误
+        const b = this.ajaxErrorCheck(e);
+        if (!b) {
+          if (e.code === 401 || e.code === 403) {
+            this.clearOidcLocalStorageData();
+            this.signIn();
+          }
         }
       });
     },

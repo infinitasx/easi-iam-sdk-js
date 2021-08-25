@@ -22,6 +22,14 @@ interface IUi {
   ) => void;
   codeExchangeTokenPage: (callback: () => void) => any; // code换token的函数
   dataActionLogComp: (params: IDataActionLogCompParams) => any; // 数据操作日志组件
+  hintModalComp: (
+    langTexts: {
+      title: string;
+      content: string;
+      okText: string;
+    },
+    callback: () => void,
+  ) => void; // 提示框
 }
 
 export interface Params {
@@ -42,6 +50,7 @@ export interface Params {
 export interface ResultType {
   getOidcClientInstance: () => UserManager;
   codeExchangeTokenPage: (homePageUrl: string) => any;
+  ajaxErrorCheck: (error: any) => boolean;
   getDeviceId: () => string;
   dataActionLogComp: (function_type: string, title?: string) => any;
   setLang: (lang: ILang) => void;

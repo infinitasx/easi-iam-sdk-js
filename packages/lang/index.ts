@@ -15,6 +15,12 @@ export default {
       actionTime: '操作时间',
       close: '关闭',
     },
+    // 提示框-设备被挤下线
+    hintModalForDevice: {
+      title: '登录设备通知',
+      content: '您的账号在另一设备上已经登录，由于登录设备限制，当前设备将会强制下线。',
+      okText: '确认',
+    },
   },
   // 英文
   en: {
@@ -32,6 +38,13 @@ export default {
       actionTime: 'Operating time',
       close: 'Close',
     },
+    // 提示框-设备被挤下线
+    hintModalForDevice: {
+      title: 'Login device notification',
+      content:
+        'Your account is already logged in on another device. Due to the login device restriction, the current device will be forced offline.',
+      okText: 'Confirm',
+    },
   },
   // 日文
   ja: {
@@ -48,6 +61,13 @@ export default {
       actionContent: '操作内容',
       actionTime: '稼働時間',
       close: '閉鎖',
+    },
+    // 提示框-设备被挤下线
+    hintModalForDevice: {
+      title: 'ログインデバイスの通知',
+      content:
+        'アカウントはすでに別のデバイスにログインしています。ログインデバイスの制限により、現在のデバイスは強制的にオフラインになります。',
+      okText: '確認',
     },
   },
 };

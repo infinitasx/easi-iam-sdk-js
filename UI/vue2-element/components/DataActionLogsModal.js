@@ -10,8 +10,9 @@ import { Button, Dialog, Table, TableColumn, Pagination, Select, Option } from '
  * @param getDataActionLog 获取操作日志的request方法
  * @param getLogSearchParams 获取日志查询的类型
  * @param langTexts 国际化文字
+ * @param errorCheck 错误校验
  */
-export default function (params, getDataActionLog, getLogSearchParams, langTexts) {
+export default function (params, getDataActionLog, getLogSearchParams, langTexts, errorCheck) {
   return {
     props: {
       data_id: {
@@ -54,8 +55,9 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
           .then(res => {
             this.searchItems = res.types || [];
           })
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          .catch(() => {});
+          .catch(err => {
+            errorCheck(err);
+          });
       },
       queryData() {
         this.loading = true;
@@ -73,7 +75,7 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
             this.data = res.events;
           })
           .catch(err => {
-            console.log(err);
+            errorCheck(err);
           })
           .finally(() => {
             this.loading = false;

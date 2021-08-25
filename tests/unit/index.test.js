@@ -26,6 +26,8 @@ describe('测试sdk-js的基本东西', () => {
       codeExchangeTokenPage() {},
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       dataActionLogComp() {},
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      hintModalComp(){},
     },
   });
 

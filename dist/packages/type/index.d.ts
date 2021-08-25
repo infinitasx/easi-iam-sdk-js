@@ -13,6 +13,11 @@ interface IUi {
     }, okCallback: () => void) => void;
     codeExchangeTokenPage: (callback: () => void) => any;
     dataActionLogComp: (params: IDataActionLogCompParams) => any;
+    hintModalComp: (langTexts: {
+        title: string;
+        content: string;
+        okText: string;
+    }, callback: () => void) => void;
 }
 export interface Params {
     client_id: {
@@ -31,6 +36,7 @@ export interface Params {
 export interface ResultType {
     getOidcClientInstance: () => UserManager;
     codeExchangeTokenPage: (homePageUrl: string) => any;
+    ajaxErrorCheck: (error: any) => boolean;
     getDeviceId: () => string;
     dataActionLogComp: (function_type: string, title?: string) => any;
     setLang: (lang: ILang) => void;

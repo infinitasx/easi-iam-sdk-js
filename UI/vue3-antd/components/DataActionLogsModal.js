@@ -11,8 +11,9 @@ import { Button, Modal, Table, Pagination, Select, SelectOption } from 'ant-desi
  * @param getDataActionLog 获取操作日志的request方法
  * @param getLogSearchParams 获取日志查询的类型
  * @param langTexts 国际化文字
+ * @param errorCheck 错误校验
  */
-export default function (params, getDataActionLog, getLogSearchParams, langTexts) {
+export default function (params, getDataActionLog, getLogSearchParams, langTexts, errorCheck) {
   return defineComponent({
     name: 'easi-action-log',
     props: {
@@ -43,8 +44,9 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
           .then(res => {
             searchItems.value = res.types || [];
           })
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          .catch(() => {});
+          .catch(err => {
+            errorCheck(err);
+          });
       };
 
       // 数据查询
@@ -64,7 +66,7 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
             dataSource.value = res.events;
           })
           .catch(err => {
-            console.log(err);
+            errorCheck(err);
           })
           .finally(() => {
             loading.value = false;
