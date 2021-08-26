@@ -21,6 +21,12 @@ export default {
       content: '您的账号在另一设备上已经登录，由于登录设备限制，当前设备将会强制下线。',
       okText: '确认',
     },
+    // 提示框-令牌失效
+    hintModalForToken: {
+      title: '登录设备通知',
+      content: '您已登出系统或访问令牌已过期',
+      okText: '确认',
+    },
   },
   // 英文
   en: {
@@ -45,6 +51,12 @@ export default {
         'Your account is already logged in on another device. Due to the login device restriction, the current device will be forced offline.',
       okText: 'Confirm',
     },
+    // 提示框-令牌失效
+    hintModalForToken: {
+      title: 'Login device notification',
+      content: 'You have been logged out of the system or the access token has expired',
+      okText: 'Confirm',
+    },
   },
   // 日文
   ja: {
@@ -67,6 +79,12 @@ export default {
       title: 'ログインデバイスの通知',
       content:
         'アカウントはすでに別のデバイスにログインしています。ログインデバイスの制限により、現在のデバイスは強制的にオフラインになります。',
+      okText: '確認',
+    },
+    // 提示框-令牌失效
+    hintModalForToken: {
+      title: 'ログインデバイスの通知',
+      content: 'システムからログアウトしているか、アクセストークンの有効期限が切れています',
       okText: '確認',
     },
   },

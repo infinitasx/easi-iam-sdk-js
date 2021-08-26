@@ -139,9 +139,14 @@ export default function (params: Params): ResultType {
 
     // ajax错误检测-（检测设备被踢下去的情况）
     ajaxErrorCheck(error: any) {
-      return clientLimitErrorCheckUtil(error, langTexts?.[getLang()].hintModalForDevice, () => {
-        this.signOut();
-      });
+      return clientLimitErrorCheckUtil(
+        error,
+        langTexts?.[getLang()].hintModalForDevice,
+        langTexts?.[getLang()].hintModalForToken,
+        () => {
+          this.signOut();
+        },
+      );
     },
 
     // 获取设备id
@@ -183,7 +188,7 @@ export default function (params: Params): ResultType {
       const func = () => {
         const url = window.location.href;
         if (url.indexOf('login') === -1 && url.indexOf('callback') === -1) {
-          window.sessionStorage.setItem('IAM-start-url', url);
+          window.sessionStorage.setItem('IAM:start-url', url);
         }
       };
 
@@ -218,6 +223,8 @@ export default function (params: Params): ResultType {
 
     // 清除localStorage 排除oidc 的信息的
     clearLocalStorageDataExcludeOidc(excludeKey?: string[]) {
+      excludeKey = excludeKey ? excludeKey : [];
+      excludeKey.push('IAM:deviceId');
       const list = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);

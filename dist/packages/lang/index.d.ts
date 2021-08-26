@@ -18,6 +18,11 @@ declare const _default: {
             content: string;
             okText: string;
         };
+        hintModalForToken: {
+            title: string;
+            content: string;
+            okText: string;
+        };
     };
     en: {
         refreshToken: string;
@@ -38,6 +43,11 @@ declare const _default: {
             content: string;
             okText: string;
         };
+        hintModalForToken: {
+            title: string;
+            content: string;
+            okText: string;
+        };
     };
     ja: {
         refreshToken: string;
@@ -54,6 +64,11 @@ declare const _default: {
             close: string;
         };
         hintModalForDevice: {
+            title: string;
+            content: string;
+            okText: string;
+        };
+        hintModalForToken: {
             title: string;
             content: string;
             okText: string;

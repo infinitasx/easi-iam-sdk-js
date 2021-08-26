@@ -1,1 +1,1 @@
-export default function (error: any, langText: any, callback: any): boolean;
+export default function (error: any, langText: any, langText2: any, callback: any): boolean;
