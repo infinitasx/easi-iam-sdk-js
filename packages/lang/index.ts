@@ -18,7 +18,7 @@ export default {
     // 提示框-设备被挤下线
     hintModalForDevice: {
       title: '登录设备通知',
-      content: '您的账号在另一设备上已经登录，由于登录设备限制，当前设备将会强制下线。',
+      content: '您已登出系统或已被强制下线',
       okText: '确认',
     },
     // 提示框-令牌失效
@@ -47,8 +47,7 @@ export default {
     // 提示框-设备被挤下线
     hintModalForDevice: {
       title: 'Login device notification',
-      content:
-        'Your account is already logged in on another device. Due to the login device restriction, the current device will be forced offline.',
+      content: 'You have been logged out of the system or have been forced offline',
       okText: 'Confirm',
     },
     // 提示框-令牌失效
@@ -77,8 +76,7 @@ export default {
     // 提示框-设备被挤下线
     hintModalForDevice: {
       title: 'ログインデバイスの通知',
-      content:
-        'アカウントはすでに別のデバイスにログインしています。ログインデバイスの制限により、現在のデバイスは強制的にオフラインになります。',
+      content: 'システムからログアウトしているか、強制的にオフラインになっています',
       okText: '確認',
     },
     // 提示框-令牌失效
