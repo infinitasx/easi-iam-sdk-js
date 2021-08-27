@@ -215,7 +215,6 @@ instance.interceptors.response.use(
 ```
 
 ### 使用api说明
-
 - IAM.getOidcClientInstance()
     - 获取oidc-client-js 原本的实例对象（https://github.com/IdentityModel/oidc-client-js/wiki）
 - IAM.codeExchangeTokenPage(homePageUrl?: string)
@@ -236,6 +235,7 @@ instance.interceptors.response.use(
     - 获取用户认证信息，返回Promise对象
 - IAM.getUserInfo()
     - 获取用户信息，返回Promise对象
+    - 后端返回的信息中，用户的基本信息、用户的权限信息、用户活跃的设备信息
 - IAM.getPermissionsData({scopeId?: string | number | null })
     - scopeId 城市/范围id
     - 获取用户权限点信息，返回Promise对象
