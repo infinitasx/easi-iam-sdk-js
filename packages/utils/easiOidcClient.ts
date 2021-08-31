@@ -281,6 +281,7 @@ export default function (params: Params): ResultType {
             this.signIn();
           }
         }
+        return Promise.reject(e);
       });
     },
 
@@ -299,6 +300,7 @@ export default function (params: Params): ResultType {
             this.signIn();
           }
         }
+        return Promise.reject(e);
       });
     },
 
