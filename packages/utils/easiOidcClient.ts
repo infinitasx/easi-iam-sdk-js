@@ -185,13 +185,6 @@ export default function (params: Params): ResultType {
 
     // vue-router 中的路由守卫
     async routerGuard() {
-      const func = () => {
-        const url = window.location.href;
-        if (url.indexOf('login') === -1 && url.indexOf('callback') === -1) {
-          window.sessionStorage.setItem('IAM:start-url', url);
-        }
-      };
-
       // 内存变量中，不存在认证信息
       if (!this.getAuthInfoSync()) {
         // 获取一次storage中的
@@ -205,7 +198,6 @@ export default function (params: Params): ResultType {
           // 删除过期的oidc缓存
           this.clearOidcLocalStorageData();
           this.closeExpiredModal();
-          func();
           this.signIn();
           return false;
         } else {
@@ -215,7 +207,6 @@ export default function (params: Params): ResultType {
         }
       } else {
         // 没有
-        func();
         this.signIn();
         return false;
       }

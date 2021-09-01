@@ -3,9 +3,11 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
-## [0.0.35] - 2021-08-31
+## [0.0.35] - 2021-09-01
 ### Fixed
 * 修复部分请求api没有return错误信息
+### Changed
+* 去掉callback页面跳到初始进入的地址
 
 ## [0.0.34] - 2021-08-26
 ### Changed

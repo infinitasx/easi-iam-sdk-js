@@ -19,8 +19,7 @@ export default function (Component: any, homePageUrl: string) {
       .signinRedirectCallback()
       .then((user: User) => {
         setDeviceId(user.profile.acr || '');
-        const url = window.sessionStorage.getItem('IAM:start-url');
-        window.location.href = url || homePageUrl || '/';
+        window.location.href = homePageUrl || '/';
       })
       .catch(err => {
         getMessage()(langText[getLang()]?.getTokenFailed);
