@@ -191,9 +191,9 @@ instance.interceptors.response.use(
             const {data, status} = error.response;
             /// ++++++++++++++++++++++++++++++++++++++++++++ 开始 +++++++++++++++++++++ 使用IAM函数
             // 判断错误的信息中是否存在当前账号被踢下去的情况
-            const b = IAM.ajaxErrorCheck(data);
+            const matchError = IAM.ajaxErrorCheck(data);
             // true，有被踢，false，没有被踢
-            if (!b) {
+            if (!matchError) {
                 if (hideError !== true) message.error(parseErrMsg(data, status));
             } else {
                 // ...
