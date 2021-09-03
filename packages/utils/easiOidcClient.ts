@@ -64,7 +64,7 @@ export default function (params: Params): ResultType {
     scope: 'openid offline',
     max_age: 7190,
     post_logout_redirect_uri: params.homePageUrl,
-    accessTokenExpiringNotificationTime: 1,
+    accessTokenExpiringNotificationTime: 120,
     filterProtocolClaims: true,
     loadUserInfo: true,
   });
