@@ -19,10 +19,11 @@ import {
 import codeExchangeToken from './codeExchangeToken';
 import clientLimitErrorCheckUtil from './clientLimitErrorCheckUtil';
 
-import { HOMEPAGE_PATH } from '../constant';
+import { HOMEPAGE_PATH, IAMLastLoginKey } from '../constant';
 
 import { getPermissions, getUserInfo, getDataActionLog, getLogSearchParams } from '../api/common';
 import { getDeviceId } from '../setter-getter/deviceId';
+import { getYearMonthDateTimeNumber } from './index';
 
 export default function (params: Params): ResultType {
   // 设置初始化语言
@@ -69,6 +70,28 @@ export default function (params: Params): ResultType {
     loadUserInfo: true,
   });
 
+  // 登录过期的提示
+  const loginExpiredTip = () => {
+    const callback = () => {
+      _oidcClient
+        .signoutRedirect()
+        .then(function (resp: any) {
+          console.log('signed out', resp);
+        })
+        .catch(function (err: any) {
+          console.log(err);
+        });
+    };
+    getModal()(
+      {
+        title: langTexts[getLang()]?.sessionExpiredTitle,
+        content: langTexts?.[getLang()]?.sessionExpired,
+        okText: langTexts?.[getLang()]?.ok,
+      },
+      callback,
+    );
+  };
+
   // 删除陈旧的oidc 的参数
   _oidcClient.clearStaleState();
 
@@ -92,27 +115,12 @@ export default function (params: Params): ResultType {
     if (_show_expired_modal) {
       // 避免多次弹出过期提示框
       _show_expired_modal = false;
-      const callback = () => {
-        _oidcClient
-          .signoutRedirect()
-          .then(function (resp: any) {
-            console.log('signed out', resp);
-          })
-          .catch(function (err: any) {
-            console.log(err);
-          });
-      };
-      getModal()(
-        {
-          title: langTexts[getLang()]?.sessionExpiredTitle,
-          content: langTexts?.[getLang()]?.sessionExpired,
-          okText: langTexts?.[getLang()]?.ok,
-        },
-        callback,
-      );
+      // 登录过期的提示
+      loginExpiredTip();
     }
   });
 
+  // 添加静默刷新的失败的提示
   _oidcClient.events.addSilentRenewError(function () {
     getMessage()(langTexts?.[getLang()]?.refreshToken as string);
   });
@@ -183,6 +191,22 @@ export default function (params: Params): ResultType {
       return getLang();
     },
 
+    // 检测今天是否登录过
+    checkTodayLogged() {
+      let time: any = window.localStorage.getItem(IAMLastLoginKey);
+      if (time && !isNaN(time)) {
+        time = Number(time);
+        const nowTime = getYearMonthDateTimeNumber();
+        // 今天未登录过，提示，并重新登录
+        if (Number(nowTime) - time > 0) {
+          // 登录过期的提示
+          loginExpiredTip();
+          return false;
+        }
+      }
+      return true;
+    },
+
     // vue-router 中的路由守卫
     async routerGuard() {
       // 内存变量中，不存在认证信息
@@ -202,8 +226,13 @@ export default function (params: Params): ResultType {
           return false;
         } else {
           // 2、在有效期内
-          this.openExpiredModal();
-          return true;
+          //    检测今天是否登录过
+          if (this.checkTodayLogged()) {
+            this.openExpiredModal();
+            return true;
+          } else {
+            return false;
+          }
         }
       } else {
         // 没有
@@ -214,15 +243,13 @@ export default function (params: Params): ResultType {
 
     // 清除localStorage 排除oidc 的信息的
     clearLocalStorageDataExcludeOidc(excludeKey?: string[]) {
-      excludeKey = excludeKey ? excludeKey : [];
-      excludeKey.push('IAM:deviceId');
       const list = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (excludeKey?.includes(key as string)) {
           continue;
         }
-        if ((key as string).includes('oidc.user:')) {
+        if ((key as string).includes('oidc.user:') || (key as string).includes('IAM:')) {
           continue;
         }
         list.push(key);

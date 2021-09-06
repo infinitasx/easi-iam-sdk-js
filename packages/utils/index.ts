@@ -25,3 +25,15 @@ export function getQueryStringArgs() {
   }
   return args;
 }
+
+/**
+ * 获取年月日的时间戳
+ */
+export function getYearMonthDateTimeNumber() {
+  const time = new Date();
+  time.setHours(0);
+  time.setMinutes(0);
+  time.setSeconds(0);
+  time.setMilliseconds(0);
+  return time.getTime() + '';
+}

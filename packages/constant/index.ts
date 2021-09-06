@@ -15,3 +15,6 @@ export const UPDATE_INIT_PWD_URL = '/dashboard/modify/init';
 export const GET_USERINFO_URL = '/v1/admin/userinfo';
 // 获取权限信息
 export const GET_PERMISSION_URL = '/v1/admin/users/menus';
+
+// 上一次登录额key
+export const IAMLastLoginKey = 'IAM:last-login';

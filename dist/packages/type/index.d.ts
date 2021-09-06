@@ -41,6 +41,7 @@ export interface ResultType {
     dataActionLogComp: (function_type: string, title?: string) => any;
     setLang: (lang: ILang) => void;
     getLang: () => ILang;
+    checkTodayLogged: () => boolean;
     routerGuard: () => Promise<boolean>;
     clearLocalStorageDataExcludeOidc: (excludeKey?: string[]) => void;
     clearOidcLocalStorageData: () => void;
