@@ -53,7 +53,7 @@ export default function (params: Params): ResultType {
   const client_id = params.client_id[getEnv()];
 
   // 是否展示过期提示框
-  let _show_expired_modal = false;
+  // let _show_expired_modal = false;
 
   // oidc-client 原本的实例对象
   const _oidcClient = new Oidc.UserManager({
@@ -97,6 +97,7 @@ export default function (params: Params): ResultType {
 
   // 令牌到期前
   _oidcClient.events.addAccessTokenExpiring(() => {
+    // _show_expired_modal = false;
     _oidcClient
       .signinSilent()
       .then(user => {
@@ -108,9 +109,12 @@ export default function (params: Params): ResultType {
           getMessage()(langTexts[getLang()]?.refreshToken as string);
         }, 2000);
       });
+    /* .finally(() => {
+        _show_expired_modal = true;
+      });*/
   });
 
-  // 访问令牌过期
+  /*  // 访问令牌过期
   _oidcClient.events.addAccessTokenExpired(function () {
     if (_show_expired_modal) {
       // 避免多次弹出过期提示框
@@ -118,7 +122,7 @@ export default function (params: Params): ResultType {
       // 登录过期的提示
       loginExpiredTip();
     }
-  });
+  });*/
 
   // 添加静默刷新的失败的提示
   _oidcClient.events.addSilentRenewError(function () {
@@ -221,14 +225,14 @@ export default function (params: Params): ResultType {
         if (this.getAuthInfoSync()?.expired === true || this.getAuthInfoSync()?.expires_in <= 0) {
           // 删除过期的oidc缓存
           this.clearOidcLocalStorageData();
-          this.closeExpiredModal();
+          // this.closeExpiredModal();
           this.signIn();
           return false;
         } else {
           // 2、在有效期内
           //    检测今天是否登录过
           if (this.checkTodayLogged()) {
-            this.openExpiredModal();
+            // this.openExpiredModal();
             return true;
           } else {
             return false;
@@ -292,13 +296,14 @@ export default function (params: Params): ResultType {
         token: this.getAuthorization(),
       }).catch((e: any) => {
         // 检测是否匹配上错误
-        const b = this.ajaxErrorCheck(e);
-        if (!b) {
+        /*const b = */
+        this.ajaxErrorCheck(e);
+        /*if (!b) {
           if (e.code === 401 || e.code === 403) {
             this.clearOidcLocalStorageData();
             this.signIn();
           }
-        }
+        }*/
         return Promise.reject(e);
       });
     },
@@ -311,13 +316,14 @@ export default function (params: Params): ResultType {
         scope_id: p.scopeId,
       }).catch((e: any) => {
         // 检测是否匹配上错误
-        const b = this.ajaxErrorCheck(e);
-        if (!b) {
+        /*const b = */
+        this.ajaxErrorCheck(e);
+        /*if (!b) {
           if (e.code === 401 || e.code === 403) {
             this.clearOidcLocalStorageData();
             this.signIn();
           }
-        }
+        }*/
         return Promise.reject(e);
       });
     },
@@ -357,7 +363,7 @@ export default function (params: Params): ResultType {
 
     // Redirect of the current window to the end session endpoint
     signOut() {
-      this.closeExpiredModal();
+      // this.closeExpiredModal();
       _oidcClient
         .signoutRedirect()
         .then(function (resp: any) {
@@ -396,7 +402,7 @@ export default function (params: Params): ResultType {
       return getAuthority() + HOMEPAGE_PATH;
     },
 
-    // 开启过期提醒对话框
+    /*// 开启过期提醒对话框
     openExpiredModal() {
       _show_expired_modal = true;
     },
@@ -404,6 +410,6 @@ export default function (params: Params): ResultType {
     // 关闭过期提醒对话框
     closeExpiredModal() {
       _show_expired_modal = false;
-    },
+    },*/
   };
 }

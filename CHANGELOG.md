@@ -3,9 +3,10 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
-## [0.0.37] - 2021-09-06
+## [0.0.37] - 2021-09-07
 ### Changed
 * 修改clearLocalStorageDataExcludeOidc方法中排除的key的值
+* 去掉token过期的事件回调，token过期由ajax响应回调中处理
 ### Added
 * 添加每天必须登录一次的校验
 

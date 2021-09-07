@@ -57,7 +57,5 @@ export interface ResultType {
     getIdToken: () => Promise<any>;
     getAuthorization: () => string;
     getIAMHomeUrl: () => string;
-    openExpiredModal: () => void;
-    closeExpiredModal: () => void;
 }
 export {};
