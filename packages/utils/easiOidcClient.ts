@@ -253,7 +253,12 @@ export default function (params: Params): ResultType {
         if (excludeKey?.includes(key as string)) {
           continue;
         }
-        if ((key as string).includes('oidc.user:') || (key as string).includes('IAM:')) {
+        if (
+          (key as string).includes('oidc.user:') ||
+          (key as string).includes('IAM:') ||
+          (key as string).includes('EASI:') ||
+          (key as string).includes('SELF:')
+        ) {
           continue;
         }
         list.push(key);
