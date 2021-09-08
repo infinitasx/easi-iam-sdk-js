@@ -27,6 +27,12 @@ export default {
       content: '您已登出系统或访问令牌已过期',
       okText: '确认',
     },
+    // 获取token失败
+    getTokenFailedTexts: {
+      title: '错误提示',
+      content: '获取token失败，您可以点击下方按钮，重新登录',
+      ok: '确定',
+    },
   },
   // 英文
   en: {
@@ -56,6 +62,12 @@ export default {
       content: 'You have been logged out of the system or the access token has expired',
       okText: 'Confirm',
     },
+    // 获取token失败
+    getTokenFailedTexts: {
+      title: 'Error message',
+      content: 'Failed to obtain token, you can click the button below to log in again',
+      ok: 'OK',
+    },
   },
   // 日文
   ja: {
@@ -84,6 +96,12 @@ export default {
       title: 'ログインデバイスの通知',
       content: 'システムからログアウトしているか、アクセストークンの有効期限が切れています',
       okText: '確認',
+    },
+    // 获取token失败
+    getTokenFailedTexts: {
+      title: 'エラーメッセージ',
+      content: 'トークンの取得に失敗しました。下のボタンをクリックして再度ログインできます',
+      ok: '確認',
     },
   },
 };

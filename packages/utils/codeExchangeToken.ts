@@ -1,5 +1,5 @@
 import Oidc, { User } from 'oidc-client';
-import { getMessage } from '../setter-getter/ui';
+import { getHintModal } from '../setter-getter/ui';
 import { getLang } from '../setter-getter/i18n';
 import langText from '../lang/index';
 import { setDeviceId } from '../setter-getter/deviceId';
@@ -26,7 +26,16 @@ export default function (Component: any, homePageUrl: string) {
         window.location.href = homePageUrl || '/';
       })
       .catch(err => {
-        getMessage()(langText[getLang()]?.getTokenFailed);
+        getHintModal()(
+          {
+            title: langText[getLang()]?.getTokenFailedTexts?.title,
+            content: langText[getLang()]?.getTokenFailedTexts?.content,
+            okText: langText[getLang()]?.getTokenFailedTexts?.ok,
+          },
+          () => {
+            window.location.href = homePageUrl || '/';
+          },
+        );
         throw err;
       });
   });

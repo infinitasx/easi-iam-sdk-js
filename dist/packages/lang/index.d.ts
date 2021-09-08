@@ -23,6 +23,11 @@ declare const _default: {
             content: string;
             okText: string;
         };
+        getTokenFailedTexts: {
+            title: string;
+            content: string;
+            ok: string;
+        };
     };
     en: {
         refreshToken: string;
@@ -48,6 +53,11 @@ declare const _default: {
             content: string;
             okText: string;
         };
+        getTokenFailedTexts: {
+            title: string;
+            content: string;
+            ok: string;
+        };
     };
     ja: {
         refreshToken: string;
@@ -72,6 +82,11 @@ declare const _default: {
             title: string;
             content: string;
             okText: string;
+        };
+        getTokenFailedTexts: {
+            title: string;
+            content: string;
+            ok: string;
         };
     };
 };
