@@ -36,7 +36,7 @@ export interface Params {
 export interface ResultType {
     getOidcClientInstance: () => UserManager;
     codeExchangeTokenPage: (homePageUrl: string) => any;
-    ajaxErrorCheck: (error: any) => boolean;
+    ajaxErrorCheck: (error: any, okCallback?: () => void) => boolean;
     getDeviceId: () => string;
     dataActionLogComp: (function_type: string, title?: string) => any;
     setLang: (lang: ILang) => void;

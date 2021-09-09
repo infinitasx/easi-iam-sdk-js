@@ -3,6 +3,10 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.39] - 2021-09-09
+### Added
+* ajaxErrorCheck方法添加可以传入点击确定后的回调函数
+
 ## [0.0.38] - 2021-09-08
 ### Added
 * code换token页面，添加请求失败后返回登录页面的入口

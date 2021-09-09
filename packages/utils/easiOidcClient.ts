@@ -150,12 +150,15 @@ export default function (params: Params): ResultType {
     },
 
     // ajax错误检测-（检测设备被踢下去的情况）
-    ajaxErrorCheck(error: any) {
+    ajaxErrorCheck(error: any, okCallback?: () => void) {
       return clientLimitErrorCheckUtil(
         error,
         langTexts?.[getLang()].hintModalForDevice,
         langTexts?.[getLang()].hintModalForToken,
         () => {
+          if (okCallback) {
+            okCallback();
+          }
           this.signOut();
         },
       );
