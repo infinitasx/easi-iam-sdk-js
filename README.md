@@ -55,7 +55,7 @@ export const IAM = IAMClient({
         testing: '******',
         development: '*******',
     },
-    applicationId: 'iam',
+    applicationId: 'iam', // IAM系统给出的id值
     lang: 'zh', // 'zh' | 'en' | 'ja'
     homePageUrl: window.location.origin + post_logout_redirect_uri, // 登录成功后跳转的主页
     callbackUrl: window.location.origin + redirect_uri, // code换token页面
@@ -168,9 +168,9 @@ const scriptCdn = [
     // ...
 ];
 // 正式环境
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.35/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.39/index.js`);
 // 测试环境
-scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.35/index.js`);
+scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.39/index.js`);
 ```
 
 ### 响应数据拦截
@@ -191,7 +191,10 @@ instance.interceptors.response.use(
             const {data, status} = error.response;
             /// ++++++++++++++++++++++++++++++++++++++++++++ 开始 +++++++++++++++++++++ 使用IAM函数
             // 判断错误的信息中是否存在当前账号被踢下去的情况
-            const matchError = IAM.ajaxErrorCheck(data);
+            const matchError = IAM.ajaxErrorCheck(data,()=>{
+                // 用户点击弹出的提示框的确定后的回调函数
+                // 可不填 
+            });
             // true，有被踢，false，没有被踢
             if (!matchError) {
                 if (hideError !== true) message.error(parseErrMsg(data, status));
@@ -221,7 +224,7 @@ instance.interceptors.response.use(
     - 获取callback组件
 - IAM.dataActionLogComp(moduleName: string,title?: string)
     - 获取操作日志组件（具体用法见上文）
-- IAM.ajaxErrorCheck(error: any): boolean
+- IAM.ajaxErrorCheck(error: any,okCallback?: () => void): boolean
     - ajax错误响应时的检测，校验错误中是否有符合，被踢的情况，true 为被踢了，false 为没有被踢
 - IAM.getDeviceId(): string
     - 获取设备id
@@ -251,7 +254,4 @@ instance.interceptors.response.use(
     - 获取token值
 - IAM.getIAMHomeUrl()
     - 获取iam的主页地址
-- IAM.openExpiredModal()
-    - 开启过期对话框
-- IAM.closeExpiredModal()
-    - 关闭过期对话框
+
