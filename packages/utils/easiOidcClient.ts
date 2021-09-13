@@ -3,7 +3,7 @@ import { Params, ResultType } from '../type';
 import langTexts from '../lang/index';
 import { ILang } from '../type';
 import { getLang, setLang } from '../setter-getter/i18n';
-import { getAuthInfo, setAuthInfo } from '../setter-getter/authInfo';
+import { getAuthInfo, setLocalKey } from '../setter-getter/authInfo';
 import { getEnv, setEnv, getAuthority } from '../setter-getter/env';
 import {
   getMessage,
@@ -49,7 +49,7 @@ export default function (params: Params): ResultType {
   setPage(params.UI.codeExchangeTokenPage);
   setLog(params.UI.dataActionLogComp);
   setHintModal(params.UI.hintModalComp);
-
+  // 当前环境client_id
   const client_id = params.client_id[getEnv()];
 
   // oidc-client 原本的实例对象
@@ -66,6 +66,11 @@ export default function (params: Params): ResultType {
     filterProtocolClaims: true,
     loadUserInfo: true,
   });
+
+  // 设置localKey
+  setLocalKey(
+    (_oidcClient as any)._settings._userStore._prefix + (_oidcClient as any)._userStoreKey,
+  );
 
   // 登录过期的提示
   const loginExpiredTip = () => {
@@ -97,10 +102,8 @@ export default function (params: Params): ResultType {
     // _show_expired_modal = false;
     _oidcClient
       .signinSilent()
-      .then(user => {
-        // 更新本地的缓存
-        setAuthInfo(user);
-      })
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      .then(() => {})
       .catch(() => {
         setTimeout(() => {
           getMessage()(langTexts[getLang()]?.refreshToken as string);
@@ -112,22 +115,6 @@ export default function (params: Params): ResultType {
   _oidcClient.events.addSilentRenewError(function () {
     getMessage()(langTexts?.[getLang()]?.refreshToken as string);
   });
-
-  // userSessionChanged
-  _oidcClient.events.addUserSessionChanged(async function () {
-    console.log('addUserSessionChanged');
-    const auth_info = await _oidcClient.getUser();
-    setAuthInfo(auth_info);
-  });
-
-  /* (async function () {
-    try {
-      const auth_info = await _oidcClient.getUser();
-      setAuthInfo(auth_info);
-    } catch (e) {
-      setAuthInfo(null);
-    }
-  })();*/
 
   return {
     // 获取oidc-client-js 的 原生实例对象
@@ -219,14 +206,12 @@ export default function (params: Params): ResultType {
         if (this.getAuthInfoSync()?.expired === true || this.getAuthInfoSync()?.expires_in <= 0) {
           // 删除过期的oidc缓存
           this.clearOidcLocalStorageData();
-          // this.closeExpiredModal();
           this.signIn();
           return false;
         } else {
           // 2、在有效期内
           //    检测今天是否登录过
           if (this.checkTodayLogged()) {
-            // this.openExpiredModal();
             return true;
           } else {
             return false;
@@ -279,7 +264,6 @@ export default function (params: Params): ResultType {
             if (user == null) {
               return resolve(null);
             } else {
-              setAuthInfo(user);
               return resolve(user);
             }
           })
