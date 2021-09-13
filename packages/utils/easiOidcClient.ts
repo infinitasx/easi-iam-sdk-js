@@ -78,10 +78,10 @@ export default function (params: Params): ResultType {
       _oidcClient
         .signoutRedirect()
         .then(function (resp: any) {
-          console.log('signed out', resp);
+          Oidc.Log.logger.info('signed out', resp);
         })
         .catch(function (err: any) {
-          console.log(err);
+          Oidc.Log.logger.error(err);
         });
     };
     getModal()(
@@ -194,16 +194,13 @@ export default function (params: Params): ResultType {
 
     // vue-router 中的路由守卫
     async routerGuard() {
-      // 内存变量中，不存在认证信息
-      if (!this.getAuthInfoSync()) {
-        // 获取一次storage中的
-        await this.getAuthInfo();
-      }
       // 有
       if (this.getAuthInfoSync()) {
         // 检测是否在有效期内
         // 1、不在有效期内
-        if (this.getAuthInfoSync()?.expired === true || this.getAuthInfoSync()?.expires_in <= 0) {
+        if (
+          this.getAuthInfoSync()?.expires_at <= Number(parseInt(new Date().getTime() / 1000 + ''))
+        ) {
           // 删除过期的oidc缓存
           this.clearOidcLocalStorageData();
           this.signIn();
@@ -326,7 +323,7 @@ export default function (params: Params): ResultType {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         .then(() => {})
         .catch(function (err: any) {
-          console.log(err);
+          Oidc.Log.logger.error(err);
         });
     },
 
@@ -336,10 +333,10 @@ export default function (params: Params): ResultType {
       _oidcClient
         .signoutRedirect()
         .then(function (resp: any) {
-          console.log('signed out', resp);
+          Oidc.Log.logger.info('signed out', resp);
         })
         .catch(function (err: any) {
-          console.log(err);
+          Oidc.Log.logger.error(err);
         });
     },
 
@@ -367,6 +364,7 @@ export default function (params: Params): ResultType {
       return auth_info ? `Bearer ${auth_info.access_token}` : '';
     },
 
+    // 返回当前环境下IAM的dashboard的地址
     getIAMHomeUrl() {
       return getAuthority() + HOMEPAGE_PATH;
     },
