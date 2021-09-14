@@ -99,7 +99,6 @@ export default function (params: Params): ResultType {
 
   // 令牌到期前
   _oidcClient.events.addAccessTokenExpiring(() => {
-    // _show_expired_modal = false;
     _oidcClient
       .signinSilent()
       // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -274,11 +273,16 @@ export default function (params: Params): ResultType {
     getUserInfo() {
       return getUserInfo({
         token: this.getAuthorization(),
-      }).catch((e: any) => {
-        // 检测是否匹配上错误
-        this.ajaxErrorCheck(e);
-        return Promise.reject(e);
-      });
+      })
+        .then((res: any) => {
+          res.application_id = params.applicationId;
+          return Promise.resolve(res);
+        })
+        .catch((e: any) => {
+          // 检测是否匹配上错误
+          this.ajaxErrorCheck(e);
+          return Promise.reject(e);
+        });
     },
 
     // 获取用户权限信息
