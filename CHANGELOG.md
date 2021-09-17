@@ -3,6 +3,10 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.42] - 2021-09-17
+### Changed
+* 去掉Oidc.UserManager实例化时的max_age参数
+
 ## [0.0.41] - 2021-09-14
 ### Changed
 * 用户信息接口返回值前端添加当前系统id字段

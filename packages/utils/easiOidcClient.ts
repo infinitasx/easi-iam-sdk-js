@@ -60,7 +60,6 @@ export default function (params: Params): ResultType {
     redirect_uri: params.callbackUrl,
     response_type: 'code',
     scope: 'openid offline',
-    max_age: 7190,
     post_logout_redirect_uri: params.homePageUrl,
     accessTokenExpiringNotificationTime: 120,
     filterProtocolClaims: true,
