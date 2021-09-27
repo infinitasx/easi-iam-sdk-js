@@ -1,4 +1,5 @@
 import Oidc from 'oidc-client';
+import ifvisible from 'ifvisible.js';
 import { Params, ResultType } from '../type';
 import langTexts from '../lang/index';
 import { ILang } from '../type';
@@ -72,7 +73,9 @@ export default function (params: Params): ResultType {
   );
 
   // 登录过期的提示
+  let loginExpiredTipStatus = false; // 只显示一次
   const loginExpiredTip = () => {
+    if (loginExpiredTipStatus) return;
     const callback = () => {
       _oidcClient
         .signoutRedirect()
@@ -82,6 +85,7 @@ export default function (params: Params): ResultType {
         .catch(function (err: any) {
           Oidc.Log.logger.error(err);
         });
+      loginExpiredTipStatus = false;
     };
     getModal()(
       {
@@ -91,6 +95,7 @@ export default function (params: Params): ResultType {
       },
       callback,
     );
+    loginExpiredTipStatus = true;
   };
 
   // 删除陈旧的oidc 的参数
@@ -113,6 +118,9 @@ export default function (params: Params): ResultType {
   _oidcClient.events.addSilentRenewError(function () {
     getMessage()(langTexts?.[getLang()]?.refreshToken as string);
   });
+
+  // 是否开启唤醒检测
+  let wakeupListenerStatus = 0;
 
   return {
     // 获取oidc-client-js 的 原生实例对象
@@ -207,6 +215,7 @@ export default function (params: Params): ResultType {
           // 2、在有效期内
           //    检测今天是否登录过
           if (this.checkTodayLogged()) {
+            this.addEveryDayLoginListener();
             return true;
           } else {
             return false;
@@ -332,7 +341,7 @@ export default function (params: Params): ResultType {
 
     // Redirect of the current window to the end session endpoint
     signOut() {
-      // this.closeExpiredModal();
+      this.removeEveryDayLoginListener();
       _oidcClient
         .signoutRedirect()
         .then(function (resp: any) {
@@ -341,24 +350,6 @@ export default function (params: Params): ResultType {
         .catch(function (err: any) {
           Oidc.Log.logger.error(err);
         });
-    },
-
-    // Get the token id
-    getIdToken() {
-      return new Promise((resolve, reject) => {
-        _oidcClient
-          .getUser()
-          .then((user: any) => {
-            if (user == null) {
-              return resolve(null);
-            } else {
-              return resolve(user.id_token);
-            }
-          })
-          .catch(function (err: any) {
-            return reject(err);
-          });
-      });
     },
 
     // 获取token
@@ -370,6 +361,26 @@ export default function (params: Params): ResultType {
     // 返回当前环境下IAM的dashboard的地址
     getIAMHomeUrl() {
       return getAuthority() + HOMEPAGE_PATH;
+    },
+
+    // 添加每日登录约束校验
+    addEveryDayLoginListener() {
+      if (wakeupListenerStatus == 0) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const that = this;
+        // 添加唤醒检测是否今天登录过
+        ifvisible.on('wakeup', that.checkTodayLogged);
+        wakeupListenerStatus++;
+      }
+    },
+
+    // 去除每日登录约束校验
+    removeEveryDayLoginListener() {
+      // 关闭唤醒检测是否今天登录过
+      for (let i = 0; i < wakeupListenerStatus; i++) {
+        ifvisible.off('wakeup');
+      }
+      wakeupListenerStatus = 0;
     },
   };
 }

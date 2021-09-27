@@ -54,8 +54,9 @@ export interface ResultType {
     getSignedIn: () => Promise<any>;
     signIn: () => void;
     signOut: () => void;
-    getIdToken: () => Promise<any>;
     getAuthorization: () => string;
     getIAMHomeUrl: () => string;
+    addEveryDayLoginListener: () => void;
+    removeEveryDayLoginListener: () => void;
 }
 export {};

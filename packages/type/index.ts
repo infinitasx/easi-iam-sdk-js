@@ -66,9 +66,8 @@ export interface ResultType {
   getSignedIn: () => Promise<any>;
   signIn: () => void;
   signOut: () => void;
-  getIdToken: () => Promise<any>;
   getAuthorization: () => string;
   getIAMHomeUrl: () => string;
-  // openExpiredModal: () => void;
-  // closeExpiredModal: () => void;
+  addEveryDayLoginListener: () => void;
+  removeEveryDayLoginListener: () => void;
 }

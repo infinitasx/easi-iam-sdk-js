@@ -168,9 +168,9 @@ const scriptCdn = [
     // ...
 ];
 // 正式环境
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.40/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.43/index.js`);
 // 测试环境
-scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.40/index.js`);
+scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.43/index.js`);
 ```
 
 ### 响应数据拦截
@@ -254,4 +254,7 @@ instance.interceptors.response.use(
     - 获取token值
 - IAM.getIAMHomeUrl()
     - 获取iam的主页地址
-
+- IAM.addEveryDayLoginListener()
+    - 添加每日登录约束校验
+- IAM.addEveryDayLoginListener
+    - 去除每日登录约束校验

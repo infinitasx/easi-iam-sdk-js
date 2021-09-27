@@ -1,21 +1,20 @@
 {
   "name": "easi-iam-sdk-js",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint -c .eslintrc.js ./ --fix",
     "serve": "vite preview",
-    "easi-auto-tag": "easi-auto-tag",
+    "test": "jest",
     "easi-assets-deploy": "easi-assets-deploy",
-    "test": "jest"
+    "easi-auto-tag": "easi-auto-tag"
   },
   "main": "dist/index.js",
   "typings": "dist/packages/index.d.ts",
   "dependencies": {
     "axios": "^0.21.1",
-    "easi-assets-deploy": "https://github.com/infinitasx/easi-assets-deploy.git#main",
-    "easi-auto-tag": "https://github.com/infinitasx/easi-auto-tag.git#main",
+    "ifvisible.js": "^1.0.6",
     "oidc-client": "^1.11.5"
   },
   "devDependencies": {
@@ -31,6 +30,8 @@
     "@types/webpack-env": "^1.16.2",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
+    "easi-assets-deploy": "https://github.com/infinitasx/easi-assets-deploy.git#main",
+    "easi-auto-tag": "https://github.com/infinitasx/easi-auto-tag.git#main",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.0",
@@ -49,16 +50,6 @@
     "vite-plugin-style-import": "^1.0.1",
     "yorkie": "^2.0.0"
   },
-  "easiAssetsDeployConfig": {
-    "backend": {
-      "projectName": "",
-      "repositoryUrl": "",
-      "templateDir": "",
-      "branchName": ""
-    },
-    "assetsFilePattern": "*.html",
-    "asLibrary": true
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -70,5 +61,15 @@
       "npm run lint",
       "prettier --write"
     ]
+  },
+  "easiAssetsDeployConfig": {
+    "backend": {
+      "projectName": "",
+      "repositoryUrl": "",
+      "templateDir": "",
+      "branchName": ""
+    },
+    "assetsFilePattern": "*.html",
+    "asLibrary": true
   }
 }
