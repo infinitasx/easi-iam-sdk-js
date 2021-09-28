@@ -3,11 +3,12 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
-## [0.0.43] - 2021-09-26
+## [0.0.43] - 2021-09-28
 ### Added
-* 新增vue3+antdv 的demo工程
+* 新增vue3+antdv版本的测试demo
+* 添加飞书发布消息提醒功能
 ### Changed
-* 添加页面唤醒检测，强制要求每天登录一次
+* 修改约束每天登录登录一次的逻辑
 
 ## [0.0.42] - 2021-09-17
 ### Changed
