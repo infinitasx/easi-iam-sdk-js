@@ -1,16 +1,16 @@
 import { IAMClient } from 'easi-iam-sdk-js'
 import UI from '../../../../UI/vue3-antd/index.js'
 
-const redirectUri = '/callback'
-const postLogoutRedirectUri = '/'
+const redirectUri = '/iam/callback'
+const postLogoutRedirectUri = '/iam'
 
 export const IAM = IAMClient({
   client_id: {
     production: '',
     testing: '',
-    development: '74a38582-04cb-4dad-a88b-68a6c96ecf9b'
+    development: '8882b276-f557-4276-b36d-d291315b70a8'
   },
-  applicationId: 'activity',
+  applicationId: 'iam',
   lang: 'zh',
   homePageUrl: window.location.origin + postLogoutRedirectUri, // 登录成功后跳转的主页
   callbackUrl: window.location.origin + redirectUri, // code换token页面

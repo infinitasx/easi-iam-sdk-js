@@ -1,4 +1,5 @@
 import Oidc from 'oidc-client';
+// 页面激活监听器
 import ifvisible from 'ifvisible.js';
 import { Params, ResultType } from '../type';
 import langTexts from '../lang/index';
@@ -126,6 +127,11 @@ export default function (params: Params): ResultType {
     // 获取oidc-client-js 的 原生实例对象
     getOidcClientInstance() {
       return _oidcClient;
+    },
+
+    // 获取当前环境
+    getCurrentEnv() {
+      return getEnv();
     },
 
     // 获取code换token 的页面
@@ -340,14 +346,27 @@ export default function (params: Params): ResultType {
     },
 
     // Redirect of the current window to the end session endpoint
-    signOut() {
+    signOut(callback?: {
+      logoutBeforeCallback?: () => void;
+      logoutSuccessCallback?: () => void;
+      logoutErrorCallback?: () => void;
+    }) {
+      if (typeof callback?.logoutBeforeCallback === 'function') {
+        callback.logoutBeforeCallback();
+      }
       this.removeEveryDayLoginListener();
       _oidcClient
         .signoutRedirect()
         .then(function (resp: any) {
+          if (typeof callback?.logoutSuccessCallback === 'function') {
+            callback.logoutSuccessCallback();
+          }
           Oidc.Log.logger.info('signed out', resp);
         })
         .catch(function (err: any) {
+          if (typeof callback?.logoutErrorCallback === 'function') {
+            callback.logoutErrorCallback();
+          }
           Oidc.Log.logger.error(err);
         });
     },

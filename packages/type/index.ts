@@ -49,6 +49,7 @@ export interface Params {
 
 export interface ResultType {
   getOidcClientInstance: () => UserManager;
+  getCurrentEnv: () => env;
   codeExchangeTokenPage: (homePageUrl: string) => any;
   ajaxErrorCheck: (error: any, okCallback?: () => void) => boolean;
   getDeviceId: () => string;
@@ -65,7 +66,11 @@ export interface ResultType {
   getPermissionsData: (arg0: { scopeId: string | number }) => Promise<any>;
   getSignedIn: () => Promise<any>;
   signIn: () => void;
-  signOut: () => void;
+  signOut: (callback?: {
+    logoutBeforeCallback?: () => void;
+    logoutSuccessCallback?: () => void;
+    logoutErrorCallback?: () => void;
+  }) => void;
   getAuthorization: () => string;
   getIAMHomeUrl: () => string;
   addEveryDayLoginListener: () => void;

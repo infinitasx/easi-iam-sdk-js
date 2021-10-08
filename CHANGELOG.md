@@ -3,6 +3,15 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.44] - 2021-10-08
+### Added
+* signOut方法支持添加回调方法
+* 完成vue3+antdv版本的测试demo
+* 添加vue2+element版本的测试demo
+### Changed
+* 优化vue3+antdv版本的操作日志查询组件的title传参
+* 优化vue2+element版本的操作日志查询组件的title传参
+
 ## [0.0.43] - 2021-09-28
 ### Added
 * 新增vue3+antdv版本的测试demo

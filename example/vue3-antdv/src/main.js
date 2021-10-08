@@ -6,4 +6,6 @@ import store from './store'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 
-createApp(App).use(store).use(router).use(Antd).mount('#app')
+import JsonEditorVue from 'json-editor-vue'
+
+createApp(App).use(store).use(router).use(Antd).use(JsonEditorVue).mount('#app')

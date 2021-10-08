@@ -1,20 +1,18 @@
 {
-  "name": "vue3-antdv",
+  "name": "vue2-element",
   "version": "0.1.0",
-  "description": "IAM JS SDK 的vue3 antdv版本的demo工程",
   "private": true,
   "scripts": {
-    "serve": "cp ../../dist/index.js ./public/easiIamSdkJs.js && vue-cli-service serve"
+    "serve": "cp ../../dist/index.js ./public/easiIamSdkJs.js && vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "ant-design-vue": "^2.2.8",
-    "axios": "^0.21.4",
     "core-js": "^3.6.5",
-    "json-editor-vue": "^0.3.1",
-    "svelte-jsoneditor": "^0.3.2",
-    "vue": "^3.2.6",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "element-ui": "^2.15.6",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -22,7 +20,6 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.2.6",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
@@ -30,9 +27,11 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^7.0.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "lint-staged": "^9.5.0",
     "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
@@ -40,7 +39,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential",
+      "plugin:vue/essential",
       "@vue/standard"
     ],
     "parserOptions": {
@@ -52,5 +51,14 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
 }

@@ -5,6 +5,8 @@
 ## 目录说明
 
 - dist 由packages打出来的的内容，最终供第三方使用的包； 使用index.js
+- example demo工程目录
+    - vue3-antdv (vue3 和 antUI的demo工程)
 - packages 具体的sdk代码
     - 入口 index.ts
 - UI 原来的packages中拆分出来的UI，不同技术栈有不同的UI使用
@@ -220,6 +222,8 @@ instance.interceptors.response.use(
 ### 使用api说明
 - IAM.getOidcClientInstance()
     - 获取oidc-client-js 原本的实例对象（https://github.com/IdentityModel/oidc-client-js/wiki）
+- IAM.getCurrentEnv()
+    - 获取当前环境参数枚举字符串儿：'production' | 'testing' | 'development'
 - IAM.codeExchangeTokenPage(homePageUrl?: string)
     - 获取callback组件
 - IAM.dataActionLogComp(moduleName: string,title?: string)
@@ -248,13 +252,13 @@ instance.interceptors.response.use(
     - 获取当前的国际化语言标识
 - IAM.signIn()
     - 登录
-- IAM.signOut()
-    - 登出
+- IAM.signOut(callback?: {logoutBeforeCallback?: () => void;logoutSuccessCallback?: () => void;logoutErrorCallback?: () => void;})
+    - 登出 （登录前）
 - IAM.getAuthorization()
     - 获取token值
 - IAM.getIAMHomeUrl()
     - 获取iam的主页地址
 - IAM.addEveryDayLoginListener()
     - 添加每日登录约束校验
-- IAM.addEveryDayLoginListener
+- IAM.removeEveryDayLoginListener()
     - 去除每日登录约束校验
