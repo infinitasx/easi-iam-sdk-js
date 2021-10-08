@@ -1,30 +1,32 @@
 <template>
-  <a-typography-paragraph>
+  <div>
     方法：
     IAM.dataActionLogComp(moduleName: string,title?: string)
     <br>
-    <LogComp :data_id="10009">
-      <a-button>
+    <LogComp key="1" :data_id="10009">
+      <el-button>
         ceshi-t 账号的操作日志
-      </a-button>
+      </el-button>
     </LogComp>
     &nbsp;
-    <LoginLogComp :data_id="10009" title="ceshi-t 账号登入登出日志">
-      <a-button>
+    <LoginLogComp key="2" :data_id="10009" title="ceshi-t 账号登入登出日志">
+      <el-button>
         ceshi-t 账号登入登出日志
-      </a-button>
+      </el-button>
     </LoginLogComp>
-  </a-typography-paragraph>
+  </div>
 </template>
 
-<script setup>
-import { IAM } from '../../utils/iamUtils'
+<script>
+import { IAM } from '../../utils/iam'
 
 const LogComp = IAM.dataActionLogComp('users')
 const LoginLogComp = IAM.dataActionLogComp('users-security')
 
+export default {
+  components: {
+    LogComp,
+    LoginLogComp
+  }
+}
 </script>
-
-<style scoped>
-
-</style>

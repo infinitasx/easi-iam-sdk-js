@@ -11,6 +11,9 @@
 ### Changed
 * 优化vue3+antdv版本的操作日志查询组件的title传参
 * 优化vue2+element版本的操作日志查询组件的title传参
+* 优化UI下vue2和vue3版本的操作日志组件的功能
+### Fixed
+* vue2+element版本下操作日志无法显示数据问题
 
 ## [0.0.43] - 2021-09-28
 ### Added

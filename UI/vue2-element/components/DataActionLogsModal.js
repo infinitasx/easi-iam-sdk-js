@@ -174,8 +174,10 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
                               placeholder: langTexts.placeholder,
                             },
                             on: {
-                              change(val) {
+                              change: val => {
+                                this.pagination.currentPage = 1;
                                 this.log_type = val;
+                                this.queryData();
                               },
                             },
                           },
@@ -220,6 +222,9 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
                           value: this.loading,
                         },
                       ],
+                      props: {
+                        data: this.data,
+                      },
                     },
                     [
                       h(TableColumn, {

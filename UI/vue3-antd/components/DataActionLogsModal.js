@@ -159,6 +159,8 @@ export default function (params, getDataActionLog, getLogSearchParams, langTexts
                             },
                             onChange(val) {
                               log_type.value = val;
+                              pagination.value.current = 1;
+                              queryHandler();
                             },
                           },
                           {

@@ -1,5 +1,5 @@
 import { IAMClient } from 'easi-iam-sdk-js'
-import UI from '../../../../UI/vue3-antd/index.js'
+import UI from '../../../../UI/vue2-element/index.js'
 
 const redirectUri = '/iam/callback'
 const postLogoutRedirectUri = '/iam'
