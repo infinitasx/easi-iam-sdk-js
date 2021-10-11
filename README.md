@@ -84,6 +84,7 @@ export const IAM = IAMClient({
 | 参数 | 说明 | 其他 |
 | --- | --- | --- |
 | data_id | number/string | 必填 |
+| title | string | 不必填（默认：操作日志） | 
 | left | slot| 不必填 | 
 | right | slot | 不必填 | 
 
@@ -92,8 +93,8 @@ export const IAM = IAMClient({
 ```vue
 
 <template>
-  <!-- 当前数据的id（后端上报给iam的数据id） -->
-  <data-log :data_id="123123123123">
+  <!-- 当前数据的id（后端上报给iam的数据id）title默认为操作日志，可不传 -->
+  <data-log :data_id="123123123123" title="操作日志">
     <!-- 可以省略 -->
     <template #left>
       <a-divider type="vertical"/>
@@ -113,7 +114,6 @@ import {IAMSdkUtils} from '@/utils/iamSdkUtils.ts'
 export default defineComponent({
   components: {
     DataLog: IAMSdkUtils.dataActionLogComp('apps'), // 参数为当前的模块名（对应的业务系统后端上报给iam的模块名）
-    // DataLog: IAMSdkUtils.dataActionLogComp('apps',"XXXX日志"), // 参数为当前的模块名（对应的业务系统后端上报给iam的模块名）
   },
 });
 </script>
@@ -170,9 +170,9 @@ const scriptCdn = [
     // ...
 ];
 // 正式环境
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.43/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.44/index.js`);
 // 测试环境
-scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.43/index.js`);
+scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.44/index.js`);
 ```
 
 ### 响应数据拦截
