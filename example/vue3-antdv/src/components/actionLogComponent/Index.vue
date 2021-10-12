@@ -3,17 +3,27 @@
     方法：
     IAM.dataActionLogComp(moduleName: string,title?: string)
     <br>
-    <LogComp :data_id="10009">
-      <a-button>
-        ceshi-t 账号的操作日志
-      </a-button>
-    </LogComp>
-    &nbsp;
-    <LoginLogComp :data_id="10009" title="ceshi-t 账号登入登出日志">
-      <a-button>
-        ceshi-t 账号登入登出日志
-      </a-button>
-    </LoginLogComp>
+    <div class="wrapper">
+      <LogComp :data_id="10009">
+        <template #left>
+          左边
+        </template>
+        <template #right>
+          右边
+        </template>
+        <a-button>
+          ceshi-t 账号的操作日志
+        </a-button>
+      </LogComp>
+    </div>
+    <br/>
+    <div class="wrapper">
+      <LoginLogComp :data_id="10009" title="ceshi-t 账号登入登出日志">
+        <a-button>
+          ceshi-t 账号登入登出日志
+        </a-button>
+      </LoginLogComp>
+    </div>
   </a-typography-paragraph>
 </template>
 

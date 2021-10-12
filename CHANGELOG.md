@@ -3,6 +3,11 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.45] - 2021-10-12
+### Changed
+* 将所有的localStorage的keys设为常量
+* 完善example的vue2、vue3中clearLocalStorageDataExcludeOidc、getDeviceId、addEveryDayLoginListener等的使用例子
+
 ## [0.0.44] - 2021-10-08
 ### Added
 * signOut方法支持添加回调方法
@@ -125,7 +130,7 @@
 ### Fixed
 * 修复获取用户信息后，无法控制初次登录修改密码的约束
 
-## 【0.0.18】- 2021-08-20
+## [0.0.18]- 2021-08-20
 ### Added
 * 添加单元测试
 ### Changed

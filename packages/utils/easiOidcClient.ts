@@ -21,7 +21,7 @@ import {
 import codeExchangeToken from './codeExchangeToken';
 import clientLimitErrorCheckUtil from './clientLimitErrorCheckUtil';
 
-import { HOMEPAGE_PATH, IAMLastLoginKey } from '../constant';
+import { HOMEPAGE_PATH, IAMLastLoginKey, ExcludeKeys } from '../constant';
 
 import { getPermissions, getUserInfo, getDataActionLog, getLogSearchParams } from '../api/common';
 import { getDeviceId } from '../setter-getter/deviceId';
@@ -242,12 +242,7 @@ export default function (params: Params): ResultType {
         if (excludeKey?.includes(key as string)) {
           continue;
         }
-        if (
-          (key as string).includes('oidc.user:') ||
-          (key as string).includes('IAM:') ||
-          (key as string).includes('EASI:') ||
-          (key as string).includes('SELF:')
-        ) {
+        if (ExcludeKeys.some(item => (key as string).includes(item))) {
           continue;
         }
         list.push(key);

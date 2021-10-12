@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // 创建实例时设置配置的默认值
 const instance = axios.create({
-  timeout: 10000,
+  timeout: 20000,
 });
 
 // 添加请求拦截器

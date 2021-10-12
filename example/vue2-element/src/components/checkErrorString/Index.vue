@@ -17,7 +17,6 @@
       <JsonEditorVue :modelValue.sync="errorDemoStr"></JsonEditorVue>
     </div>
   </div>
-
 </template>
 
 <script>

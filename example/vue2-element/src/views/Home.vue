@@ -27,6 +27,15 @@
       <el-collapse-item title="日志查询组件功能" name="6">
         <ActionLog/>
       </el-collapse-item>
+      <el-collapse-item name="7" title="获取设备id">
+        <GetDeviceId/>
+      </el-collapse-item>
+      <el-collapse-item name="8" title="清除localStorage的数据，除了oidc里保存的东西">
+        <ClearLocalStorageDataExcludeOidc/>
+      </el-collapse-item>
+      <el-collapse-item name="9" title="每日登录校验约束">
+        <EveryDayLoginListener/>
+      </el-collapse-item>
     </el-collapse>
   </div>
 </template>
@@ -39,6 +48,9 @@ import GetPermissionInfo from '../components/getPermissionInfo/Index.vue'
 import GetHomePath from '../components/getHomePath/Index.vue'
 import CheckErrorString from '../components/checkErrorString/Index.vue'
 import ActionLog from '../components/actionLogComponent/Index.vue'
+import GetDeviceId from '../components/getDeviceId/Index.vue'
+import ClearLocalStorageDataExcludeOidc from '../components/clearLocalStorageDataExcludeOidc/Index.vue'
+import EveryDayLoginListener from '../components/everyDayLoginListener/Index.vue'
 
 export default {
   name: 'Home',
@@ -48,7 +60,10 @@ export default {
     GetPermissionInfo,
     GetHomePath,
     CheckErrorString,
-    ActionLog
+    ActionLog,
+    GetDeviceId,
+    ClearLocalStorageDataExcludeOidc,
+    EveryDayLoginListener
   },
   computed: {
     username () {

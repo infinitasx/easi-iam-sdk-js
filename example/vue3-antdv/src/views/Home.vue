@@ -19,6 +19,16 @@
       <a-collapse-panel key="6" header="日志查询组件功能" >
         <ActionLog/>
       </a-collapse-panel>
+      <a-collapse-panel key="7" header="获取设备id" >
+        <GetDeviceId/>
+      </a-collapse-panel>
+      <a-collapse-panel key="8" header="清除localStorage的数据，除了oidc里保存的东西" >
+        <ClearLocalStorageDataExcludeOidc/>
+      </a-collapse-panel>
+      <a-collapse-panel key="9" header="每日登录校验约束" >
+        <EveryDayLoginListener/>
+      </a-collapse-panel>
+
     </a-collapse>
 
   </div>
@@ -33,6 +43,9 @@ import GetPermissionInfo from '../components/getPermissionInfo/Index.vue'
 import GetHomePath from '../components/getHomePath/Index.vue'
 import CheckErrorString from '../components/checkErrorString/Index.vue'
 import ActionLog from '../components/actionLogComponent/Index.vue'
+import GetDeviceId from '../components/getDeviceId/Index.vue'
+import ClearLocalStorageDataExcludeOidc from '../components/clearLocalStorageDataExcludeOidc/Index.vue'
+import EveryDayLoginListener from '../components/everyDayLoginListener/Index.vue'
 
-const activeKey = ref('1')
+const activeKey = ref('')
 </script>

@@ -18,3 +18,9 @@ export const GET_PERMISSION_URL = '/v1/admin/users/menus';
 
 // 上一次登录额key
 export const IAMLastLoginKey = 'IAM:last-login';
+
+// IAM 设备ID key
+export const IAMDeviceIDKey = 'IAM:deviceId';
+
+// 清空localStorage 时排除的key
+export const ExcludeKeys = ['oidc.user:', 'IAM:', 'EASI:', 'SELF:'];
