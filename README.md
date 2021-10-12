@@ -170,9 +170,9 @@ const scriptCdn = [
     // ...
 ];
 // 正式环境
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.44/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.45/index.js`);
 // 测试环境
-scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.44/index.js`);
+scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.45/index.js`);
 ```
 
 ### 响应数据拦截
