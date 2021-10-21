@@ -213,10 +213,16 @@ export default function (params: Params): ResultType {
         if (
           this.getAuthInfoSync()?.expires_at <= Number(parseInt(new Date().getTime() / 1000 + ''))
         ) {
-          // 删除过期的oidc缓存
-          this.clearOidcLocalStorageData();
-          this.signIn();
-          return false;
+          //    检测今天是否登录过
+          if (this.checkTodayLogged()) {
+            // 登录过，删除过期的oidc缓存
+            this.clearOidcLocalStorageData();
+            this.signIn();
+            return false;
+          } else {
+            // 没有登录过
+            return false;
+          }
         } else {
           // 2、在有效期内
           //    检测今天是否登录过
