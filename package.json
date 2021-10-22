@@ -7,6 +7,7 @@
     "lint": "eslint -c .eslintrc.js ./ --fix",
     "serve": "vite preview",
     "test": "jest",
+    "commit": "git cz",
     "easi-assets-deploy": "easi-assets-deploy",
     "easi-auto-tag": "easi-auto-tag"
   },
@@ -24,12 +25,16 @@
     "@babel/plugin-transform-runtime": "^7.14.5",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-typescript": "^7.15.0",
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
     "@rollup/plugin-babel": "^5.3.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.4.3",
     "@types/webpack-env": "^1.16.2",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
     "easi-assets-deploy": "https://github.com/infinitasx/easi-assets-deploy.git#main",
     "easi-auto-tag": "https://github.com/infinitasx/easi-auto-tag.git#main",
     "eslint": "^7.32.0",
@@ -38,7 +43,7 @@
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-typescript": "^0.14.0",
-    "husky": "^7.0.1",
+    "husky": "^4.3.0",
     "jest": "^27.0.6",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",
@@ -54,6 +59,54 @@
     "hooks": {
       "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog",
+      "disableEmoji": false,
+      "types": {
+        "feat": {
+          "description": "一个新的特性",
+          "value": "feat"
+        },
+        "fix": {
+          "description": "修复bug",
+          "value": "fix"
+        },
+        "perf": {
+          "description": "优化了性能的代码改动",
+          "value": "perf"
+        },
+        "refactor": {
+          "description": "一些代码结构上优化，既不是新特性也不是修 Bug（比如函数改个名字）",
+          "value": "refactor"
+        },
+        "release": {
+          "description": "Create a release commit",
+          "value": "release"
+        },
+        "style": {
+          "description": "代码的样式美化，不涉及到功能修改（比如改了缩进）",
+          "value": "style"
+        },
+        "test": {
+          "description": "新增或者修改已有的测试代码",
+          "value": "test"
+        },
+        "chore": {
+          "description": "跟仓库主要业务无关的构建/工程依赖/工具等功能改动（比如新增一个文档生成工具）",
+          "value": "chore"
+        },
+        "ci": {
+          "description": "CI related changes",
+          "value": "ci"
+        },
+        "docs": {
+          "description": "更新了文档（比如改了 Readme）",
+          "value": "docs"
+        }
+      }
     }
   },
   "lint-staged": {
