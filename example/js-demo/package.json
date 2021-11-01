@@ -1,0 +1,12 @@
+{
+  "name": "js-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "cp ../../dist/index.js ./public/easiIamSdkJs.js && hs ./public -p 8091"
+  },
+  "devDependencies": {
+    "http-server": "^14.0.0"
+  }
+}

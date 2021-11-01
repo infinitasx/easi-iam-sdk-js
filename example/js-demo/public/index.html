@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>原生js的调用方式</title>
+</head>
+<body>
+
+<script src="https://unpkg.com/axios@0.21.0/dist/axios.min.js"></script>
+<script src="./easiIamSdkJs.js"></script>
+<script>
+  console.log(easiIamSdkJs)
+  const IAM = easiIamSdkJs.IAMClient({
+    client_id: {
+      production: '',
+      testing: '',
+      development: '74a38582-04cb-4dad-a88b-68a6c96ecf9b',
+    },
+    applicationId: 'activity', // IAM系统给出的id值
+    lang: 'zh', // 'zh' | 'en' | 'ja'
+    homePageUrl: window.location.origin + '/', // 登录成功后跳转的主页
+    callbackUrl: window.location.origin + '/', // code换token页面
+    needIntercept: true, // 可不传， development 环境下，false，不跳转登录界面
+    env: 'development', // env: 'production' | 'testing' | 'development'，项目对应的运行环境
+    UI: {
+      showErrorMsg: () => {
+      },
+      showTokenExpiredModal: () => {
+      },
+      codeExchangeTokenPage: () => {
+      },
+      dataActionLogComp: () => {
+      },
+      hintModalComp: () => {
+      },
+    },
+  });
+  console.log(IAM.getAuthInfoSync())
+
+</script>
+</body>
+</html>
