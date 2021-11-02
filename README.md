@@ -7,6 +7,8 @@
 - dist 由packages打出来的的内容，最终供第三方使用的包； 使用index.js
 - example demo工程目录
     - vue3-antdv (vue3 和 antUI的demo工程)
+    - vue2-element (vue2 和 element的demo工程)
+    - js-demo （原生js的调用demo）
 - packages 具体的sdk代码
     - 入口 index.ts
 - UI 原来的packages中拆分出来的UI，不同技术栈有不同的UI使用
@@ -83,7 +85,7 @@ export const IAM = IAMClient({
 
 | 参数 | 说明 | 其他 |
 | --- | --- | --- |
-| data_id | number/string | 必填 |
+| data_id | number/string | 不必填 |
 | title | string | 不必填（默认：操作日志） | 
 | left | slot| 不必填 | 
 | right | slot | 不必填 | 
@@ -170,9 +172,9 @@ const scriptCdn = [
     // ...
 ];
 // 正式环境
-scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.45/index.js`);
+scriptCdn.push(`https://static.easiglobal.com/easi-iam-sdk-js/0.0.46/index.js`);
 // 测试环境
-scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.45/index.js`);
+scriptCdn.push(`https://static.melbdelivery.com/easi-iam-sdk-js/0.0.46/index.js`);
 ```
 
 ### 响应数据拦截
