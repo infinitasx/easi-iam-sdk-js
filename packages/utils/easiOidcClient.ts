@@ -132,12 +132,6 @@ export default function (params: Params): ResultType {
   // 是否开启唤醒检测
   let wakeupListenerStatus = 0;
 
-  // 添加消息中间页面
-  _createFrame(
-    getEnv() === 'production'
-      ? PRODUCTION_URL + messageTransferUrl
-      : TESTING_URL + messageTransferUrl,
-  );
   // 监听收到的消息
   window.addEventListener(
     'message',
@@ -156,6 +150,13 @@ export default function (params: Params): ResultType {
       }
     },
     false,
+  );
+
+  // 添加消息中间页面
+  _createFrame(
+    getEnv() === 'production'
+      ? PRODUCTION_URL + messageTransferUrl
+      : TESTING_URL + messageTransferUrl,
   );
 
   return {
