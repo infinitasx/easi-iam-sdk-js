@@ -3,6 +3,10 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.47] - 2021-11-25
+### Added
+* 添加消息传递相关功能
+
 ## [0.0.46] - 2021-11-01
 ### Fixed
 * 修复token过期和今日未登录两种情况同时存在时，大刷新后跑去自动登录了的问题

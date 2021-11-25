@@ -20,8 +20,16 @@ import {
 } from '../setter-getter/ui';
 import codeExchangeToken from './codeExchangeToken';
 import clientLimitErrorCheckUtil from './clientLimitErrorCheckUtil';
+import { _createFrame } from './message';
 
-import { HOMEPAGE_PATH, IAMLastLoginKey, ExcludeKeys } from '../constant';
+import {
+  HOMEPAGE_PATH,
+  IAMLastLoginKey,
+  ExcludeKeys,
+  messageTransferUrl,
+  TESTING_URL,
+  PRODUCTION_URL,
+} from '../constant';
 
 import { getPermissions, getUserInfo, getDataActionLog, getLogSearchParams } from '../api/common';
 import { getDeviceId } from '../setter-getter/deviceId';
@@ -122,6 +130,13 @@ export default function (params: Params): ResultType {
 
   // 是否开启唤醒检测
   let wakeupListenerStatus = 0;
+
+  // 添加消息中间页面
+  _createFrame(
+    getEnv() === 'production'
+      ? PRODUCTION_URL + messageTransferUrl
+      : TESTING_URL + messageTransferUrl,
+  );
 
   return {
     // 获取oidc-client-js 的 原生实例对象

@@ -8,3 +8,9 @@ export declare const GET_PERMISSION_URL = "/v1/admin/users/menus";
 export declare const IAMLastLoginKey = "IAM:last-login";
 export declare const IAMDeviceIDKey = "IAM:deviceId";
 export declare const ExcludeKeys: string[];
+export declare const messageTransferUrl = "/dashboard/message-transfer";
+export declare const MessageConstant: {
+    theme: string;
+    lastLoginTime: string;
+};
+export declare const iframeIdName = "iam_message_transfer_frame";

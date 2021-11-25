@@ -24,3 +24,12 @@ export const IAMDeviceIDKey = 'IAM:deviceId';
 
 // 清空localStorage 时排除的key
 export const ExcludeKeys = ['oidc.user:', 'IAM:', 'EASI:', 'SELF:'];
+
+// message 相关的
+export const messageTransferUrl = '/dashboard/message-transfer';
+export const MessageConstant = {
+  theme: 'STYLE_MODE', // 切换主题
+  lastLoginTime: 'LAST_LOGIN_TIME', // 最后登录时间
+};
+// 中间iframe的id
+export const iframeIdName = 'iam_message_transfer_frame';
