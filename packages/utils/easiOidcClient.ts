@@ -29,6 +29,7 @@ import {
   messageTransferUrl,
   TESTING_URL,
   PRODUCTION_URL,
+  MessageConstant,
 } from '../constant';
 
 import { getPermissions, getUserInfo, getDataActionLog, getLogSearchParams } from '../api/common';
@@ -136,6 +137,25 @@ export default function (params: Params): ResultType {
     getEnv() === 'production'
       ? PRODUCTION_URL + messageTransferUrl
       : TESTING_URL + messageTransferUrl,
+  );
+  // 监听收到的消息
+  window.addEventListener(
+    'message',
+    (e: MessageEvent) => {
+      const data = e.data;
+      if (data) {
+        // 最后一次登录时间
+        if (data.type === MessageConstant.lastLoginTime) {
+          console.log('收到了最后一次登录时间的更新');
+          console.log(data.message);
+          // 主题更新
+        } else if (data.type === MessageConstant.theme) {
+          console.log('主题更新');
+          console.log(data.message);
+        }
+      }
+    },
+    false,
   );
 
   return {
