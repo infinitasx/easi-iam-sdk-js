@@ -149,7 +149,8 @@ export default function (params: Params): ResultType {
           oldTime = oldTime ? Number(oldTime) : 0;
           if (data.message && data.message > oldTime) {
             window.localStorage.setItem(IAMLastLoginKey, data.message);
-            // 如果每日校验弹出框已经弹出了，关闭它
+            // 刷新页面
+            window.location.reload();
           }
         }
       }
