@@ -10,7 +10,9 @@ export interface IDataActionLogCompParams {
 
 // 对应的UI
 interface IUi {
-  showErrorMsg: (errorMsg: string) => void; // 展示错误信息的方法，接受错误信息
+  // 展示错误信息的方法，接受错误信息
+  showErrorMsg: (errorMsg: string) => void;
+  // 展示token过期提示框
   showTokenExpiredModal: (
     text: {
       // 展示token到期后的弹出框
@@ -20,8 +22,11 @@ interface IUi {
     },
     okCallback: () => void,
   ) => void;
-  codeExchangeTokenPage: (callback: () => void) => any; // code换token的函数
-  dataActionLogComp: (params: IDataActionLogCompParams) => any; // 数据操作日志组件
+  // code换token的函数
+  codeExchangeTokenPage: (callback: () => void) => any;
+  // 数据操作日志组件
+  dataActionLogComp: (params: IDataActionLogCompParams) => any;
+  // 提示框
   hintModalComp: (
     langTexts: {
       title: string;
@@ -29,7 +34,7 @@ interface IUi {
       okText: string;
     },
     callback: () => void,
-  ) => void; // 提示框
+  ) => void;
 }
 
 export interface Params {

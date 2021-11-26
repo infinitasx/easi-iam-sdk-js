@@ -142,10 +142,12 @@ export default function (params: Params): ResultType {
         if (data.type === MessageConstant.lastLoginTime) {
           console.log('收到了最后一次登录时间的更新');
           console.log(data.message);
-          // 主题更新
-        } else if (data.type === MessageConstant.theme) {
-          console.log('主题更新');
-          console.log(data.message);
+          let oldTime: any = window.localStorage.getItem(IAMLastLoginKey);
+          oldTime = oldTime ? Number(oldTime) : 0;
+          if (data.message && data.message > oldTime) {
+            window.localStorage.setItem(IAMLastLoginKey, data.message);
+            // 如果每日校验弹出框已经弹出了，关闭它
+          }
         }
       }
     },
@@ -157,6 +159,7 @@ export default function (params: Params): ResultType {
     getEnv() === 'production'
       ? PRODUCTION_URL + messageTransferUrl
       : TESTING_URL + messageTransferUrl,
+    params.applicationId,
   );
 
   return {
