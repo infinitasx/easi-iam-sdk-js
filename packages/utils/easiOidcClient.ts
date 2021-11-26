@@ -172,8 +172,10 @@ export default function (params: Params): ResultType {
             // 刷新页面
             window.location.reload();
           }
-          // 检测时间
-          _checkTodayLogged();
+          // 检测时间，排除code换token的页面
+          if (window.location.href.indexOf(params.callbackUrl) === -1) {
+            _checkTodayLogged();
+          }
         }
       }
     },
