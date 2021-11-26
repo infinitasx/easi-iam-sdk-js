@@ -83,7 +83,7 @@ export default function (params: Params): ResultType {
   );
 
   // 登录过期的提示
-  let loginExpiredTipStatus = false; // 只显示一次
+  let loginExpiredTipStatus = params.applicationId === 'iam' ? false : true; // 只显示一次,true，显示了，false，没有显示
   const loginExpiredTip = () => {
     if (loginExpiredTipStatus) return;
     const callback = () => {
@@ -106,6 +106,22 @@ export default function (params: Params): ResultType {
       callback,
     );
     loginExpiredTipStatus = true;
+  };
+
+  // 检测今天是否登录过了
+  const _checkTodayLogged = () => {
+    let time: any = window.localStorage.getItem(IAMLastLoginKey);
+    if (time && !isNaN(time)) {
+      time = Number(time);
+      const nowTime = getYearMonthDateTimeNumber();
+      // 今天未登录过，提示，并重新登录
+      if (Number(nowTime) - time > 0) {
+        // 登录过期的提示
+        loginExpiredTip();
+        return false;
+      }
+    }
+    return true;
   };
 
   // 删除陈旧的oidc 的参数
@@ -145,6 +161,10 @@ export default function (params: Params): ResultType {
         if (data.type === MessageConstant.lastLoginTime) {
           console.log('收到了最后一次登录时间的更新');
           console.log(data.message);
+          // 收到iframe传递的消息，恢复默认的false
+          if (params.applicationId !== 'iam') {
+            loginExpiredTipStatus = false;
+          }
           let oldTime: any = window.localStorage.getItem(IAMLastLoginKey);
           oldTime = oldTime ? Number(oldTime) : 0;
           if (data.message && data.message > oldTime) {
@@ -152,6 +172,8 @@ export default function (params: Params): ResultType {
             // 刷新页面
             window.location.reload();
           }
+          // 检测时间
+          _checkTodayLogged();
         }
       }
     },
@@ -232,20 +254,7 @@ export default function (params: Params): ResultType {
     },
 
     // 检测今天是否登录过
-    checkTodayLogged() {
-      let time: any = window.localStorage.getItem(IAMLastLoginKey);
-      if (time && !isNaN(time)) {
-        time = Number(time);
-        const nowTime = getYearMonthDateTimeNumber();
-        // 今天未登录过，提示，并重新登录
-        if (Number(nowTime) - time > 0) {
-          // 登录过期的提示
-          loginExpiredTip();
-          return false;
-        }
-      }
-      return true;
-    },
+    checkTodayLogged: _checkTodayLogged,
 
     // vue-router 中的路由守卫
     async routerGuard() {
