@@ -150,8 +150,10 @@ export default function (params: Params): ResultType {
 
   // 监听收到的消息, iam的消息中转页面去掉绑定
   if (
-    window.location.href.indexOf('/dashboard/message-transfer') > -1 &&
-    params.applicationId === 'iam'
+    !(
+      window.location.href.indexOf('/dashboard/message-transfer') > -1 &&
+      params.applicationId === 'iam'
+    )
   ) {
     window.addEventListener(
       'message',
