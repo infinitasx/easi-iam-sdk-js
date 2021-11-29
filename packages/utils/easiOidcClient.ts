@@ -148,39 +148,44 @@ export default function (params: Params): ResultType {
   // 是否开启唤醒检测
   let wakeupListenerStatus = 0;
 
-  // 监听收到的消息
-  window.addEventListener(
-    'message',
-    (e: MessageEvent) => {
-      console.log('当前页面收到消息了====开始');
-      console.log(e);
-      console.log('当前页面收到消息了====结束');
-      const data = e.data;
-      if (data) {
-        // 最后一次登录时间
-        if (data.type === MessageConstant.lastLoginTime) {
-          console.log('收到了最后一次登录时间的更新');
-          console.log(data.message);
-          // 收到iframe传递的消息，恢复默认的false
-          if (params.applicationId !== 'iam') {
-            loginExpiredTipStatus = false;
-          }
-          let oldTime: any = window.localStorage.getItem(IAMLastLoginKey);
-          oldTime = oldTime ? Number(oldTime) : 0;
-          if (data.message && data.message > oldTime) {
-            window.localStorage.setItem(IAMLastLoginKey, data.message);
-            // 刷新页面
-            window.location.reload();
-          }
-          // 检测时间，排除code换token的页面
-          if (window.location.href.indexOf(params.callbackUrl) === -1) {
-            _checkTodayLogged();
+  // 监听收到的消息, iam的消息中转页面去掉绑定
+  if (
+    window.location.href.indexOf('/dashboard/message-transfer') > -1 &&
+    params.applicationId === 'iam'
+  ) {
+    window.addEventListener(
+      'message',
+      (e: MessageEvent) => {
+        console.log('当前页面收到消息了====开始');
+        console.log(e);
+        console.log('当前页面收到消息了====结束');
+        const data = e.data;
+        if (data) {
+          // 最后一次登录时间
+          if (data.type === MessageConstant.lastLoginTime) {
+            console.log('收到了最后一次登录时间的更新');
+            console.log(data.message);
+            // 收到iframe传递的消息，恢复默认的false
+            if (params.applicationId !== 'iam') {
+              loginExpiredTipStatus = false;
+            }
+            let oldTime: any = window.localStorage.getItem(IAMLastLoginKey);
+            oldTime = oldTime ? Number(oldTime) : 0;
+            if (data.message && data.message > oldTime) {
+              window.localStorage.setItem(IAMLastLoginKey, data.message);
+              // 刷新页面
+              window.location.reload();
+            }
+            // 检测时间，排除code换token的页面
+            if (window.location.href.indexOf(params.callbackUrl) === -1) {
+              _checkTodayLogged();
+            }
           }
         }
-      }
-    },
-    false,
-  );
+      },
+      false,
+    );
+  }
 
   // 添加消息中间页面
   _createFrame(
