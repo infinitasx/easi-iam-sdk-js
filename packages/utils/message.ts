@@ -20,7 +20,7 @@ export function _createFrame(url: string, applicationId: string) {
 }
 
 // 发送消息给iam
-export function sendMessageToIAM(type: string, message: string) {
+export function sendMessageToIAM(type: string, message: any) {
   const frame = document.getElementById(iframeIdName);
   if (frame) {
     (frame as any).contentWindow.postMessage(
