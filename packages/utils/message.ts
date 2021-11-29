@@ -32,3 +32,13 @@ export function sendMessageToIAM(type: string, message: any) {
     );
   }
 }
+
+const utils: {
+  _createFrame: (url: string, applicationId: string) => void;
+  sendMessageToIAM: (type: string, message: any) => void;
+} = {
+  _createFrame,
+  sendMessageToIAM,
+};
+
+export default utils;
