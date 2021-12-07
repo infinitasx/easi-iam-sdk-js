@@ -296,6 +296,14 @@ export default function (params: Params): ResultType {
       })
         .then((res: any) => {
           res.application_id = params.applicationId;
+          // 校验 当前的sid 缓存是否为最新的
+          let obj: any = window.localStorage.getItem(getLocalKey() as string) || '{}';
+          obj = JSON.parse(obj);
+          const sid = obj.profile.sid;
+          const i = (res.devices || []).findIndex((item: any) => item.session_id == sid);
+          if (i === -1) {
+            loginExpiredTip();
+          }
           return Promise.resolve(res);
         })
         .catch((e: any) => {
