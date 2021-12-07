@@ -5,7 +5,7 @@ import { Params, ResultType } from '../type';
 import langTexts from '../lang/index';
 import { ILang } from '../type';
 import { getLang, setLang } from '../setter-getter/i18n';
-import { getAuthInfo, setLocalKey } from '../setter-getter/authInfo';
+import { getAuthInfo, getLocalKey, setLocalKey } from '../setter-getter/authInfo';
 import { getEnv, setEnv, getAuthority } from '../setter-getter/env';
 import {
   getMessage,
@@ -20,17 +20,8 @@ import {
 } from '../setter-getter/ui';
 import codeExchangeToken from './codeExchangeToken';
 import clientLimitErrorCheckUtil from './clientLimitErrorCheckUtil';
-import { _createFrame, sendMessageToIAM } from './message';
 
-import {
-  HOMEPAGE_PATH,
-  IAMLastLoginKey,
-  ExcludeKeys,
-  messageTransferUrl,
-  TESTING_URL,
-  PRODUCTION_URL,
-  MessageConstant,
-} from '../constant';
+import { HOMEPAGE_PATH, ExcludeKeys } from '../constant';
 
 import { getPermissions, getUserInfo, getDataActionLog, getLogSearchParams } from '../api/common';
 import { getDeviceId } from '../setter-getter/deviceId';
@@ -83,7 +74,7 @@ export default function (params: Params): ResultType {
   );
 
   // 登录过期的提示
-  let loginExpiredTipStatus = params.applicationId === 'iam' ? false : true; // 只显示一次,true，显示了，false，没有显示
+  let loginExpiredTipStatus = false;
   const loginExpiredTip = () => {
     if (loginExpiredTipStatus) return;
     const callback = () => {
@@ -110,16 +101,18 @@ export default function (params: Params): ResultType {
 
   // 检测今天是否登录过了
   const _checkTodayLogged = () => {
-    let time: any = window.localStorage.getItem(IAMLastLoginKey);
-    if (time && !isNaN(time)) {
-      time = Number(time);
-      const nowTime = getYearMonthDateTimeNumber();
-      // 今天未登录过，提示，并重新登录
-      if (Number(nowTime) - time > 0) {
-        // 登录过期的提示
-        loginExpiredTip();
-        return false;
-      }
+    let obj: any = window.localStorage.getItem(getLocalKey() as string) || '{}';
+    obj = JSON.parse(obj as string);
+    const time = obj.profile.auth_time * 1000 || new Date().getTime();
+    const timeObj = new Date(time);
+    timeObj.setHours(0);
+    timeObj.setMinutes(0);
+    timeObj.setSeconds(0);
+    timeObj.setMilliseconds(0);
+    if (timeObj.getTime() + '' !== getYearMonthDateTimeNumber()) {
+      // 登录过期的提示
+      loginExpiredTip();
+      return false;
     }
     return true;
   };
@@ -147,56 +140,6 @@ export default function (params: Params): ResultType {
 
   // 是否开启唤醒检测
   let wakeupListenerStatus = 0;
-
-  // 监听收到的消息, iam的消息中转页面去掉绑定
-  if (
-    !(
-      window.location.href.indexOf('/dashboard/message-transfer') > -1 &&
-      params.applicationId === 'iam'
-    )
-  ) {
-    window.addEventListener(
-      'message',
-      (e: MessageEvent) => {
-        const data = e.data;
-        if (data) {
-          // 最后一次登录时间
-          if (data.type === MessageConstant.lastLoginTime) {
-            // 收到iframe传递的消息，恢复默认的false
-            if (params.applicationId !== 'iam') {
-              loginExpiredTipStatus = false;
-            }
-            let oldTime: any = window.localStorage.getItem(IAMLastLoginKey);
-            oldTime = oldTime ? Number(oldTime) : 0;
-            if (data.message && data.message > oldTime) {
-              window.localStorage.setItem(IAMLastLoginKey, data.message);
-              if (data.message == getYearMonthDateTimeNumber()) {
-                // 刷新页面
-                window.location.reload();
-                return;
-              }
-            } else if (data.message && data.message < oldTime) {
-              // 收到消息发现iam的时间比自己小，则传递消息更新iam的时间
-              sendMessageToIAM(MessageConstant.lastLoginTime, oldTime);
-            }
-            // 检测时间，排除code换token的页面
-            if (window.location.href.indexOf(params.callbackUrl) === -1) {
-              _checkTodayLogged();
-            }
-          }
-        }
-      },
-      false,
-    );
-  }
-
-  // 添加消息中间页面
-  _createFrame(
-    getEnv() === 'production'
-      ? PRODUCTION_URL + messageTransferUrl
-      : TESTING_URL + messageTransferUrl,
-    params.applicationId,
-  );
 
   return {
     // 获取oidc-client-js 的 原生实例对象

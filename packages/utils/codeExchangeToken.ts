@@ -3,9 +3,6 @@ import { getHintModal } from '../setter-getter/ui';
 import { getLang } from '../setter-getter/i18n';
 import langText from '../lang/index';
 import { setDeviceId } from '../setter-getter/deviceId';
-import { getYearMonthDateTimeNumber } from './index';
-import { IAMLastLoginKey, MessageConstant } from '../constant';
-import { sendMessageToIAM } from './message';
 
 // code => token 方法
 export default function (Component: any, homePageUrl: string) {
@@ -22,11 +19,6 @@ export default function (Component: any, homePageUrl: string) {
       .signinRedirectCallback()
       .then((user: User) => {
         setDeviceId(user.profile.acr || '');
-        const time = getYearMonthDateTimeNumber();
-        // 记录登录的时间
-        window.localStorage.setItem(IAMLastLoginKey, time);
-        // 同步最后登录时间
-        sendMessageToIAM(MessageConstant.lastLoginTime, time);
         window.location.href = homePageUrl || '/';
       })
       .catch(err => {

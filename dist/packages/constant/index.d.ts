@@ -5,12 +5,5 @@ export declare const HOMEPAGE_PATH = "/dashboard";
 export declare const UPDATE_INIT_PWD_URL = "/dashboard/modify/init";
 export declare const GET_USERINFO_URL = "/v1/admin/userinfo";
 export declare const GET_PERMISSION_URL = "/v1/admin/users/menus";
-export declare const IAMLastLoginKey = "IAM:last-login";
 export declare const IAMDeviceIDKey = "IAM:deviceId";
 export declare const ExcludeKeys: string[];
-export declare const messageTransferUrl = "/dashboard/message-transfer";
-export declare const MessageConstant: {
-    theme: string;
-    lastLoginTime: string;
-};
-export declare const iframeIdName = "iam_message_transfer_frame";
