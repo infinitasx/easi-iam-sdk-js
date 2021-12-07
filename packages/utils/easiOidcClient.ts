@@ -300,9 +300,12 @@ export default function (params: Params): ResultType {
           let obj: any = window.localStorage.getItem(getLocalKey() as string) || '{}';
           obj = JSON.parse(obj);
           const sid = obj.profile.sid;
-          const i = (res.devices || []).findIndex((item: any) => item.session_id == sid);
-          if (i === -1) {
-            loginExpiredTip();
+          // 有设备id返回是才有意义
+          if (res.devices && res.devices.length > 0) {
+            const i = res.devices.findIndex((item: any) => item.session_id == sid);
+            if (i === -1) {
+              loginExpiredTip();
+            }
           }
           return Promise.resolve(res);
         })
