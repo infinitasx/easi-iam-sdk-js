@@ -170,9 +170,11 @@ export default function (params: Params): ResultType {
             oldTime = oldTime ? Number(oldTime) : 0;
             if (data.message && data.message > oldTime) {
               window.localStorage.setItem(IAMLastLoginKey, data.message);
-              // 刷新页面
-              window.location.reload();
-              return;
+              if (data.message == getYearMonthDateTimeNumber()) {
+                // 刷新页面
+                window.location.reload();
+                return;
+              }
             } else if (data.message && data.message < oldTime) {
               // 收到消息发现iam的时间比自己小，则传递消息更新iam的时间
               sendMessageToIAM(MessageConstant.lastLoginTime, oldTime);
