@@ -20,7 +20,7 @@ import {
 } from '../setter-getter/ui';
 import codeExchangeToken from './codeExchangeToken';
 import clientLimitErrorCheckUtil from './clientLimitErrorCheckUtil';
-import { _createFrame } from './message';
+import { _createFrame, sendMessageToIAM } from './message';
 
 import {
   HOMEPAGE_PATH,
@@ -172,6 +172,9 @@ export default function (params: Params): ResultType {
               window.localStorage.setItem(IAMLastLoginKey, data.message);
               // 刷新页面
               window.location.reload();
+            } else if (data.message && data.message < oldTime) {
+              // 收到消息发现iam的时间比自己小，则传递消息更新iam的时间
+              sendMessageToIAM(MessageConstant.lastLoginTime, oldTime);
             }
             // 检测时间，排除code换token的页面
             if (window.location.href.indexOf(params.callbackUrl) === -1) {

@@ -3,6 +3,10 @@
 本项目的所有更改都将记录在此文件中。
 
 本文件格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/) ，并且遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 。
+## [0.0.52] - 2021-12-07
+### Changed
+* 获取到的最后登录时间小于当前系统时，回传当前系统记录的时间
+
 ## [0.0.51] - 2021-11-30
 ### Changed
 * 删除消息传递的相关日志输出
