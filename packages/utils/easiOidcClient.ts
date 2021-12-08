@@ -291,6 +291,8 @@ export default function (params: Params): ResultType {
 
     // 获取用户信息
     getUserInfo() {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const that = this;
       return getUserInfo({
         token: this.getAuthorization(),
       })
@@ -304,7 +306,7 @@ export default function (params: Params): ResultType {
           if (res.devices && res.devices.length > 0) {
             const i = res.devices.findIndex((item: any) => item.session_id == sid);
             if (i === -1) {
-              loginExpiredTip();
+              that.signOut();
             }
           }
           return Promise.resolve(res);
