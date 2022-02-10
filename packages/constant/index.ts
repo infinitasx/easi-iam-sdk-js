@@ -21,3 +21,6 @@ export const IAMDeviceIDKey = 'IAM:deviceId';
 
 // 清空localStorage 时排除的key
 export const ExcludeKeys = ['oidc.user:', 'IAM:', 'EASI:', 'SELF:'];
+
+// iam跳转过来携带的参数
+export const FromOrginKey = 'dashboard';

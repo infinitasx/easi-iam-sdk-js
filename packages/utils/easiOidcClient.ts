@@ -21,7 +21,7 @@ import {
 import codeExchangeToken from './codeExchangeToken';
 import clientLimitErrorCheckUtil from './clientLimitErrorCheckUtil';
 
-import { HOMEPAGE_PATH, ExcludeKeys } from '../constant';
+import { HOMEPAGE_PATH, ExcludeKeys, FromOrginKey } from '../constant';
 
 import { getPermissions, getUserInfo, getDataActionLog, getLogSearchParams } from '../api/common';
 import { getDeviceId } from '../setter-getter/deviceId';
@@ -100,7 +100,7 @@ export default function (params: Params): ResultType {
   };
 
   // 检测今天是否登录过了
-  const _checkTodayLogged = () => {
+  const _checkTodayLogged = (noShowTip?: boolean) => {
     let obj: any = window.localStorage.getItem(getLocalKey() as string) || '{}';
     obj = JSON.parse(obj as string);
     const time = obj.profile.auth_time * 1000 || new Date().getTime();
@@ -111,7 +111,9 @@ export default function (params: Params): ResultType {
     timeObj.setMilliseconds(0);
     if (timeObj.getTime() + '' !== getYearMonthDateTimeNumber()) {
       // 登录过期的提示
-      loginExpiredTip();
+      if (!noShowTip) {
+        loginExpiredTip();
+      }
       return false;
     }
     return true;
@@ -211,9 +213,17 @@ export default function (params: Params): ResultType {
 
     // vue-router 中的路由守卫
     async routerGuard() {
-      // 有
+      // 有认证信息
       if (this.getAuthInfoSync()) {
-        // 检测是否在有效期内
+        const from = new URL(window.location.href).searchParams.get('__from');
+        // 从iam跳转过 且 当日没有登录过
+        if (from === FromOrginKey && this.checkTodayLogged(true) === false) {
+          // 清除认证信息，重新获取
+          this.clearOidcLocalStorageData();
+          this.signIn();
+          return false;
+        }
+        // 检测token是否在有效期内
         // 1、不在有效期内
         if (
           this.getAuthInfoSync()?.expires_at <= Number(parseInt(new Date().getTime() / 1000 + ''))
